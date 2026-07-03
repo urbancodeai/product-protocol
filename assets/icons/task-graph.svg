@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Task graph">
+  <title>Task graph</title>
+  <circle cx="6" cy="5" r="2.5"/>
+  <circle cx="18" cy="5" r="2.5"/>
+  <circle cx="12" cy="12.5" r="2.5"/>
+  <circle cx="12" cy="19.5" r="2.5"/>
+  <path d="M7.6 7 10.4 10.5"/>
+  <path d="M16.4 7 13.6 10.5"/>
+  <path d="M12 15v2"/>
+</svg>

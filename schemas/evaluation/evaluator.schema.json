@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://productprotocol.org/schemas/evaluation/evaluator.schema.json",
+  "title": "Evaluator",
+  "description": "An actor that judges work against criteria and Constitutions. Normative per PP-0008 §5.",
+  "$ref": "../common/envelope.schema.json",
+  "properties": {
+    "kind": { "const": "Evaluator" },
+    "spec": {
+      "$ref": "../common/common.schema.json#/$defs/extensibleObject",
+      "properties": {
+        "description": { "$ref": "../common/common.schema.json#/$defs/prose" },
+        "type": {
+          "type": "string",
+          "enum": ["automated", "agentic", "human"]
+        },
+        "categories": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "regression",
+              "visual",
+              "business_validation",
+              "agent_evaluation",
+              "performance",
+              "security",
+              "accessibility",
+              "constitution_audit",
+              "acceptance"
+            ]
+          }
+        }
+      },
+      "required": ["description", "type", "categories"],
+      "additionalProperties": false
+    }
+  }
+}

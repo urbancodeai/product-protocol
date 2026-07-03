@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://productprotocol.org/schemas/common/common.schema.json",
+  "title": "Product Protocol Common Definitions",
+  "description": "Shared value types used by all Product Protocol schemas. Normative per PP-0002.",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]([a-z0-9-]{0,126}[a-z0-9])?$",
+      "description": "Object identifier, unique per (Product, kind). PP-0002 §3.1."
+    },
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+      "description": "Semantic Version 2.0.0."
+    },
+    "protocolVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$",
+      "description": "Protocol version, MAJOR.MINOR. PP-0002 §2."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 timestamp string."
+    },
+    "duration": {
+      "type": "string",
+      "pattern": "^P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?(T(?=\\d)(\\d+H)?(\\d+M)?(\\d+(\\.\\d+)?S)?)?$",
+      "description": "ISO 8601 duration."
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+:[a-fA-F0-9]+$",
+      "description": "Content digest, <algorithm>:<hex>. PP-0002 §4."
+    },
+    "prose": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable text; Markdown permitted. Opaque to validators."
+    },
+    "stringMap": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "actor": {
+      "type": "object",
+      "description": "An accountable participant. PP-0002 §3.1.",
+      "properties": {
+        "type": { "type": "string", "enum": ["human", "agent", "team"] },
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string" }
+      },
+      "required": ["type", "id"],
+      "additionalProperties": false
+    },
+    "ref": {
+      "type": "object",
+      "description": "Reference to another PP object. PP-0002 §5.",
+      "properties": {
+        "ref": {
+          "type": "object",
+          "properties": {
+            "kind": { "type": "string", "pattern": "^([A-Z][A-Za-z0-9]*|x-[a-z0-9-]+-[A-Z][A-Za-z0-9]*)$" },
+            "id": { "$ref": "#/$defs/id" },
+            "version": { "type": "string", "description": "Exact SemVer or SemVer range." },
+            "product": { "$ref": "#/$defs/id" }
+          },
+          "required": ["kind", "id"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["ref"],
+      "additionalProperties": false
+    },
+    "refList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ref" }
+    },
+    "governedLifecycle": {
+      "type": "string",
+      "enum": ["draft", "proposed", "approved", "deprecated", "archived"],
+      "description": "Governed object lifecycle state. PP-0002 §6.2."
+    },
+    "extensibleObject": {
+      "type": "object",
+      "patternProperties": {
+        "^x-": {}
+      },
+      "description": "Base for spec objects: x- extension fields admitted everywhere. PP-0002 §8."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Object metadata. PP-0002 §3.1.",
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "version": { "$ref": "#/$defs/semver" },
+        "labels": { "$ref": "#/$defs/stringMap" },
+        "annotations": { "$ref": "#/$defs/stringMap" },
+        "createdAt": { "$ref": "#/$defs/timestamp" },
+        "updatedAt": { "$ref": "#/$defs/timestamp" },
+        "owners": { "type": "array", "items": { "$ref": "#/$defs/actor" } },
+        "lifecycle": { "type": "string" }
+      },
+      "required": ["id", "version"],
+      "additionalProperties": false
+    }
+  }
+}

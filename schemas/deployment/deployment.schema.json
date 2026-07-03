@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://productprotocol.org/schemas/deployment/deployment.schema.json",
+  "title": "Deployment",
+  "description": "The record of releasing Artifacts into an Environment, gated by Evaluations. Normative per PP-0010 §6.",
+  "$ref": "../common/envelope.schema.json",
+  "properties": {
+    "kind": { "const": "Deployment" },
+    "spec": {
+      "$ref": "../common/common.schema.json#/$defs/extensibleObject",
+      "properties": {
+        "environment": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Name of a declared environment in Product.spec.environments. PP-0010 §6.1."
+        },
+        "artifacts": {
+          "$ref": "../common/common.schema.json#/$defs/refList",
+          "minItems": 1
+        },
+        "gates": { "$ref": "../common/common.schema.json#/$defs/refList" },
+        "strategy": {
+          "type": "string",
+          "enum": ["rolling", "blue_green", "canary", "recreate", "other"]
+        },
+        "requestedBy": { "$ref": "../common/common.schema.json#/$defs/actor" },
+        "requestedAt": { "$ref": "../common/common.schema.json#/$defs/timestamp" }
+      },
+      "required": ["environment", "artifacts", "requestedAt"],
+      "additionalProperties": false
+    },
+    "status": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "requested",
+            "validating",
+            "deploying",
+            "active",
+            "superseded",
+            "rolled_back",
+            "failed"
+          ]
+        },
+        "evaluations": { "$ref": "../common/common.schema.json#/$defs/refList" },
+        "startedAt": { "$ref": "../common/common.schema.json#/$defs/timestamp" },
+        "completedAt": { "$ref": "../common/common.schema.json#/$defs/timestamp" },
+        "reason": { "$ref": "../common/common.schema.json#/$defs/prose" }
+      },
+      "required": ["state"],
+      "additionalProperties": false
+    }
+  }
+}

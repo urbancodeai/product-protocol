@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 160" role="img" aria-label="Product Protocol logo">
+  <title>Product Protocol</title>
+  <desc>A hexagonal loop of nodes with directional flow, next to the wordmark "Product Protocol".</desc>
+
+  <!--
+    Mark: a continuous loop of structured objects.
+    Two-tone: the accent (#6366F1) reads on light and dark backgrounds;
+    everything else uses currentColor so the logo adapts to its context.
+  -->
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <!-- hexagonal loop -->
+    <path d="M80 26 L126.8 53 L126.8 107 L80 134 L33.2 107 L33.2 53 Z"
+          fill="none" stroke="#6366F1" stroke-width="4"/>
+
+    <!-- directional flow chevrons (clockwise) -->
+    <g fill="none" stroke="currentColor" stroke-width="3">
+      <g transform="translate(103.4 39.5) rotate(30)">
+        <path d="M-4 -5 L4 0 L-4 5"/>
+      </g>
+      <g transform="translate(103.4 120.5) rotate(150)">
+        <path d="M-4 -5 L4 0 L-4 5"/>
+      </g>
+      <g transform="translate(33.2 80) rotate(270)">
+        <path d="M-4 -5 L4 0 L-4 5"/>
+      </g>
+    </g>
+
+    <!-- structured objects at the vertices -->
+    <circle cx="80"    cy="26"  r="8" fill="currentColor"/>
+    <circle cx="126.8" cy="53"  r="8" fill="#6366F1"/>
+    <circle cx="126.8" cy="107" r="8" fill="currentColor"/>
+    <circle cx="80"    cy="134" r="8" fill="#6366F1"/>
+    <circle cx="33.2"  cy="107" r="8" fill="currentColor"/>
+    <circle cx="33.2"  cy="53"  r="8" fill="#6366F1"/>
+  </g>
+
+  <!-- Wordmark: generic system font stack, no external fonts -->
+  <text x="168" y="96"
+        font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="46" font-weight="700" letter-spacing="-0.5"
+        fill="currentColor">Product <tspan fill="#6366F1">Protocol</tspan></text>
+</svg>

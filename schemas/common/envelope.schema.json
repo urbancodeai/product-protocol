@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://productprotocol.org/schemas/common/envelope.schema.json",
+  "title": "Product Protocol Object Envelope",
+  "description": "The envelope every PP object must satisfy, independent of kind. Normative per PP-0002 §3.",
+  "type": "object",
+  "properties": {
+    "pp": { "$ref": "common.schema.json#/$defs/protocolVersion" },
+    "kind": {
+      "type": "string",
+      "pattern": "^([A-Z][A-Za-z0-9]*|x-[a-z0-9-]+-[A-Z][A-Za-z0-9]*)$"
+    },
+    "metadata": { "$ref": "common.schema.json#/$defs/metadata" },
+    "spec": { "type": "object" },
+    "status": { "type": "object" }
+  },
+  "required": ["pp", "kind", "metadata", "spec"],
+  "additionalProperties": false
+}

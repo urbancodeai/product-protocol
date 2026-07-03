@@ -1,0 +1,4 @@
+# Default reviewers for all changes to the specification, schemas,
+# examples, and supporting material. See GOVERNANCE.md for how
+# maintainers are added and how decisions are made.
+* @urbancodeai/product-protocol-maintainers

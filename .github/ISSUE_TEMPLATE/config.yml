@@ -1,0 +1,7 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Questions and open-ended discussion
+    url: https://github.com/urbancodeai/product-protocol/discussions
+    about: >-
+      Use GitHub Discussions for questions, use cases, and ideas that are
+      not yet a concrete errata report, change proposal, or new PP.

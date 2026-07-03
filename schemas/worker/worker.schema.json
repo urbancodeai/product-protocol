@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://productprotocol.org/schemas/worker/worker.schema.json",
+  "title": "Worker",
+  "description": "An actor that claims and executes Tasks under the worker contract. Normative per PP-0007 §2.",
+  "$ref": "../common/envelope.schema.json",
+  "properties": {
+    "kind": { "const": "Worker" },
+    "spec": {
+      "$ref": "../common/common.schema.json#/$defs/extensibleObject",
+      "properties": {
+        "description": { "$ref": "../common/common.schema.json#/$defs/prose" },
+        "type": {
+          "type": "string",
+          "enum": ["agent", "human", "hybrid"]
+        },
+        "capabilities": {
+          "type": "array",
+          "items": { "$ref": "../task/task.schema.json#/$defs/capabilityTag" },
+          "minItems": 1
+        },
+        "constraints": {
+          "type": "object",
+          "properties": {
+            "allowedArtifactTypes": {
+              "type": "array",
+              "items": { "$ref": "../task/task.schema.json#/$defs/artifactType" }
+            },
+            "maxConcurrentTasks": { "type": "integer", "minimum": 1 },
+            "constitutionBound": { "type": "boolean", "default": true }
+          },
+          "additionalProperties": false
+        },
+        "contextContract": {
+          "type": "object",
+          "properties": {
+            "requires": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["task", "specification", "constitution", "knowledge", "prior_attempts"]
+              }
+            },
+            "maxContextItems": { "type": "integer", "minimum": 1 }
+          },
+          "additionalProperties": false
+        },
+        "evaluationHooks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "description": { "$ref": "../common/common.schema.json#/$defs/prose" },
+              "mode": {
+                "type": "string",
+                "enum": ["blocking", "advisory"]
+              },
+              "evaluation": { "$ref": "../common/common.schema.json#/$defs/ref" }
+            },
+            "required": ["name", "mode"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["description", "type", "capabilities"],
+      "additionalProperties": false
+    }
+  }
+}

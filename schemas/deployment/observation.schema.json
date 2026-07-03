@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://productprotocol.org/schemas/deployment/observation.schema.json",
+  "title": "Observation",
+  "description": "An append-only, telemetry-derived fact about the running Product. Normative per PP-0010 §6.3.",
+  "$ref": "../common/envelope.schema.json",
+  "properties": {
+    "kind": { "const": "Observation" },
+    "spec": {
+      "$ref": "../common/common.schema.json#/$defs/extensibleObject",
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": ["telemetry", "incident", "user_feedback", "analytics", "manual"]
+        },
+        "statement": { "$ref": "../common/common.schema.json#/$defs/prose" },
+        "measurement": {
+          "type": "object",
+          "properties": {
+            "metric": { "type": "string", "minLength": 1 },
+            "value": { "type": ["number", "string"] },
+            "unit": { "type": "string" }
+          },
+          "required": ["metric", "value"],
+          "additionalProperties": false
+        },
+        "observedAt": { "$ref": "../common/common.schema.json#/$defs/timestamp" },
+        "environment": { "type": "string", "minLength": 1 },
+        "relatesTo": { "$ref": "../common/common.schema.json#/$defs/refList" },
+        "severity": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low", "info"]
+        }
+      },
+      "required": ["source", "statement", "observedAt"],
+      "additionalProperties": false
+    }
+  }
+}

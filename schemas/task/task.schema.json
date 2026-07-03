@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://productprotocol.org/schemas/task/task.schema.json",
+  "title": "Task",
+  "description": "The atomic unit of schedulable work. Normative per PP-0006 §5.",
+  "$ref": "../common/envelope.schema.json",
+  "properties": {
+    "kind": { "const": "Task" },
+    "spec": {
+      "$ref": "../common/common.schema.json#/$defs/extensibleObject",
+      "properties": {
+        "intent": { "$ref": "../common/common.schema.json#/$defs/prose" },
+        "tracesTo": { "$ref": "../common/common.schema.json#/$defs/ref" },
+        "dependsOn": { "$ref": "../common/common.schema.json#/$defs/refList" },
+        "priority": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low"],
+          "default": "medium"
+        },
+        "capabilities": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/capabilityTag" }
+        },
+        "context": {
+          "type": "object",
+          "properties": {
+            "knowledge": { "$ref": "../common/common.schema.json#/$defs/refList" },
+            "specifications": { "$ref": "../common/common.schema.json#/$defs/refList" },
+            "constitutionArticles": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "notes": { "$ref": "../common/common.schema.json#/$defs/prose" }
+          },
+          "additionalProperties": false
+        },
+        "completion": {
+          "type": "object",
+          "properties": {
+            "criteria": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string", "minLength": 1 },
+                  "statement": { "$ref": "../common/common.schema.json#/$defs/prose" }
+                },
+                "required": ["id", "statement"],
+                "additionalProperties": false
+              }
+            },
+            "evaluations": { "$ref": "../common/common.schema.json#/$defs/refList" },
+            "artifacts": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/artifactType" }
+            }
+          },
+          "additionalProperties": false
+        },
+        "constraints": {
+          "type": "object",
+          "properties": {
+            "effortBudget": { "$ref": "../common/common.schema.json#/$defs/duration" },
+            "deadline": { "$ref": "../common/common.schema.json#/$defs/timestamp" },
+            "maxAttempts": { "type": "integer", "minimum": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": ["intent", "tracesTo"],
+      "additionalProperties": false
+    },
+    "status": {
+      "$ref": "../common/common.schema.json#/$defs/extensibleObject",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "ready",
+            "claimed",
+            "in_progress",
+            "blocked",
+            "submitted",
+            "evaluating",
+            "done",
+            "rejected",
+            "cancelled"
+          ]
+        },
+        "worker": { "$ref": "../common/common.schema.json#/$defs/ref" },
+        "attempts": { "type": "integer", "minimum": 0 },
+        "claimedAt": { "$ref": "../common/common.schema.json#/$defs/timestamp" },
+        "submittedAt": { "$ref": "../common/common.schema.json#/$defs/timestamp" },
+        "completedAt": { "$ref": "../common/common.schema.json#/$defs/timestamp" },
+        "blockedReason": { "$ref": "../common/common.schema.json#/$defs/prose" }
+      },
+      "required": ["state"],
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "capabilityTag": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]*(\\.[a-z0-9][a-z0-9_-]*)*$",
+      "description": "Freeform dot-namespaced capability tag, e.g. code.typescript. PP-0006 §7."
+    },
+    "artifactType": {
+      "type": "string",
+      "enum": [
+        "changeset",
+        "document",
+        "image",
+        "binary",
+        "report",
+        "prototype",
+        "dataset",
+        "other"
+      ],
+      "description": "Artifact type. PP-0007 §6."
+    }
+  }
+}
