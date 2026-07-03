@@ -13,4 +13,4 @@ Informative material supporting the normative specifications in
 
 New to the protocol? Read [VISION](../VISION.md) →
 [PP-0001](../pp/PP-0001-vision.md) →
-[tutorials/getting-started.md](./tutorials/getting-started.md).
+[tutorials/01-getting-started.md](./tutorials/01-getting-started.md).
