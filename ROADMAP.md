@@ -12,6 +12,7 @@ The current repository. Goals:
 - [x] JSON Schemas for all core kinds
 - [x] Four complete example products (ecommerce, saas, mobile, api)
 - [x] Glossary, object model, design principles
+- [x] Reference Architecture v1 — opinionated implementation blueprint
 - [ ] Public review: solicit issues from implementers and product teams
 - [ ] Schema validation CI hardening (all examples, all schemas)
 

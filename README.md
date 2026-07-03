@@ -65,14 +65,25 @@ Start with [VISION](VISION.md), then PP-0001 and PP-0002.
 ## Repository Map
 
 ```
-pp/          Numbered specification documents (the standard itself)
-schemas/     JSON Schemas for every object kind (normative)
-reference/   Glossary, terminology, object model, design principles
-examples/    Complete example products (informative): ecommerce, saas, mobile, api
-docs/        Architecture, concept guides, tutorials, decisions, diagrams
-diagrams/    Editable diagram sources
-assets/      Logo and icons
+pp/                      Numbered specification documents (the standard itself)
+schemas/                 JSON Schemas for every object kind (normative)
+reference/               Glossary, terminology, object model, design principles
+examples/                Complete example products (informative): ecommerce, saas, mobile, api
+docs/                    Architecture, concept guides, tutorials, decisions, diagrams
+reference-architecture/  RA v1 — an opinionated implementation blueprint (informative)
+diagrams/                Editable diagram sources
+assets/                  Logo and icons
 ```
+
+## Reference Architecture
+
+The specification is vendor-neutral; the
+[Reference Architecture v1](reference-architecture/README.md) is not. It
+shows one complete, opinionated way to run the protocol — Obsidian and a
+Graphiti-style graph as the knowledge layer, Claude Code workers on
+Kubernetes, Linear as an execution mirror, GitHub Actions as the
+evaluation pipeline — mapping every component to the conformance class
+it implements. Swap any part of it; the contracts are what matter.
 
 ## A Taste
 

@@ -52,6 +52,12 @@ Initial public draft of the Product Protocol specification.
   `ecommerce`, `saas`, `mobile`, `api`.
 - **Docs & diagrams** — architecture overview, concept guides,
   tutorials, decision records, Mermaid diagram sources.
+- **Reference Architecture v1** (`reference-architecture/`, informative)
+  — a complete opinionated implementation blueprint: Obsidian vault and
+  Graphiti-style knowledge graph over the Product Brain, Claude Code
+  worker sessions on Kubernetes, Linear execution mirror, GitHub +
+  Actions evaluation pipeline, MCP context layer, 13-role agent
+  architecture, and CLAUDE.md layering conventions.
 
 [Unreleased]: https://github.com/urbancodeai/product-protocol/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/urbancodeai/product-protocol/releases/tag/v0.1.0
