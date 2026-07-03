@@ -5,31 +5,57 @@
   "description": "The root object of a Product Protocol tree. Normative per PP-0002 §9.",
   "$ref": "../common/envelope.schema.json",
   "properties": {
-    "kind": { "const": "Product" },
+    "kind": {
+      "const": "Product"
+    },
     "spec": {
       "$ref": "../common/common.schema.json#/$defs/extensibleObject",
+      "patternProperties": {
+        "^x-": {}
+      },
       "properties": {
-        "summary": { "$ref": "../common/common.schema.json#/$defs/prose" },
-        "brain": { "$ref": "../common/common.schema.json#/$defs/ref" },
+        "summary": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "brain": {
+          "$ref": "../common/common.schema.json#/$defs/ref"
+        },
         "constitutions": {
           "$ref": "../common/common.schema.json#/$defs/refList",
           "minItems": 1
         },
-        "goals": { "$ref": "../common/common.schema.json#/$defs/refList" },
+        "goals": {
+          "$ref": "../common/common.schema.json#/$defs/refList"
+        },
         "environments": {
           "type": "array",
           "items": {
             "type": "object",
             "properties": {
-              "name": { "$ref": "../common/common.schema.json#/$defs/id" },
+              "name": {
+                "$ref": "../common/common.schema.json#/$defs/id"
+              },
               "classification": {
                 "type": "string",
-                "enum": ["development", "test", "pre_production", "production"]
+                "enum": [
+                  "development",
+                  "test",
+                  "pre_production",
+                  "production"
+                ]
               },
-              "description": { "type": "string" }
+              "description": {
+                "type": "string"
+              }
             },
-            "required": ["name", "classification"],
-            "additionalProperties": false
+            "required": [
+              "name",
+              "classification"
+            ],
+            "additionalProperties": false,
+            "patternProperties": {
+              "^x-": {}
+            }
           }
         },
         "repositories": {
@@ -37,16 +63,40 @@
           "items": {
             "type": "object",
             "properties": {
-              "name": { "type": "string" },
-              "uri": { "type": "string", "format": "uri" },
-              "role": { "type": "string", "enum": ["source", "artifact", "knowledge", "other"] }
+              "name": {
+                "type": "string"
+              },
+              "uri": {
+                "type": "string",
+                "format": "uri"
+              },
+              "role": {
+                "type": "string",
+                "enum": [
+                  "source",
+                  "artifact",
+                  "knowledge",
+                  "other"
+                ]
+              }
             },
-            "required": ["name", "uri", "role"],
-            "additionalProperties": false
+            "required": [
+              "name",
+              "uri",
+              "role"
+            ],
+            "additionalProperties": false,
+            "patternProperties": {
+              "^x-": {}
+            }
           }
         }
       },
-      "required": ["summary", "brain", "constitutions"],
+      "required": [
+        "summary",
+        "brain",
+        "constitutions"
+      ],
       "additionalProperties": false
     }
   }

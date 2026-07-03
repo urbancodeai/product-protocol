@@ -1,0 +1,11 @@
+%% Product Protocol — governed-object lifecycle (PP-0002 §6.2)
+%% Applies to Goal, Capability, Specification, Constitution, Feature,
+%% Story, GoldenTest. The Task state machine is in state-machines-task.mmd.
+stateDiagram-v2
+    [*] --> draft
+    draft --> proposed : submit
+    proposed --> draft : revise
+    proposed --> approved : human approval (Decision)
+    approved --> deprecated : supersede / retire
+    deprecated --> archived
+    archived --> [*]

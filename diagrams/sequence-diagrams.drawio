@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="pp-sequence-loop" name="One Loop Turn (simplified)">
+    <mxGraphModel dx="1200" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="520" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="note" value="Simplified box-and-arrow view of diagrams/sequence-loop.mmd. Numbers give the order of one loop turn." style="text;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="720" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="human" value="Human" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hi" value="Human Interface" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="80" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="brain" value="Product Brain" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="80" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="planner" value="Planner" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="80" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="worker" value="Worker" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="220" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="evaluator" value="Evaluator" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="220" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="runtime" value="Runtime" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="220" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="telemetry" value="Telemetry" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="360" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" value="1. intent / 5. approve" style="html=1;" edge="1" parent="1" source="human" target="hi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" value="2. ingest Knowledge / 6. Decision" style="html=1;" edge="1" parent="1" source="hi" target="brain">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" value="3-4. draft Specification, present" style="html=1;curved=1;exitX=0.5;exitY=0;entryX=0.5;entryY=0;" edge="1" parent="1" source="brain" target="hi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s4" value="7. approved intent + context" style="html=1;" edge="1" parent="1" source="brain" target="planner">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s5" value="8. Task Graph, Worker claims Task" style="html=1;" edge="1" parent="1" source="planner" target="worker">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s6" value="9. Artifacts + evidence" style="html=1;" edge="1" parent="1" source="worker" target="evaluator">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s7" value="10. Evaluation (accepted)" style="html=1;" edge="1" parent="1" source="evaluator" target="runtime">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s8" value="11. gated Deployment" style="html=1;" edge="1" parent="1" source="runtime" target="telemetry">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s9" value="12. Observations become Knowledge (learning)" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;exitX=1;exitY=0.5;entryX=0.5;entryY=1;" edge="1" parent="1" source="telemetry" target="brain">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

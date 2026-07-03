@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://productprotocol.org/schemas/knowledge/knowledge.schema.json",
+  "title": "Knowledge",
+  "description": "A single versioned unit of product knowledge. Normative per PP-0003 §3.",
+  "$ref": "../common/envelope.schema.json",
+  "properties": {
+    "kind": {
+      "const": "Knowledge"
+    },
+    "spec": {
+      "$ref": "../common/common.schema.json#/$defs/extensibleObject",
+      "properties": {
+        "category": {
+          "type": "string",
+          "enum": [
+            "domain",
+            "user",
+            "market",
+            "technical",
+            "architectural",
+            "operational",
+            "process",
+            "lesson"
+          ],
+          "description": "Knowledge category. PP-0003 §2."
+        },
+        "subcategory": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Free-form refinement of category. PP-0003 §2."
+        },
+        "statement": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "detail": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "hypothesis",
+            "observed",
+            "validated",
+            "canonical"
+          ],
+          "description": "Confidence ladder rung. PP-0003 §4."
+        },
+        "provenance": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Where this claim comes from. PP-0003 §3.4.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "conversation",
+                  "document",
+                  "observation",
+                  "evaluation",
+                  "decision",
+                  "external"
+                ]
+              },
+              "ref": {
+                "$ref": "../common/common.schema.json#/$defs/ref"
+              },
+              "uri": {
+                "type": "string",
+                "format": "uri"
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "type"
+            ],
+            "additionalProperties": false,
+            "patternProperties": {
+              "^x-": {}
+            }
+          }
+        },
+        "links": {
+          "type": "array",
+          "description": "Typed Knowledge Graph edges. PP-0003 §8.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "rel": {
+                "type": "string",
+                "enum": [
+                  "supports",
+                  "contradicts",
+                  "refines",
+                  "derived_from",
+                  "supersedes",
+                  "relates_to"
+                ]
+              },
+              "target": {
+                "$ref": "../common/common.schema.json#/$defs/ref"
+              }
+            },
+            "required": [
+              "rel",
+              "target"
+            ],
+            "additionalProperties": false,
+            "patternProperties": {
+              "^x-": {}
+            }
+          }
+        },
+        "reviewedAt": {
+          "$ref": "../common/common.schema.json#/$defs/timestamp"
+        }
+      },
+      "required": [
+        "category",
+        "statement",
+        "confidence",
+        "provenance"
+      ],
+      "patternProperties": {
+        "^x-": {}
+      },
+      "additionalProperties": false
+    }
+  }
+}

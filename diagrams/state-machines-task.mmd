@@ -1,0 +1,18 @@
+%% Product Protocol — Task state machine (PP-0006 §5)
+%% The governed-object lifecycle is in state-machines-governed.mmd.
+stateDiagram-v2
+    [*] --> pending
+    pending --> ready : dependencies satisfied
+    ready --> claimed : worker claims
+    claimed --> in_progress : worker starts
+    in_progress --> blocked : dependency / question
+    blocked --> in_progress : unblocked
+    in_progress --> submitted : artifacts + evidence delivered
+    submitted --> evaluating : evaluator picks up
+    evaluating --> done : accepted
+    evaluating --> rejected : rejected
+    rejected --> ready : replan / retry
+    pending --> cancelled
+    ready --> cancelled
+    cancelled --> [*]
+    done --> [*]

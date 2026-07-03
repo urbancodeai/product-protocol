@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://productprotocol.org/schemas/knowledge/product-brain.schema.json",
+  "title": "ProductBrain",
+  "description": "The root object of a Product's knowledge store. Normative per PP-0003 §1.",
+  "$ref": "../common/envelope.schema.json",
+  "properties": {
+    "kind": {
+      "const": "ProductBrain"
+    },
+    "spec": {
+      "$ref": "../common/common.schema.json#/$defs/extensibleObject",
+      "properties": {
+        "summary": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "retention": {
+          "type": "object",
+          "description": "Retention policy hints. PP-0003 §5.",
+          "properties": {
+            "reviewInterval": {
+              "$ref": "../common/common.schema.json#/$defs/duration"
+            },
+            "compactAfter": {
+              "$ref": "../common/common.schema.json#/$defs/duration"
+            }
+          },
+          "additionalProperties": false,
+          "patternProperties": {
+            "^x-": {}
+          }
+        },
+        "indexes": {
+          "type": "array",
+          "description": "Declared retrieval indexes (hints). PP-0003 §1.5.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "patternProperties": {
+              "^x-": {}
+            }
+          }
+        }
+      },
+      "required": [
+        "summary"
+      ],
+      "patternProperties": {
+        "^x-": {}
+      },
+      "additionalProperties": false
+    }
+  }
+}

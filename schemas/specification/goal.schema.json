@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://productprotocol.org/schemas/specification/goal.schema.json",
+  "title": "Goal",
+  "description": "A measurable business or user outcome the Product pursues. Normative per PP-0004 §3.",
+  "$ref": "../common/envelope.schema.json",
+  "properties": {
+    "kind": {
+      "const": "Goal"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "lifecycle": {
+          "$ref": "../common/common.schema.json#/$defs/governedLifecycle"
+        }
+      },
+      "required": [
+        "lifecycle"
+      ]
+    },
+    "spec": {
+      "$ref": "../common/common.schema.json#/$defs/extensibleObject",
+      "properties": {
+        "statement": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "metric": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": {
+              "type": "string"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "baseline": {
+              "type": [
+                "number",
+                "string"
+              ]
+            },
+            "target": {
+              "type": [
+                "number",
+                "string"
+              ]
+            },
+            "direction": {
+              "type": "string",
+              "enum": [
+                "increase",
+                "decrease",
+                "maintain"
+              ]
+            }
+          },
+          "required": [
+            "name",
+            "target",
+            "direction"
+          ],
+          "additionalProperties": false,
+          "patternProperties": {
+            "^x-": {}
+          }
+        },
+        "timeframe": {
+          "type": "string"
+        },
+        "rationale": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        }
+      },
+      "required": [
+        "statement",
+        "metric"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      }
+    }
+  }
+}

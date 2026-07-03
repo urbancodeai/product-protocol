@@ -5,40 +5,71 @@
   "description": "The actor that decomposes approved intent into the Task Graph. Normative per PP-0006 §3.",
   "$ref": "../common/envelope.schema.json",
   "properties": {
-    "kind": { "const": "Planner" },
+    "kind": {
+      "const": "Planner"
+    },
     "spec": {
       "$ref": "../common/common.schema.json#/$defs/extensibleObject",
       "properties": {
-        "description": { "$ref": "../common/common.schema.json#/$defs/prose" },
+        "description": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
         "type": {
           "type": "string",
-          "enum": ["agent", "human", "hybrid"]
+          "enum": [
+            "agent",
+            "human",
+            "hybrid"
+          ]
         },
         "policies": {
           "type": "object",
           "properties": {
             "scheduling": {
               "type": "string",
-              "enum": ["priority_fifo", "deadline_first", "custom"]
+              "enum": [
+                "priority_fifo",
+                "deadline_first",
+                "custom"
+              ]
             },
-            "maxParallelism": { "type": "integer", "minimum": 1 },
+            "maxParallelism": {
+              "type": "integer",
+              "minimum": 1
+            },
             "replanOn": {
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": ["rejection", "issue", "specification_change", "observation"]
+                "enum": [
+                  "rejection",
+                  "issue",
+                  "specification_change",
+                  "observation"
+                ]
               }
             }
           },
-          "additionalProperties": false
+          "additionalProperties": false,
+          "patternProperties": {
+            "^x-": {}
+          }
         },
         "capabilities": {
           "type": "array",
-          "items": { "$ref": "task.schema.json#/$defs/capabilityTag" }
+          "items": {
+            "$ref": "task.schema.json#/$defs/capabilityTag"
+          }
         }
       },
-      "required": ["description", "type"],
-      "additionalProperties": false
+      "required": [
+        "description",
+        "type"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      }
     }
   }
 }

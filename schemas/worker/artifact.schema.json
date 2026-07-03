@@ -5,22 +5,54 @@
   "description": "A content-addressed, immutable output of a Task. Normative per PP-0007 §6.",
   "$ref": "../common/envelope.schema.json",
   "properties": {
-    "kind": { "const": "Artifact" },
+    "kind": {
+      "const": "Artifact"
+    },
     "spec": {
       "$ref": "../common/common.schema.json#/$defs/extensibleObject",
       "properties": {
-        "type": { "$ref": "../task/task.schema.json#/$defs/artifactType" },
-        "digest": { "$ref": "../common/common.schema.json#/$defs/digest" },
-        "uri": { "type": "string", "format": "uri" },
-        "path": { "type": "string", "minLength": 1 },
-        "summary": { "$ref": "../common/common.schema.json#/$defs/prose" },
-        "producedBy": { "$ref": "../common/common.schema.json#/$defs/ref" },
-        "producedAt": { "$ref": "../common/common.schema.json#/$defs/timestamp" },
-        "size": { "type": "integer", "minimum": 0 },
-        "mediaType": { "type": "string", "minLength": 1 }
+        "type": {
+          "$ref": "../task/task.schema.json#/$defs/artifactType"
+        },
+        "digest": {
+          "$ref": "../common/common.schema.json#/$defs/digest"
+        },
+        "uri": {
+          "type": "string",
+          "format": "uri"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "producedBy": {
+          "$ref": "../common/common.schema.json#/$defs/ref"
+        },
+        "producedAt": {
+          "$ref": "../common/common.schema.json#/$defs/timestamp"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mediaType": {
+          "type": "string",
+          "minLength": 1
+        }
       },
-      "required": ["type", "digest", "producedBy", "producedAt"],
-      "additionalProperties": false
+      "required": [
+        "type",
+        "digest",
+        "producedBy",
+        "producedAt"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      }
     }
   }
 }

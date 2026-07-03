@@ -1,0 +1,126 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="pp-governed-lifecycle" name="Governed Objects">
+    <mxGraphModel dx="1000" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="980" pageHeight="300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="start" value="" style="ellipse;fillColor=#000000;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="95" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="draft" value="draft" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="85" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="proposed" value="proposed" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="85" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="approved" value="approved" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="85" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="deprecated" value="deprecated" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="85" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="archived" value="archived" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="840" y="85" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ge0" style="html=1;" edge="1" parent="1" source="start" target="draft">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge1" value="submit" style="html=1;" edge="1" parent="1" source="draft" target="proposed">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge2" value="revise" style="html=1;curved=1;exitX=0.25;exitY=0;entryX=0.75;entryY=0;" edge="1" parent="1" source="proposed" target="draft">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge3" value="human approval (Decision)" style="html=1;" edge="1" parent="1" source="proposed" target="approved">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge4" value="supersede / retire" style="html=1;" edge="1" parent="1" source="approved" target="deprecated">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ge5" style="html=1;" edge="1" parent="1" source="deprecated" target="archived">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="pp-task-lifecycle" name="Task">
+    <mxGraphModel dx="1000" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="480" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="tstart" value="" style="ellipse;fillColor=#000000;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="70" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="pending" value="pending" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="60" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ready" value="ready" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="60" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="claimed" value="claimed" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="60" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="inprogress" value="in_progress" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="60" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="blocked" value="blocked" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="180" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="submitted" value="submitted" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="60" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="evaluating" value="evaluating" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="180" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="done" value="done" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="870" y="180" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="rejected" value="rejected" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="300" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cancelled" value="cancelled" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="180" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="te0" style="html=1;" edge="1" parent="1" source="tstart" target="pending">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te1" value="dependencies satisfied" style="html=1;" edge="1" parent="1" source="pending" target="ready">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te2" value="worker claims" style="html=1;" edge="1" parent="1" source="ready" target="claimed">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te3" value="worker starts" style="html=1;" edge="1" parent="1" source="claimed" target="inprogress">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te4" value="dependency / question" style="html=1;exitX=0.25;exitY=1;entryX=0.25;entryY=0;" edge="1" parent="1" source="inprogress" target="blocked">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te5" value="unblocked" style="html=1;exitX=0.75;exitY=0;entryX=0.75;entryY=1;" edge="1" parent="1" source="blocked" target="inprogress">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te6" value="artifacts + evidence" style="html=1;" edge="1" parent="1" source="inprogress" target="submitted">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te7" value="evaluator picks up" style="html=1;" edge="1" parent="1" source="submitted" target="evaluating">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te8" value="accepted" style="html=1;" edge="1" parent="1" source="evaluating" target="done">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te9" value="rejected" style="html=1;" edge="1" parent="1" source="evaluating" target="rejected">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te10" value="replan / retry" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;exitX=0;exitY=0.5;entryX=0.5;entryY=1;" edge="1" parent="1" source="rejected" target="ready">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te11" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;" edge="1" parent="1" source="pending" target="cancelled">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te12" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;" edge="1" parent="1" source="ready" target="cancelled">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

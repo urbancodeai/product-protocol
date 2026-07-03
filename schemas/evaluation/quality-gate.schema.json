@@ -5,11 +5,15 @@
   "description": "A named predicate over Evaluations that gates a transition. Normative per PP-0008 §9.",
   "$ref": "../common/envelope.schema.json",
   "properties": {
-    "kind": { "const": "QualityGate" },
+    "kind": {
+      "const": "QualityGate"
+    },
     "spec": {
       "$ref": "../common/common.schema.json#/$defs/extensibleObject",
       "properties": {
-        "description": { "$ref": "../common/common.schema.json#/$defs/prose" },
+        "description": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
         "trigger": {
           "type": "string",
           "enum": [
@@ -21,7 +25,10 @@
         },
         "mode": {
           "type": "string",
-          "enum": ["blocking", "advisory"]
+          "enum": [
+            "blocking",
+            "advisory"
+          ]
         },
         "requires": {
           "type": "array",
@@ -29,8 +36,12 @@
           "items": {
             "type": "object",
             "properties": {
-              "description": { "$ref": "../common/common.schema.json#/$defs/prose" },
-              "evaluations": { "$ref": "../common/common.schema.json#/$defs/refList" },
+              "description": {
+                "$ref": "../common/common.schema.json#/$defs/prose"
+              },
+              "evaluations": {
+                "$ref": "../common/common.schema.json#/$defs/refList"
+              },
               "selector": {
                 "type": "object",
                 "properties": {
@@ -48,24 +59,48 @@
                       "acceptance"
                     ]
                   },
-                  "labels": { "$ref": "../common/common.schema.json#/$defs/stringMap" }
+                  "labels": {
+                    "$ref": "../common/common.schema.json#/$defs/stringMap"
+                  }
                 },
-                "additionalProperties": false
+                "additionalProperties": false,
+                "patternProperties": {
+                  "^x-": {}
+                }
               },
               "verdict": {
                 "type": "string",
-                "enum": ["pass"],
+                "enum": [
+                  "pass"
+                ],
                 "default": "pass"
               },
-              "minScore": { "type": "number", "minimum": 0, "maximum": 1 }
+              "minScore": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
             },
-            "required": ["description"],
-            "additionalProperties": false
+            "required": [
+              "description"
+            ],
+            "additionalProperties": false,
+            "patternProperties": {
+              "^x-": {}
+            }
           }
         }
       },
-      "required": ["description", "trigger", "mode", "requires"],
-      "additionalProperties": false
+      "required": [
+        "description",
+        "trigger",
+        "mode",
+        "requires"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      }
     }
   }
 }

@@ -1,0 +1,29 @@
+%% Product Protocol — component/actor architecture
+%% Consistent with pp/PP-0001-vision.md §1-§2 and reference/object-model.md §6.
+graph TB
+    Human([Human])
+    HI[Human Interface]
+    Runtime[Runtime]
+    Planner[Planner]
+    Workers[Workers]
+    Evaluators[Evaluators]
+    Brain[(Product Brain)]
+    Storage[(".product tree<br/>(Git storage binding)")]
+    Env[Environments]
+    Telemetry[Telemetry]
+
+    Human -- "intent, approvals" --> HI
+    HI -- "Knowledge, Decisions" --> Brain
+    HI -- "approved Goals / Specs / Constitutions" --> Storage
+    Brain -- "context, retrieval" --> Planner
+    Brain -- "context, retrieval" --> Workers
+    Planner -- "Task Graph" --> Storage
+    Runtime -- "schedules ready Tasks" --> Workers
+    Workers -- "claim Tasks / submit Artifacts" --> Storage
+    Evaluators -- "Evaluations + Evidence" --> Storage
+    Storage -- "gate results" --> Runtime
+    Runtime -- "gated Deployments" --> Env
+    Env -- "signals" --> Telemetry
+    Telemetry -- "Observations" --> Storage
+    Telemetry -- "learning" --> Brain
+    Brain -- "questions, drafts" --> HI

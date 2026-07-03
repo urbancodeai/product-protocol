@@ -5,7 +5,9 @@
   "description": "The record of releasing Artifacts into an Environment, gated by Evaluations. Normative per PP-0010 §6.",
   "$ref": "../common/envelope.schema.json",
   "properties": {
-    "kind": { "const": "Deployment" },
+    "kind": {
+      "const": "Deployment"
+    },
     "spec": {
       "$ref": "../common/common.schema.json#/$defs/extensibleObject",
       "properties": {
@@ -18,16 +20,35 @@
           "$ref": "../common/common.schema.json#/$defs/refList",
           "minItems": 1
         },
-        "gates": { "$ref": "../common/common.schema.json#/$defs/refList" },
+        "gates": {
+          "$ref": "../common/common.schema.json#/$defs/refList"
+        },
         "strategy": {
           "type": "string",
-          "enum": ["rolling", "blue_green", "canary", "recreate", "other"]
+          "enum": [
+            "rolling",
+            "blue_green",
+            "canary",
+            "recreate",
+            "other"
+          ]
         },
-        "requestedBy": { "$ref": "../common/common.schema.json#/$defs/actor" },
-        "requestedAt": { "$ref": "../common/common.schema.json#/$defs/timestamp" }
+        "requestedBy": {
+          "$ref": "../common/common.schema.json#/$defs/actor"
+        },
+        "requestedAt": {
+          "$ref": "../common/common.schema.json#/$defs/timestamp"
+        }
       },
-      "required": ["environment", "artifacts", "requestedAt"],
-      "additionalProperties": false
+      "required": [
+        "environment",
+        "artifacts",
+        "requestedAt"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      }
     },
     "status": {
       "type": "object",
@@ -44,12 +65,22 @@
             "failed"
           ]
         },
-        "evaluations": { "$ref": "../common/common.schema.json#/$defs/refList" },
-        "startedAt": { "$ref": "../common/common.schema.json#/$defs/timestamp" },
-        "completedAt": { "$ref": "../common/common.schema.json#/$defs/timestamp" },
-        "reason": { "$ref": "../common/common.schema.json#/$defs/prose" }
+        "evaluations": {
+          "$ref": "../common/common.schema.json#/$defs/refList"
+        },
+        "startedAt": {
+          "$ref": "../common/common.schema.json#/$defs/timestamp"
+        },
+        "completedAt": {
+          "$ref": "../common/common.schema.json#/$defs/timestamp"
+        },
+        "reason": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        }
       },
-      "required": ["state"],
+      "required": [
+        "state"
+      ],
       "additionalProperties": false
     }
   }

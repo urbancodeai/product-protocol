@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://productprotocol.org/schemas/specification/story.schema.json",
+  "title": "Story",
+  "description": "A narrow, testable slice of a Feature with acceptance criteria. Normative per PP-0004 §6 and §7.",
+  "$ref": "../common/envelope.schema.json",
+  "properties": {
+    "kind": {
+      "const": "Story"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "lifecycle": {
+          "$ref": "../common/common.schema.json#/$defs/governedLifecycle"
+        }
+      },
+      "required": [
+        "lifecycle"
+      ]
+    },
+    "spec": {
+      "$ref": "../common/common.schema.json#/$defs/extensibleObject",
+      "properties": {
+        "narrative": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "feature": {
+          "$ref": "../common/common.schema.json#/$defs/ref"
+        },
+        "acceptanceCriteria": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/acceptanceCriterion"
+          }
+        },
+        "businessRules": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "uxRefs": {
+          "$ref": "../common/common.schema.json#/$defs/refList"
+        }
+      },
+      "required": [
+        "narrative",
+        "feature",
+        "acceptanceCriteria"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      }
+    }
+  },
+  "$defs": {
+    "acceptanceCriterion": {
+      "type": "object",
+      "description": "A single acceptance criterion. PP-0004 §7: single-prose form (criterion) or given/when/then form.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "criterion": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "given": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "when": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "then": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "verification": {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "enum": [
+                "automated",
+                "agentic",
+                "manual"
+              ]
+            },
+            "evaluations": {
+              "$ref": "../common/common.schema.json#/$defs/refList"
+            }
+          },
+          "required": [
+            "method"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "verification"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "criterion"
+          ]
+        },
+        {
+          "required": [
+            "given",
+            "when",
+            "then"
+          ]
+        }
+      ],
+      "additionalProperties": false
+    }
+  }
+}

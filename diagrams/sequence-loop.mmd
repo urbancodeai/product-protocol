@@ -1,0 +1,29 @@
+%% Product Protocol — one turn of the loop, end to end
+%% Consistent with pp/PP-0001-vision.md §1 and reference/object-model.md §3.
+sequenceDiagram
+    actor Human
+    participant HI as Human Interface
+    participant Brain as Product Brain
+    participant Planner
+    participant Worker
+    participant Evaluator
+    participant Runtime
+    participant Telemetry
+
+    Human->>HI: express intent (conversation)
+    HI->>Brain: ingest as Knowledge
+    Brain-->>HI: draft Specification (draft -> proposed)
+    HI->>Human: present proposal
+    Human->>HI: approve
+    HI->>Brain: record Decision (proposed -> approved)
+    Brain->>Planner: approved intent + context
+    Planner->>Runtime: emit Task Graph
+    Worker->>Runtime: claim ready Task
+    Worker->>Evaluator: submit Artifacts + evidence
+    Evaluator->>Evaluator: judge vs acceptance criteria,<br/>Golden Tests, Constitution
+    Evaluator->>Runtime: Evaluation record (accepted)
+    Runtime->>Runtime: QualityGate passes
+    Runtime->>Telemetry: Deployment to environment
+    Telemetry->>Brain: Observations
+    Brain->>Brain: distill into Knowledge (learning)
+    Brain-->>Human: insights, next proposals

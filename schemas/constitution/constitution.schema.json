@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://productprotocol.org/schemas/constitution/constitution.schema.json",
+  "title": "Constitution",
+  "description": "A versioned set of Articles: rules that hold for the entire Product at all times. Normative per PP-0005.",
+  "$ref": "../common/envelope.schema.json",
+  "properties": {
+    "kind": {
+      "const": "Constitution"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "lifecycle": {
+          "$ref": "../common/common.schema.json#/$defs/governedLifecycle"
+        }
+      },
+      "required": [
+        "lifecycle"
+      ]
+    },
+    "spec": {
+      "$ref": "../common/common.schema.json#/$defs/extensibleObject",
+      "properties": {
+        "preamble": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "articles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/article"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "articles"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      }
+    }
+  },
+  "$defs": {
+    "article": {
+      "type": "object",
+      "description": "A single Constitution Article. PP-0005 §4.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "security",
+            "performance",
+            "accessibility",
+            "compliance",
+            "architecture",
+            "coding_standards",
+            "ux",
+            "reliability"
+          ]
+        },
+        "rule": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "rationale": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "enforcement": {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "blocking",
+                "advisory"
+              ]
+            },
+            "evaluatedOn": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "task_submission",
+                  "deployment",
+                  "schedule",
+                  "observation"
+                ]
+              },
+              "minItems": 1
+            },
+            "evaluations": {
+              "$ref": "../common/common.schema.json#/$defs/refList"
+            },
+            "monitor": {
+              "$ref": "../common/common.schema.json#/$defs/prose"
+            }
+          },
+          "required": [
+            "mode",
+            "evaluatedOn"
+          ],
+          "additionalProperties": false
+        },
+        "exceptions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "description": {
+                "$ref": "../common/common.schema.json#/$defs/prose"
+              },
+              "approvedBy": {
+                "$ref": "../common/common.schema.json#/$defs/ref"
+              },
+              "expiresAt": {
+                "$ref": "../common/common.schema.json#/$defs/timestamp"
+              }
+            },
+            "required": [
+              "description"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "id",
+        "category",
+        "rule",
+        "enforcement"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

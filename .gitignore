@@ -1,0 +1,12 @@
+# Validation tooling installs ajv/js-yaml transiently (npm install --no-save)
+node_modules/
+package.json
+package-lock.json
+
+# Rendered diagram outputs (sources are the .mmd/.drawio files)
+diagrams/*.svg
+diagrams/*.png
+
+# OS/editor noise
+.DS_Store
+*.swp

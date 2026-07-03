@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://productprotocol.org/schemas/specification/feature.schema.json",
+  "title": "Feature",
+  "description": "A coherent unit of user-facing functionality within a Capability. Normative per PP-0004 §5.",
+  "$ref": "../common/envelope.schema.json",
+  "properties": {
+    "kind": {
+      "const": "Feature"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "lifecycle": {
+          "$ref": "../common/common.schema.json#/$defs/governedLifecycle"
+        }
+      },
+      "required": [
+        "lifecycle"
+      ]
+    },
+    "spec": {
+      "$ref": "../common/common.schema.json#/$defs/extensibleObject",
+      "properties": {
+        "description": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "capability": {
+          "$ref": "../common/common.schema.json#/$defs/ref"
+        },
+        "personas": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "notes": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        }
+      },
+      "required": [
+        "description",
+        "capability"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      }
+    }
+  }
+}

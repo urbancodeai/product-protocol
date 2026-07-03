@@ -5,34 +5,61 @@
   "description": "The atomic unit of schedulable work. Normative per PP-0006 §5.",
   "$ref": "../common/envelope.schema.json",
   "properties": {
-    "kind": { "const": "Task" },
+    "kind": {
+      "const": "Task"
+    },
     "spec": {
       "$ref": "../common/common.schema.json#/$defs/extensibleObject",
       "properties": {
-        "intent": { "$ref": "../common/common.schema.json#/$defs/prose" },
-        "tracesTo": { "$ref": "../common/common.schema.json#/$defs/ref" },
-        "dependsOn": { "$ref": "../common/common.schema.json#/$defs/refList" },
+        "intent": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "tracesTo": {
+          "$ref": "../common/common.schema.json#/$defs/ref"
+        },
+        "dependsOn": {
+          "$ref": "../common/common.schema.json#/$defs/refList"
+        },
         "priority": {
           "type": "string",
-          "enum": ["critical", "high", "medium", "low"],
+          "enum": [
+            "critical",
+            "high",
+            "medium",
+            "low"
+          ],
           "default": "medium"
         },
         "capabilities": {
           "type": "array",
-          "items": { "$ref": "#/$defs/capabilityTag" }
+          "items": {
+            "$ref": "#/$defs/capabilityTag"
+          }
         },
         "context": {
           "type": "object",
           "properties": {
-            "knowledge": { "$ref": "../common/common.schema.json#/$defs/refList" },
-            "specifications": { "$ref": "../common/common.schema.json#/$defs/refList" },
+            "knowledge": {
+              "$ref": "../common/common.schema.json#/$defs/refList"
+            },
+            "specifications": {
+              "$ref": "../common/common.schema.json#/$defs/refList"
+            },
             "constitutionArticles": {
               "type": "array",
-              "items": { "type": "string", "minLength": 1 }
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
             },
-            "notes": { "$ref": "../common/common.schema.json#/$defs/prose" }
+            "notes": {
+              "$ref": "../common/common.schema.json#/$defs/prose"
+            }
           },
-          "additionalProperties": false
+          "additionalProperties": false,
+          "patternProperties": {
+            "^x-": {}
+          }
         },
         "completion": {
           "type": "object",
@@ -42,33 +69,67 @@
               "items": {
                 "type": "object",
                 "properties": {
-                  "id": { "type": "string", "minLength": 1 },
-                  "statement": { "$ref": "../common/common.schema.json#/$defs/prose" }
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "statement": {
+                    "$ref": "../common/common.schema.json#/$defs/prose"
+                  }
                 },
-                "required": ["id", "statement"],
-                "additionalProperties": false
+                "required": [
+                  "id",
+                  "statement"
+                ],
+                "additionalProperties": false,
+                "patternProperties": {
+                  "^x-": {}
+                }
               }
             },
-            "evaluations": { "$ref": "../common/common.schema.json#/$defs/refList" },
+            "evaluations": {
+              "$ref": "../common/common.schema.json#/$defs/refList"
+            },
             "artifacts": {
               "type": "array",
-              "items": { "$ref": "#/$defs/artifactType" }
+              "items": {
+                "$ref": "#/$defs/artifactType"
+              }
             }
           },
-          "additionalProperties": false
+          "additionalProperties": false,
+          "patternProperties": {
+            "^x-": {}
+          }
         },
         "constraints": {
           "type": "object",
           "properties": {
-            "effortBudget": { "$ref": "../common/common.schema.json#/$defs/duration" },
-            "deadline": { "$ref": "../common/common.schema.json#/$defs/timestamp" },
-            "maxAttempts": { "type": "integer", "minimum": 1 }
+            "effortBudget": {
+              "$ref": "../common/common.schema.json#/$defs/duration"
+            },
+            "deadline": {
+              "$ref": "../common/common.schema.json#/$defs/timestamp"
+            },
+            "maxAttempts": {
+              "type": "integer",
+              "minimum": 1
+            }
           },
-          "additionalProperties": false
+          "additionalProperties": false,
+          "patternProperties": {
+            "^x-": {}
+          }
         }
       },
-      "required": ["intent", "tracesTo"],
-      "additionalProperties": false
+      "required": [
+        "intent",
+        "tracesTo"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      }
     },
     "status": {
       "$ref": "../common/common.schema.json#/$defs/extensibleObject",
@@ -88,14 +149,29 @@
             "cancelled"
           ]
         },
-        "worker": { "$ref": "../common/common.schema.json#/$defs/ref" },
-        "attempts": { "type": "integer", "minimum": 0 },
-        "claimedAt": { "$ref": "../common/common.schema.json#/$defs/timestamp" },
-        "submittedAt": { "$ref": "../common/common.schema.json#/$defs/timestamp" },
-        "completedAt": { "$ref": "../common/common.schema.json#/$defs/timestamp" },
-        "blockedReason": { "$ref": "../common/common.schema.json#/$defs/prose" }
+        "worker": {
+          "$ref": "../common/common.schema.json#/$defs/ref"
+        },
+        "attempts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "claimedAt": {
+          "$ref": "../common/common.schema.json#/$defs/timestamp"
+        },
+        "submittedAt": {
+          "$ref": "../common/common.schema.json#/$defs/timestamp"
+        },
+        "completedAt": {
+          "$ref": "../common/common.schema.json#/$defs/timestamp"
+        },
+        "blockedReason": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        }
       },
-      "required": ["state"],
+      "required": [
+        "state"
+      ],
       "additionalProperties": false
     }
   },

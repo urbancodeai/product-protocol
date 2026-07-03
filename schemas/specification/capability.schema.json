@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://productprotocol.org/schemas/specification/capability.schema.json",
+  "title": "Capability",
+  "description": "A durable ability the Product offers in service of Goals. Normative per PP-0004 §4.",
+  "$ref": "../common/envelope.schema.json",
+  "properties": {
+    "kind": {
+      "const": "Capability"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "lifecycle": {
+          "$ref": "../common/common.schema.json#/$defs/governedLifecycle"
+        }
+      },
+      "required": [
+        "lifecycle"
+      ]
+    },
+    "spec": {
+      "$ref": "../common/common.schema.json#/$defs/extensibleObject",
+      "properties": {
+        "description": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "serves": {
+          "$ref": "../common/common.schema.json#/$defs/refList",
+          "minItems": 1
+        }
+      },
+      "required": [
+        "description",
+        "serves"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      }
+    }
+  }
+}

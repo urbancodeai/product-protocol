@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://productprotocol.org/schemas/knowledge/decision.schema.json",
+  "title": "Decision",
+  "description": "An immutable record of a choice: context, options, outcome, authority, affected objects. Normative per PP-0003 §7.",
+  "$ref": "../common/envelope.schema.json",
+  "properties": {
+    "kind": {
+      "const": "Decision"
+    },
+    "spec": {
+      "$ref": "../common/common.schema.json#/$defs/extensibleObject",
+      "properties": {
+        "context": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "options": {
+          "type": "array",
+          "description": "Options considered. PP-0003 §7.4.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "option": {
+                "type": "string",
+                "minLength": 1
+              },
+              "rationale": {
+                "$ref": "../common/common.schema.json#/$defs/prose"
+              }
+            },
+            "required": [
+              "option"
+            ],
+            "additionalProperties": false,
+            "patternProperties": {
+              "^x-": {}
+            }
+          }
+        },
+        "outcome": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "authority": {
+          "$ref": "../common/common.schema.json#/$defs/actor"
+        },
+        "decidedAt": {
+          "$ref": "../common/common.schema.json#/$defs/timestamp"
+        },
+        "affects": {
+          "$ref": "../common/common.schema.json#/$defs/refList",
+          "minItems": 1,
+          "description": "Objects this decision affects. PP-0003 §7.4."
+        },
+        "approves": {
+          "$ref": "../common/common.schema.json#/$defs/ref",
+          "description": "For approval Decisions: the exact governed object version approved. PP-0002 §6.2, PP-0003 §7.1."
+        },
+        "supersedes": {
+          "$ref": "../common/common.schema.json#/$defs/ref",
+          "description": "An earlier Decision this one replaces. PP-0003 §7.2."
+        },
+        "consequences": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        }
+      },
+      "required": [
+        "context",
+        "outcome",
+        "authority",
+        "decidedAt",
+        "affects"
+      ],
+      "patternProperties": {
+        "^x-": {}
+      },
+      "additionalProperties": false
+    }
+  }
+}

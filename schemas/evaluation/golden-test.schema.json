@@ -5,43 +5,75 @@
   "description": "A canonical, versioned scenario the Product must always satisfy. Governed object. Normative per PP-0008 §6.",
   "$ref": "../common/envelope.schema.json",
   "properties": {
-    "kind": { "const": "GoldenTest" },
+    "kind": {
+      "const": "GoldenTest"
+    },
     "metadata": {
       "type": "object",
       "properties": {
-        "lifecycle": { "$ref": "../common/common.schema.json#/$defs/governedLifecycle" }
+        "lifecycle": {
+          "$ref": "../common/common.schema.json#/$defs/governedLifecycle"
+        }
       },
-      "required": ["lifecycle"]
+      "required": [
+        "lifecycle"
+      ]
     },
     "spec": {
       "$ref": "../common/common.schema.json#/$defs/extensibleObject",
       "properties": {
-        "scenario": { "$ref": "../common/common.schema.json#/$defs/prose" },
+        "scenario": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
         "inputs": {
           "type": "object",
           "description": "Fixed inputs for the scenario. Free-form object."
         },
-        "expected": { "$ref": "../common/common.schema.json#/$defs/prose" },
+        "expected": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
         "steps": {
           "type": "array",
           "items": {
             "type": "object",
             "properties": {
-              "step": { "$ref": "../common/common.schema.json#/$defs/prose" }
+              "step": {
+                "$ref": "../common/common.schema.json#/$defs/prose"
+              }
             },
-            "required": ["step"],
-            "additionalProperties": false
+            "required": [
+              "step"
+            ],
+            "additionalProperties": false,
+            "patternProperties": {
+              "^x-": {}
+            }
           }
         },
         "method": {
           "type": "string",
-          "enum": ["automated", "agentic", "manual"]
+          "enum": [
+            "automated",
+            "agentic",
+            "manual"
+          ]
         },
-        "appliesTo": { "$ref": "../common/common.schema.json#/$defs/refList" },
-        "tolerance": { "$ref": "../common/common.schema.json#/$defs/prose" }
+        "appliesTo": {
+          "$ref": "../common/common.schema.json#/$defs/refList"
+        },
+        "tolerance": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        }
       },
-      "required": ["scenario", "expected", "method"],
-      "additionalProperties": false
+      "required": [
+        "scenario",
+        "expected",
+        "method"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      }
     }
   }
 }

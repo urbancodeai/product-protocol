@@ -5,11 +5,15 @@
   "description": "The append-only record of judging a subject against criteria, with Evidence. Normative per PP-0008 §4 and §8.",
   "$ref": "../common/envelope.schema.json",
   "properties": {
-    "kind": { "const": "Evaluation" },
+    "kind": {
+      "const": "Evaluation"
+    },
     "spec": {
       "$ref": "../common/common.schema.json#/$defs/extensibleObject",
       "properties": {
-        "subject": { "$ref": "../common/common.schema.json#/$defs/ref" },
+        "subject": {
+          "$ref": "../common/common.schema.json#/$defs/ref"
+        },
         "category": {
           "type": "string",
           "enum": [
@@ -30,39 +34,81 @@
           "items": {
             "type": "object",
             "properties": {
-              "source": { "$ref": "../common/common.schema.json#/$defs/ref" },
-              "description": { "$ref": "../common/common.schema.json#/$defs/prose" }
+              "source": {
+                "$ref": "../common/common.schema.json#/$defs/ref"
+              },
+              "description": {
+                "$ref": "../common/common.schema.json#/$defs/prose"
+              }
             },
-            "required": ["description"],
-            "additionalProperties": false
+            "required": [
+              "description"
+            ],
+            "additionalProperties": false,
+            "patternProperties": {
+              "^x-": {}
+            }
           }
         },
         "verdict": {
           "type": "string",
-          "enum": ["pass", "fail", "error", "inconclusive"]
+          "enum": [
+            "pass",
+            "fail",
+            "error",
+            "inconclusive"
+          ]
         },
-        "score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
         "dimensions": {
           "type": "array",
           "items": {
             "type": "object",
             "properties": {
-              "name": { "type": "string", "minLength": 1 },
-              "score": { "type": "number", "minimum": 0, "maximum": 1 },
-              "weight": { "type": "number", "minimum": 0 }
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "score": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "weight": {
+                "type": "number",
+                "minimum": 0
+              }
             },
-            "required": ["name", "score"],
-            "additionalProperties": false
+            "required": [
+              "name",
+              "score"
+            ],
+            "additionalProperties": false,
+            "patternProperties": {
+              "^x-": {}
+            }
           }
         },
         "evidence": {
           "type": "array",
           "minItems": 1,
-          "items": { "$ref": "#/$defs/evidenceItem" }
+          "items": {
+            "$ref": "#/$defs/evidenceItem"
+          }
         },
-        "evaluator": { "$ref": "../common/common.schema.json#/$defs/ref" },
-        "evaluatedAt": { "$ref": "../common/common.schema.json#/$defs/timestamp" },
-        "notes": { "$ref": "../common/common.schema.json#/$defs/prose" }
+        "evaluator": {
+          "$ref": "../common/common.schema.json#/$defs/ref"
+        },
+        "evaluatedAt": {
+          "$ref": "../common/common.schema.json#/$defs/timestamp"
+        },
+        "notes": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        }
       },
       "required": [
         "subject",
@@ -73,7 +119,10 @@
         "evaluator",
         "evaluatedAt"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      }
     }
   },
   "$defs": {
@@ -94,18 +143,48 @@
             "other"
           ]
         },
-        "description": { "$ref": "../common/common.schema.json#/$defs/prose" },
-        "uri": { "type": "string", "format": "uri" },
-        "path": { "type": "string", "minLength": 1 },
-        "digest": { "$ref": "../common/common.schema.json#/$defs/digest" },
-        "artifact": { "$ref": "../common/common.schema.json#/$defs/ref" }
+        "description": {
+          "$ref": "../common/common.schema.json#/$defs/prose"
+        },
+        "uri": {
+          "type": "string",
+          "format": "uri"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest": {
+          "$ref": "../common/common.schema.json#/$defs/digest"
+        },
+        "artifact": {
+          "$ref": "../common/common.schema.json#/$defs/ref"
+        }
       },
-      "required": ["type"],
+      "required": [
+        "type"
+      ],
       "anyOf": [
-        { "required": ["uri"] },
-        { "required": ["path"] },
-        { "required": ["digest"] },
-        { "required": ["artifact"] }
+        {
+          "required": [
+            "uri"
+          ]
+        },
+        {
+          "required": [
+            "path"
+          ]
+        },
+        {
+          "required": [
+            "digest"
+          ]
+        },
+        {
+          "required": [
+            "artifact"
+          ]
+        }
       ],
       "additionalProperties": false
     }
