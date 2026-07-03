@@ -1,0 +1,32 @@
+pp: "0.1"
+kind: Task
+metadata:
+  id: task-checkin-notifications
+  name: Missed-window escalation notifications
+  version: 1.0.0
+  createdAt: 2026-05-25T09:15:00Z
+spec:
+  intent: >
+    Wire server-side missed-window detection to contact escalation:
+    ordered notification of contacts, stop on acknowledgement, 15-minute
+    grace period (business rules br-1, br-2).
+  tracesTo: { ref: { kind: Story, id: story-checkin-scheduled } }
+  dependsOn:
+    - ref: { kind: Task, id: task-checkin-scheduler }
+  priority: high
+  capabilities:
+    - code.kotlin
+    - mobile.ui
+  context:
+    specifications:
+      - ref: { kind: Story, id: story-checkin-scheduled }
+    constitutionArticles:
+      - art-security-location
+  completion:
+    criteria:
+      - id: cc-1
+        statement: Escalation fires after grace period, honours contact order, stops on acknowledgement.
+    artifacts:
+      - changeset
+status:
+  state: pending

@@ -1,0 +1,43 @@
+pp: "0.1"
+kind: Task
+metadata:
+  id: task-checkin-scheduler
+  name: Check-in scheduling and offline confirmation queue
+  version: 1.0.0
+  createdAt: 2026-05-25T09:10:00Z
+  updatedAt: 2026-06-15T09:00:00Z
+spec:
+  intent: >
+    Implement check-in window scheduling, the one-tap confirmation with
+    an offline outbox, and sync of confirmations when connectivity
+    returns (story-checkin-scheduled ac-1).
+  tracesTo: { ref: { kind: Story, id: story-checkin-scheduled } }
+  priority: critical
+  capabilities:
+    - code.kotlin
+    - code.swift
+    - mobile.offline-storage
+  context:
+    knowledge:
+      - ref: { kind: Knowledge, id: know-user-offline-first }
+      - ref: { kind: Knowledge, id: know-lesson-gps-battery }
+    specifications:
+      - ref: { kind: Story, id: story-checkin-scheduled }
+    constitutionArticles:
+      - art-arch-offline-first
+      - art-perf-battery
+    notes: >
+      Per know-lesson-gps-battery, location sampling during windows is
+      duty-cycled: one fix at window open, one at confirm/close.
+  completion:
+    criteria:
+      - id: cc-1
+        statement: Offline confirmations queue and deliver on reconnect; goldens pass.
+    evaluations:
+      - ref: { kind: GoldenTest, id: golden-checkin-happy-path }
+      - ref: { kind: QualityGate, id: gate-task-acceptance }
+    artifacts:
+      - changeset
+      - report
+status:
+  state: ready

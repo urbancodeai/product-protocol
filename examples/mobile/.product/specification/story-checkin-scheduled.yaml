@@ -1,0 +1,39 @@
+pp: "0.1"
+kind: Story
+metadata:
+  id: story-checkin-scheduled
+  name: Schedule and confirm a safety check-in
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-18T09:20:00Z
+  updatedAt: 2026-05-20T09:00:00Z
+spec:
+  narrative: >
+    As a solo day hiker, I want to schedule check-in windows before I
+    start and confirm each one with a single tap, so my emergency
+    contact knows I am safe without me composing messages on the trail.
+  feature: { ref: { kind: Feature, id: feat-safety-checkin } }
+  acceptanceCriteria:
+    - id: ac-1
+      given: a hike with a check-in window scheduled at 14:00 and a designated contact
+      when: the hiker taps "I'm OK" inside the window while offline
+      then: the confirmation is queued and delivered to the contact as soon as the device regains any connectivity
+      verification:
+        method: automated
+        evaluations:
+          - ref: { kind: GoldenTest, id: golden-checkin-happy-path }
+    - id: ac-2
+      given: a check-in window that closed 15 minutes ago with no confirmation and no connectivity from the device
+      when: the server-side grace period expires
+      then: the first emergency contact receives a push notification with the hiker's last known position and planned route
+      verification:
+        method: automated
+    - id: ac-3
+      criterion: >
+        The "I'm OK" control is at least 48dp, reachable one-handed,
+        and operable via screen reader.
+      verification:
+        method: manual
+  businessRules:
+    - br-1
+    - br-2

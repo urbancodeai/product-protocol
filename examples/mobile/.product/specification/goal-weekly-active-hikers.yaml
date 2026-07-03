@@ -1,0 +1,24 @@
+pp: "0.1"
+kind: Goal
+metadata:
+  id: goal-weekly-active-hikers
+  name: Grow weekly active hikers
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-06T09:00:00Z
+  updatedAt: 2026-05-12T09:00:00Z
+spec:
+  statement: >
+    Grow the number of hikers who record at least one activity per week,
+    proving TrailKit is the tool they reach for on the trail.
+  metric:
+    name: weekly_active_hikers
+    description: Unique users recording >= 1 tracked activity in a 7-day window.
+    unit: users
+    baseline: 4200
+    target: 12000
+    direction: increase
+  timeframe: End of Q4 2026
+  rationale: >
+    Retained weekly hikers drive both subscription conversion and the
+    safety network effect (contacts install the app to receive check-ins).

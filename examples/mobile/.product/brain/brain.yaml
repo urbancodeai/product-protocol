@@ -1,0 +1,21 @@
+pp: "0.1"
+kind: ProductBrain
+metadata:
+  id: trailkit-brain
+  name: TrailKit Product Brain
+  version: 1.0.0
+  createdAt: 2026-05-04T09:05:00Z
+  updatedAt: 2026-06-26T09:00:00Z
+spec:
+  summary: >
+    Knowledge store for TrailKit: what hikers need offline, how trail
+    data is licensed, what mobile release trains cost us, and lessons
+    distilled from production incidents.
+  retention:
+    reviewInterval: P30D
+    compactAfter: P180D
+  indexes:
+    - name: by-category
+      description: Retrieval by Knowledge category.
+    - name: offline-maps
+      description: Everything about offline map storage and rendering.

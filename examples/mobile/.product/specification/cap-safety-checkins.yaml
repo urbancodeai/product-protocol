@@ -1,0 +1,17 @@
+pp: "0.1"
+kind: Capability
+metadata:
+  id: cap-safety-checkins
+  name: Safety check-ins
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-06T09:25:00Z
+  updatedAt: 2026-05-12T09:00:00Z
+spec:
+  description: >
+    Schedule check-in windows for a hike, confirm safety with one tap,
+    and escalate to emergency contacts when a window is missed --
+    designed to work when the hiker's phone is offline.
+  serves:
+    - ref: { kind: Goal, id: goal-checkin-adoption }
+    - ref: { kind: Goal, id: goal-weekly-active-hikers }

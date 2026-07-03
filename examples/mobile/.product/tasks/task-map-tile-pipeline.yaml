@@ -1,0 +1,53 @@
+pp: "0.1"
+kind: Task
+metadata:
+  id: task-map-tile-pipeline
+  name: Region pack tile pipeline and on-device store
+  version: 1.0.0
+  createdAt: 2026-05-25T09:00:00Z
+  updatedAt: 2026-06-03T10:00:00Z
+spec:
+  intent: >
+    Implement the per-region vector-tile pack format (single SQLite file
+    per region), the resumable download manager, and the on-device
+    region store with delete/reclaim, per dec-offline-maps-storage.
+  tracesTo: { ref: { kind: Story, id: story-download-trail-region } }
+  priority: critical
+  capabilities:
+    - code.kotlin
+    - mobile.offline-storage
+  context:
+    knowledge:
+      - ref: { kind: Knowledge, id: know-user-offline-first }
+      - ref: { kind: Knowledge, id: know-domain-trail-data-licensing }
+    specifications:
+      - ref: { kind: Specification, id: spec-trailkit-mvp, version: "1.0.0" }
+      - ref: { kind: Story, id: story-download-trail-region }
+    constitutionArticles:
+      - art-arch-offline-first
+      - art-code-standards
+    notes: >
+      Pack format decided in dec-offline-maps-storage; downloads must
+      resume via HTTP range requests.
+  completion:
+    criteria:
+      - id: cc-1
+        statement: Region packs download, resume after interruption, render offline, and delete cleanly (story ac-1, ac-2, ac-4).
+      - id: cc-2
+        statement: Measured pack sizes reported for the ten launch regions.
+    evaluations:
+      - ref: { kind: GoldenTest, id: golden-offline-map-render }
+      - ref: { kind: QualityGate, id: gate-task-acceptance }
+    artifacts:
+      - changeset
+      - report
+  constraints:
+    effortBudget: PT24H
+    maxAttempts: 3
+status:
+  state: done
+  worker: { ref: { kind: Worker, id: worker-trail-agent } }
+  attempts: 1
+  claimedAt: 2026-05-26T08:00:00Z
+  submittedAt: 2026-06-01T16:00:00Z
+  completedAt: 2026-06-03T10:00:00Z

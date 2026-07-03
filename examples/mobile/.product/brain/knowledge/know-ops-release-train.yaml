@@ -1,0 +1,26 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-ops-release-train
+  name: App-store review adds 1-3 days to every release
+  version: 1.0.0
+  createdAt: 2026-05-21T09:00:00Z
+spec:
+  category: operational
+  subcategory: release-process
+  statement: >
+    Store review takes 1-3 calendar days and can reject a build
+    outright; hotfixes are not instant. Release trains are cut every
+    second Tuesday and anything that misses the cut waits two weeks.
+  detail: >
+    Consequence: the promotion gate must be strict enough that a train
+    almost never needs an emergency follow-up, because "roll forward
+    fast" is not available on mobile.
+  confidence: validated
+  provenance:
+    - type: decision
+      ref: { ref: { kind: Decision, id: dec-release-train } }
+      description: Release-train adoption decision.
+    - type: external
+      uri: https://developer.apple.com/app-store/review/
+      description: Store review policy documentation.

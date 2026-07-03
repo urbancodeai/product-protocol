@@ -1,0 +1,27 @@
+pp: "0.1"
+kind: Goal
+metadata:
+  id: goal-weekly-active-readers
+  name: Grow weekly active readers
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-02T09:10:00Z
+  updatedAt: 2026-06-10T14:30:00Z
+  owners:
+    - { type: human, id: dana@example.com, name: Dana Ito }
+spec:
+  statement: >
+    Readers should come back every week — to browse, to follow their
+    club's schedule, and to act on recommendations. Grow the number of
+    accounts active in a given week.
+  metric:
+    name: weekly_active_readers
+    description: Distinct signed-in accounts with a browse, purchase, or club event in a 7-day window.
+    unit: accounts
+    baseline: 18400
+    target: 25000
+    direction: increase
+  timeframe: 2026-Q4
+  rationale: >
+    Repeat engagement is the leading indicator for both storefront
+    revenue and reading-club subscription retention.

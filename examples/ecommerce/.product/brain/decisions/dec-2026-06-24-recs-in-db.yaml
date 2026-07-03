@@ -1,0 +1,32 @@
+# An architecture Decision in the ADR profile (PP-0003 §7.3).
+pp: "0.1"
+kind: Decision
+metadata:
+  id: dec-2026-06-24-recs-in-db
+  name: Compute recommendations in the primary database
+  version: 1.0.0
+  createdAt: 2026-06-24T11:20:00Z
+spec:
+  context: >
+    The "For you" shelf needs personalized recommendations with p95
+    under the constitutional 300 ms response budget. Catalog size is
+    ~40k titles and the team wants zero new production dependencies
+    while checkout work is in flight.
+  options:
+    - option: Dedicated recommendation service with a vector store
+      rationale: Best model flexibility; new infrastructure, new failure mode, new on-call surface.
+    - option: In-database collaborative filtering over the ratings table
+      rationale: Meets the latency budget at current scale per benchmark; zero new infra; limited model sophistication.
+  outcome: >
+    Compute recommendations with in-database collaborative filtering;
+    revisit if the catalog exceeds 500k titles or shelf-quality
+    evaluations regress for two consecutive months.
+  authority: { type: human, id: dana@example.com, name: Dana Ito }
+  decidedAt: 2026-06-24T11:15:00Z
+  affects:
+    - ref: { kind: Capability, id: cap-recommendations }
+    - ref: { kind: Feature, id: feat-recs-shelf }
+  consequences: >
+    Ranking-model options are limited; accepted until scale demands
+    otherwise. Removes one production dependency and keeps the
+    recommendation path inside the existing ARCH-1 API boundary.

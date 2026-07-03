@@ -1,0 +1,37 @@
+pp: "0.1"
+kind: Story
+metadata:
+  id: story-recs-shelf
+  name: Returning reader sees a personalized shelf
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-06-15T10:00:00Z
+  updatedAt: 2026-06-22T09:00:00Z
+spec:
+  narrative: >
+    As a returning reader, I want the home page to open with eight
+    titles picked for me, so that finding my next book takes seconds
+    rather than a search session.
+  feature: { ref: { kind: Feature, id: feat-recs-shelf } }
+  acceptanceCriteria:
+    - id: ac-1
+      given: a signed-in reader with fewer than five rated or purchased books
+      when: the home page loads
+      then: the shelf shows curated bestsellers labeled as such, never an empty state
+      verification:
+        method: automated
+    - id: ac-2
+      criterion: >
+        For readers with five or more rated or purchased books, at
+        least six of the eight shelf titles are personalized (not
+        bestsellers), and none is a title the reader already owns.
+      verification:
+        method: automated
+    - id: ac-3
+      criterion: >
+        A monthly curator review finds the shelf plausible for ten
+        sampled readers across genres.
+      verification:
+        method: manual
+        evaluations:
+          - ref: { kind: GoldenTest, id: golden-recs-shelf-quality }

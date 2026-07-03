@@ -1,0 +1,35 @@
+pp: "0.1"
+kind: Product
+metadata:
+  id: trailkit
+  name: TrailKit
+  version: 1.1.0
+  labels:
+    domain: outdoor-fitness
+    platform: mobile
+  owners:
+    - { type: human, id: maya@trailkit.example.com, name: Maya Lindqvist }
+  createdAt: 2026-05-04T09:00:00Z
+  updatedAt: 2026-06-28T10:00:00Z
+spec:
+  summary: >
+    TrailKit is a mobile hiking and fitness companion: offline trail
+    maps, GPS activity tracking, and scheduled safety check-ins that
+    notify emergency contacts when a hiker misses a check-in window.
+    Ships to app stores on a two-week release train.
+  brain: { ref: { kind: ProductBrain, id: trailkit-brain } }
+  constitutions:
+    - ref: { kind: Constitution, id: trailkit-constitution, version: "1.0.0" }
+  goals:
+    - ref: { kind: Goal, id: goal-weekly-active-hikers }
+    - ref: { kind: Goal, id: goal-checkin-adoption }
+  environments:
+    - name: test
+      classification: test
+      description: Internal beta track (TestFlight / Play internal testing).
+    - name: production
+      classification: production
+      description: Public App Store and Play Store release track.
+  repositories:
+    - { name: app, uri: "https://git.example.com/trailkit/app.git", role: source }
+    - { name: builds, uri: "https://artifacts.example.com/trailkit", role: artifact }

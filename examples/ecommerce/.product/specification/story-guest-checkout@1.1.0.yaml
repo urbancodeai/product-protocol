@@ -1,0 +1,52 @@
+# story-guest-checkout v1.1.0 — a PROPOSED amendment awaiting a human
+# Decision. Parallel versions of a governed object MAY be kept as
+# <id>@<version>.yaml (PP-0002 §7); v1.0.0 stays approved and immutable
+# in story-guest-checkout.yaml until this version is approved.
+pp: "0.1"
+kind: Story
+metadata:
+  id: story-guest-checkout
+  name: Guest completes a purchase
+  version: 1.1.0
+  lifecycle: proposed
+  createdAt: 2026-06-28T10:00:00Z
+  updatedAt: 2026-06-30T09:00:00Z
+  owners:
+    - { type: human, id: dana@example.com, name: Dana Ito }
+spec:
+  narrative: >
+    As a guest shopper, I want to pay for my cart with only my email
+    and shipping details — with the full cost visible before I start —
+    so that I can buy without creating an account or being surprised.
+  feature: { ref: { kind: Feature, id: feat-guest-checkout } }
+  acceptanceCriteria:
+    - id: ac-1
+      given: a cart with at least one in-stock item and no signed-in user
+      when: the shopper submits valid email, shipping, and card details
+      then: >
+        the order is created, payment is captured exactly once, and a
+        confirmation page and email include the order number
+      verification:
+        method: automated
+        evaluations:
+          - ref: { kind: GoldenTest, id: golden-checkout-happy-path }
+    - id: ac-2
+      criterion: >
+        A failed payment intent returns a retryable error to the
+        shopper and never creates an order.
+      verification:
+        method: automated
+    - id: ac-3
+      criterion: >
+        The checkout flow reads clearly and matches the approved
+        prototype's step order.
+      verification:
+        method: agentic
+    - id: ac-4
+      given: an anonymous cart containing at least one item
+      when: the shopper views the cart page
+      then: >
+        an estimated shipping cost for the default shipping method is
+        shown alongside the item subtotal
+      verification:
+        method: automated

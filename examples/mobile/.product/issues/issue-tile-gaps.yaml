@@ -1,0 +1,25 @@
+pp: "0.1"
+kind: Issue
+metadata:
+  id: issue-tile-gaps
+  name: Missing tiles at zoom 14+ along region boundaries
+  version: 1.0.0
+  createdAt: 2026-06-15T09:00:00Z
+  updatedAt: 2026-06-18T09:30:00Z
+spec:
+  title: Downloaded regions show blank tiles at zoom 14+ near boundaries
+  description: >
+    Support tickets with screenshots show blank map squares at zoom 14
+    and above near the edges of several downloaded regions. Reproduced
+    on the gruenwald-ridge pack; suspected boundary enumeration bug in
+    the pack builder.
+  severity: medium
+  source:
+    type: human
+  affects:
+    - ref: { kind: Feature, id: feat-offline-trail-maps }
+    - ref: { kind: Story, id: story-download-trail-region }
+status:
+  state: planned
+  tasks:
+    - ref: { kind: Task, id: task-tile-gap-fix }

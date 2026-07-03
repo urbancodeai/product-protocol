@@ -1,0 +1,19 @@
+pp: "0.1"
+kind: Feature
+metadata:
+  id: feat-recs-shelf
+  name: For-you recommendations shelf
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-20T11:30:00Z
+  updatedAt: 2026-06-22T09:00:00Z
+spec:
+  description: >
+    A personalized "For you" shelf on the home page: eight titles ranked
+    for the signed-in reader, falling back to curated bestsellers for
+    new accounts with fewer than five rated or purchased books.
+  capability: { ref: { kind: Capability, id: cap-recommendations } }
+  personas:
+    - returning-reader
+  notes: >
+    Cold-start fallback is part of the feature, not an error state.

@@ -1,0 +1,27 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-early-price-transparency
+  name: Early total-cost transparency raises completion
+  version: 1.0.0
+  labels:
+    area: checkout
+  createdAt: 2026-05-15T11:00:00Z
+  updatedAt: 2026-06-02T10:05:00Z
+spec:
+  category: domain
+  subcategory: pricing
+  statement: >
+    In low-ticket retail, showing the full cost of an order (items,
+    shipping, tax) before the payment step measurably increases
+    completion; surprises at payment are the main driver of drop-off.
+  confidence: observed
+  provenance:
+    - type: document
+      uri: https://docs.example.com/aurora/pricing-review-2026-05.pdf
+      description: Internal May 2026 pricing-behavior review.
+    - type: conversation
+      description: Bootstrap interview with the retail advisory group, 2026-05-14.
+  links:
+    - rel: relates_to
+      target: { ref: { kind: Goal, id: goal-checkout-conversion } }

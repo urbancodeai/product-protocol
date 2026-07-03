@@ -1,0 +1,43 @@
+pp: "0.1"
+kind: Story
+metadata:
+  id: story-download-trail-region
+  name: Download a trail region for offline use
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-18T09:00:00Z
+  updatedAt: 2026-05-20T09:00:00Z
+spec:
+  narrative: >
+    As a solo day hiker, I want to download the map region around my
+    planned route before leaving home, so that the full map works on
+    the trail with no signal.
+  feature: { ref: { kind: Feature, id: feat-offline-trail-maps } }
+  acceptanceCriteria:
+    - id: ac-1
+      given: a region pack is fully downloaded and the device is in airplane mode
+      when: the hiker opens the trailhead map for that region
+      then: the map renders at zoom levels 8-14 with trails, contours, and attribution visible
+      verification:
+        method: agentic
+        evaluations:
+          - ref: { kind: GoldenTest, id: golden-offline-map-render }
+    - id: ac-2
+      criterion: >
+        A region download interrupted by connectivity loss resumes from
+        where it stopped instead of restarting.
+      verification:
+        method: automated
+    - id: ac-3
+      given: the hiker has three downloaded regions on the free plan
+      when: they start a fourth region download
+      then: the app offers the Trail+ upgrade instead of starting the download
+      verification:
+        method: automated
+    - id: ac-4
+      criterion: Deleting a region pack reclaims its full disk footprint within one minute.
+      verification:
+        method: automated
+  businessRules:
+    - br-3
+  uxRefs: []

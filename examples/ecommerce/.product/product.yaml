@@ -1,0 +1,31 @@
+# The root Product object (PP-0002 §9). This is the same aurora-books
+# product shown in the PP-0001 and PP-0002 Examples sections.
+pp: "0.1"
+kind: Product
+metadata:
+  id: aurora-books
+  name: Aurora Books
+  version: 1.2.0
+  labels:
+    domain: ecommerce
+  owners:
+    - { type: human, id: dana@example.com, name: Dana Ito }
+  createdAt: 2026-05-01T09:00:00Z
+  updatedAt: 2026-07-03T12:00:00Z
+spec:
+  summary: >
+    Online bookstore with personalized recommendations and
+    subscription-based reading clubs.
+  brain: { ref: { kind: ProductBrain, id: aurora-brain } }
+  constitutions:
+    - ref: { kind: Constitution, id: aurora-constitution, version: ">=2.0.0" }
+  goals:
+    - ref: { kind: Goal, id: goal-weekly-active-readers }
+    - ref: { kind: Goal, id: goal-checkout-conversion }
+  environments:
+    - name: staging
+      classification: pre_production
+    - name: production
+      classification: production
+  repositories:
+    - { name: main, uri: "https://git.example.com/aurora/books.git", role: source }

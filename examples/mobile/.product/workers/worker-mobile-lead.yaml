@@ -1,0 +1,31 @@
+pp: "0.1"
+kind: Worker
+metadata:
+  id: worker-mobile-lead
+  name: Mobile lead (human)
+  version: 1.0.0
+  createdAt: 2026-05-22T09:10:00Z
+spec:
+  description: >
+    Human mobile lead: release-train conductor, accessibility and UX
+    review, store submission, and any work requiring human judgment or
+    store credentials.
+  type: human
+  capabilities:
+    - mobile.release
+    - review.design
+    - review.accessibility
+    - qa.manual
+  constraints:
+    allowedArtifactTypes:
+      - changeset
+      - report
+      - document
+      - binary
+    maxConcurrentTasks: 3
+    constitutionBound: true
+  evaluationHooks:
+    - name: release-train-gate
+      description: Confirms the promotion gate is green before store submission.
+      mode: blocking
+      evaluation: { ref: { kind: QualityGate, id: gate-release-train } }

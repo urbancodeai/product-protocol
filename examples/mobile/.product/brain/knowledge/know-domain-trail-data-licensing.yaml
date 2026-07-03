@@ -1,0 +1,22 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-domain-trail-data-licensing
+  name: Trail data is ODbL-licensed and requires attribution
+  version: 1.0.0
+  createdAt: 2026-05-06T10:30:00Z
+spec:
+  category: domain
+  subcategory: licensing
+  statement: >
+    Base trail geometry comes from OpenStreetMap under the ODbL:
+    attribution must be visible wherever map data is rendered, and any
+    derived trail database we redistribute inherits share-alike terms.
+  confidence: canonical
+  provenance:
+    - type: external
+      uri: https://www.openstreetmap.org/copyright
+      description: OpenStreetMap copyright and license page.
+    - type: document
+      uri: https://legal.example.com/trailkit/odbl-review
+      description: Counsel review of ODbL obligations for offline packs.

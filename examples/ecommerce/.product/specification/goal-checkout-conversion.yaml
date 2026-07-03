@@ -1,0 +1,26 @@
+pp: "0.1"
+kind: Goal
+metadata:
+  id: goal-checkout-conversion
+  name: Raise checkout conversion
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-02T09:00:00Z
+  updatedAt: 2026-06-10T14:30:00Z
+  owners:
+    - { type: human, id: dana@example.com, name: Dana Ito }
+spec:
+  statement: >
+    Visitors who start checkout should finish it. Raise the share of
+    started checkouts that complete a purchase.
+  metric:
+    name: checkout_conversion_rate
+    description: Completed purchases divided by started checkouts, weekly.
+    unit: percent
+    baseline: 2.4
+    target: 3.5
+    direction: increase
+  timeframe: 2026-Q4
+  rationale: >
+    Checkout abandonment is the largest single loss point in the funnel;
+    support tickets and session replays point at forced account creation.

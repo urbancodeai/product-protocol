@@ -1,0 +1,22 @@
+pp: "0.1"
+kind: Issue
+metadata:
+  id: issue-battery-drain
+  name: Check-in windows exceed battery budget
+  version: 1.0.0
+  createdAt: 2026-06-24T19:00:00Z
+spec:
+  title: Continuous GPS during check-in windows drains 15%/hour
+  description: >
+    Raised from the 2026-06-24 battery-drain incident: an open check-in
+    window keeps a continuous high-accuracy GPS subscription, tripling
+    drain versus the 5%/hour constitutional budget (art-perf-battery).
+    Needs duty-cycled sampling per know-lesson-gps-battery.
+  severity: high
+  source:
+    type: observation
+    ref: { ref: { kind: Observation, id: obs-incident-battery-drain } }
+  affects:
+    - ref: { kind: Feature, id: feat-safety-checkin }
+status:
+  state: open

@@ -35,7 +35,7 @@ status: {}              # implementation-managed state  (OPTIONAL)
 References between objects use the `ref` form (PP-0002 §5):
 
 ```yaml
-ref: { kind: Story, id: story-checkout-guest }        # same Product
+ref: { kind: Story, id: story-guest-checkout }        # same Product
 ref: { kind: Goal, id: goal-conversion, version: ">=1.0.0" }
 ```
 
@@ -105,7 +105,7 @@ Cardinality (normative):
   `Issue`) via `spec.tracesTo`.
 - An `Artifact` MUST reference the `Task` that produced it.
 - An `Evaluation` MUST reference its subject (`Artifact`, `Task`,
-  `Deployment`, or `Product`) and the criteria evaluated.
+  `Deployment`, `Product`, or `Worker`) and the criteria evaluated.
 - A `Decision` MUST reference the objects it affects.
 
 ## 4. Lifecycles

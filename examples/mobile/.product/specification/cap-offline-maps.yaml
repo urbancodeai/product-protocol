@@ -1,0 +1,16 @@
+pp: "0.1"
+kind: Capability
+metadata:
+  id: cap-offline-maps
+  name: Offline trail maps
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-06T09:20:00Z
+  updatedAt: 2026-05-12T09:00:00Z
+spec:
+  description: >
+    Download, store, render, and navigate trail maps entirely offline:
+    per-region packs, resumable downloads, storage management, and
+    on-trail position against the downloaded map.
+  serves:
+    - ref: { kind: Goal, id: goal-weekly-active-hikers }

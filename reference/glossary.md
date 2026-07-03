@@ -16,7 +16,7 @@ attached to a Story or Task that define when it is complete. (PP-0004 §7)
 Human. Actors are declared as objects but hold no work state.
 
 **Approval** — A human authorization recorded as a Decision that moves a
-governed object from `proposed` to `approved`. (PP-0010 §7)
+governed object from `proposed` to `approved`. (PP-0002 §6.2, PP-0010 §7)
 
 **Artifact** — A content-addressed, immutable output of a Task: code
 changeset, document, image, binary, report. Every Artifact references the

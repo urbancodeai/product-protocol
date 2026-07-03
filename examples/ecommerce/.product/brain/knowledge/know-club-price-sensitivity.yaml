@@ -1,0 +1,29 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-club-price-sensitivity
+  name: Reading-club pricing above $15/month suppresses signups
+  version: 1.0.0
+  labels:
+    area: reading-clubs
+  createdAt: 2026-06-30T10:00:00Z
+  updatedAt: 2026-06-30T10:00:00Z
+spec:
+  category: market
+  subcategory: pricing
+  statement: >
+    Reading-club subscriptions priced above $15/month appear to
+    suppress signups sharply; competitor clubs cluster at $9.99-$12.99
+    with a bundled monthly book credit.
+  confidence: hypothesis
+  provenance:
+    - type: conversation
+      description: >
+        Pricing discussion with the founding team, 2026-06-29; not yet
+        tested against our own funnel.
+    - type: external
+      uri: https://market.example.com/reports/book-subscriptions-2026
+      description: Third-party subscription-market survey.
+  links:
+    - rel: relates_to
+      target: { ref: { kind: Goal, id: goal-weekly-active-readers } }

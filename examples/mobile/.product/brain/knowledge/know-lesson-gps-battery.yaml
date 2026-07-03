@@ -1,0 +1,31 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-lesson-gps-battery
+  name: "Lesson: continuous GPS during check-in windows drains batteries"
+  version: 1.0.0
+  createdAt: 2026-06-26T09:00:00Z
+spec:
+  category: lesson
+  subcategory: battery
+  statement: >
+    Keeping the GPS radio in continuous high-accuracy mode while a
+    safety check-in window is open tripled battery drain (to ~15% per
+    hour) on mid-range Android devices. Location sampling during
+    check-in windows must be duty-cycled, not continuous.
+  detail: >
+    Distilled from the 2026-06-24 battery-drain incident: the check-in
+    service requested high-accuracy location updates every second for
+    the entire window instead of a single fix at window open and close.
+    Any future location consumer must state its duty cycle explicitly
+    against the 5%/hour battery budget.
+  confidence: observed
+  provenance:
+    - type: observation
+      ref: { ref: { kind: Observation, id: obs-incident-battery-drain } }
+      description: Production incident observation this lesson distils.
+  links:
+    - rel: derived_from
+      target: { ref: { kind: Observation, id: obs-incident-battery-drain } }
+    - rel: relates_to
+      target: { ref: { kind: Issue, id: issue-battery-drain } }

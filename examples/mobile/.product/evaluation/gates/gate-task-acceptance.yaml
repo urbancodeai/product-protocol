@@ -1,0 +1,24 @@
+pp: "0.1"
+kind: QualityGate
+metadata:
+  id: gate-task-acceptance
+  name: Task acceptance gate
+  version: 1.0.0
+  createdAt: 2026-05-22T10:30:00Z
+spec:
+  description: >
+    Every submitted Task must pass an acceptance Evaluation of its
+    Artifacts against the Task's completion criteria, plus a
+    constitution audit of the changeset, before the Task may move to
+    done.
+  trigger: task_acceptance
+  mode: blocking
+  requires:
+    - description: An acceptance Evaluation of the submitted Artifacts passes.
+      selector:
+        category: acceptance
+      verdict: pass
+    - description: A constitution audit of the change passes (blocking articles only).
+      selector:
+        category: constitution_audit
+      verdict: pass

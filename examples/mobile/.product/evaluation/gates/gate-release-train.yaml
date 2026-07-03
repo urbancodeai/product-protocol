@@ -1,0 +1,30 @@
+pp: "0.1"
+kind: QualityGate
+metadata:
+  id: gate-release-train
+  name: Release train promotion gate
+  version: 1.0.0
+  createdAt: 2026-05-22T10:40:00Z
+spec:
+  description: >
+    A build boards the production release train only when the
+    mobile-core golden dataset passes on the test track, visual goldens
+    score at least 0.9, and the battery and cold-start budgets hold.
+  trigger: deployment_promotion
+  mode: blocking
+  requires:
+    - description: Visual golden-screen comparisons pass with high similarity.
+      selector:
+        category: visual
+        labels:
+          dataset: mobile-core
+      verdict: pass
+      minScore: 0.9
+    - description: Battery and cold-start budgets pass on reference hardware.
+      evaluations:
+        - ref: { kind: GoldenTest, id: golden-battery-budget }
+      verdict: pass
+    - description: No open blocking constitution-audit failures for the build.
+      selector:
+        category: constitution_audit
+      verdict: pass

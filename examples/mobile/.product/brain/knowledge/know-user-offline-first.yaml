@@ -1,0 +1,31 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-user-offline-first
+  name: Hikers expect full functionality offline
+  version: 1.1.0
+  createdAt: 2026-05-06T10:00:00Z
+  updatedAt: 2026-06-20T10:00:00Z
+spec:
+  category: user
+  subcategory: connectivity-expectations
+  statement: >
+    Hikers treat the app as safety equipment: maps, tracking, and
+    check-in scheduling must work with no connectivity at the trailhead
+    and none for the whole hike.
+  detail: >
+    In 14 of 16 user interviews, participants reported airplane mode or
+    dead zones for the majority of a hike. Features that silently
+    require a network connection are perceived as dangerous, not merely
+    broken.
+  confidence: validated
+  provenance:
+    - type: conversation
+      description: User interview round of 2026-05, 16 participants.
+    - type: document
+      uri: https://research.example.com/trailkit/interviews-2026-05
+      description: Interview synthesis report.
+  links:
+    - rel: relates_to
+      target: { ref: { kind: Capability, id: cap-offline-maps } }
+  reviewedAt: 2026-06-20T10:00:00Z

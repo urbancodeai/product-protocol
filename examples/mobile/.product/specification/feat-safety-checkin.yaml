@@ -1,0 +1,19 @@
+pp: "0.1"
+kind: Feature
+metadata:
+  id: feat-safety-checkin
+  name: Scheduled safety check-ins
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-15T09:10:00Z
+  updatedAt: 2026-05-18T09:00:00Z
+spec:
+  description: >
+    Schedule check-in windows for a hike, confirm with one tap, and
+    escalate to emergency contacts (push, then SMS) when a window is
+    missed. Server-side timers own escalation so a dead phone still
+    triggers alerts.
+  capability: { ref: { kind: Capability, id: cap-safety-checkins } }
+  personas:
+    - solo-hiker
+    - emergency-contact

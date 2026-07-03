@@ -1,0 +1,95 @@
+pp: "0.1"
+kind: Constitution
+metadata:
+  id: trailkit-constitution
+  name: TrailKit Constitution
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-05T09:00:00Z
+  updatedAt: 2026-05-12T09:00:00Z
+  owners:
+    - { type: human, id: maya@trailkit.example.com, name: Maya Lindqvist }
+spec:
+  preamble: >
+    TrailKit is safety equipment. These articles hold for every change,
+    on every release train, regardless of feature pressure.
+  articles:
+    - id: art-security-location
+      category: security
+      rule: >
+        Location history MUST be encrypted at rest on device and MUST
+        never leave the device except to the check-in service over TLS,
+        or to designated contacts during an active escalation.
+      rationale: A hiker's movement history is sensitive personal data.
+      enforcement:
+        mode: blocking
+        evaluatedOn:
+          - task_submission
+          - deployment
+    - id: art-perf-battery
+      category: performance
+      rule: >
+        Background activity tracking MUST NOT exceed 5% battery drain
+        per hour on reference hardware; any new location consumer MUST
+        declare its GPS duty cycle.
+      rationale: A dead phone on the trail defeats the safety purpose.
+      enforcement:
+        mode: blocking
+        evaluatedOn:
+          - deployment
+          - observation
+        evaluations:
+          - ref: { kind: GoldenTest, id: golden-battery-budget }
+        monitor: Battery telemetry per session, alert at 6%/hour p50.
+    - id: art-perf-cold-start
+      category: performance
+      rule: Cold start to interactive map MUST stay under 2500 ms p90 on reference hardware.
+      enforcement:
+        mode: blocking
+        evaluatedOn:
+          - deployment
+        monitor: Startup trace percentiles per release-train build.
+    - id: art-a11y-trail-actions
+      category: accessibility
+      rule: >
+        On-trail actions (check-in confirm, start/stop tracking, SOS)
+        MUST meet WCAG 2.2 AA, have touch targets >= 48dp, and be fully
+        operable with a screen reader and with gloves (no long-press-only).
+      enforcement:
+        mode: blocking
+        evaluatedOn:
+          - task_submission
+    - id: art-arch-offline-first
+      category: architecture
+      rule: >
+        Every on-trail flow MUST be implemented offline-first: local
+        state is authoritative on device, network sync is opportunistic,
+        and no on-trail interaction may block on a network call.
+      rationale: See know-user-offline-first; connectivity is absent on most hikes.
+      enforcement:
+        mode: blocking
+        evaluatedOn:
+          - task_submission
+          - deployment
+    - id: art-code-standards
+      category: coding_standards
+      rule: >
+        All app code MUST pass static analysis (lint, type checks) with
+        zero errors, and every merged changeset MUST include tests for
+        the behaviour it adds or changes.
+      enforcement:
+        mode: blocking
+        evaluatedOn:
+          - task_submission
+    - id: art-ux-offline-states
+      category: ux
+      rule: >
+        Offline MUST be presented as a normal state, never as an error:
+        no blocking spinners, no "no connection" modals on on-trail
+        screens; attribution for map data MUST remain visible on every
+        map surface.
+      enforcement:
+        mode: advisory
+        evaluatedOn:
+          - task_submission
+          - schedule

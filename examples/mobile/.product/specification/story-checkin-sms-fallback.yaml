@@ -1,0 +1,34 @@
+pp: "0.1"
+kind: Story
+metadata:
+  id: story-checkin-sms-fallback
+  name: SMS fallback for contacts without the app
+  version: 1.0.0
+  lifecycle: proposed
+  createdAt: 2026-06-30T09:00:00Z
+  updatedAt: 2026-06-30T09:00:00Z
+spec:
+  narrative: >
+    As an emergency contact without TrailKit installed, I want missed
+    check-in alerts by SMS with a web link to the hiker's last known
+    position, so that escalation does not depend on me having the app.
+  feature: { ref: { kind: Feature, id: feat-safety-checkin } }
+  acceptanceCriteria:
+    - id: ac-1
+      given: a missed check-in whose first contact has no registered device
+      when: escalation fires
+      then: the contact receives an SMS within 2 minutes containing a signed, expiring link to the status page
+      verification:
+        method: automated
+    - id: ac-2
+      criterion: >
+        The status page shows last known position, planned route, and a
+        clear timestamp of the missed window without requiring sign-in.
+      verification:
+        method: agentic
+    - id: ac-3
+      criterion: SMS content contains no precise coordinates in plain text, only the signed link.
+      verification:
+        method: manual
+  businessRules:
+    - br-2

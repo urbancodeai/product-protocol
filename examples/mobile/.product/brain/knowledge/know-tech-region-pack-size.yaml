@@ -1,0 +1,22 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-tech-region-pack-size
+  name: Offline region packs average 38 MB at zoom 14
+  version: 1.0.0
+  createdAt: 2026-06-03T09:00:00Z
+spec:
+  category: technical
+  subcategory: offline-storage
+  statement: >
+    A typical downloadable trail region (vector tiles + elevation +
+    trail metadata, zoom <= 14) compresses to ~38 MB; the p95 region is
+    92 MB. Download UX must assume tens of megabytes on cellular.
+  confidence: observed
+  provenance:
+    - type: evaluation
+      ref: { ref: { kind: Evaluation, id: eval-tile-pipeline-acceptance } }
+      description: Size measurements from the tile-pipeline acceptance run.
+  links:
+    - rel: refines
+      target: { ref: { kind: Knowledge, id: know-user-offline-first } }

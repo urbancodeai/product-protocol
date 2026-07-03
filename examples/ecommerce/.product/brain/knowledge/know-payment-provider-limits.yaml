@@ -1,0 +1,32 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-payment-provider-limits
+  name: Payment provider rate limits and idempotency
+  version: 1.1.0
+  labels:
+    area: payments
+  createdAt: 2026-05-20T09:00:00Z
+  updatedAt: 2026-06-16T08:00:00Z
+spec:
+  category: technical
+  subcategory: integration
+  statement: >
+    The payment provider allows 25 payment-intent creations per second
+    per merchant account and requires an idempotency key on every
+    capture; retries without a key can double-charge.
+  detail: >
+    Confirmed against provider documentation and a staging soak test.
+    Capture retries MUST reuse the original idempotency key. This
+    underlies business rule BR-PAY-1 (payment captured exactly once).
+  confidence: validated
+  provenance:
+    - type: document
+      uri: https://developer.paymentprovider.example.com/docs/rate-limits
+      description: Provider rate-limit and idempotency documentation.
+    - type: external
+      uri: https://ci.example.com/aurora/soak-tests/payments-2026-06-15
+      description: Staging soak test, 2026-06-15.
+  links:
+    - rel: relates_to
+      target: { ref: { kind: Capability, id: cap-payments } }

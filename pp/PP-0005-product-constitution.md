@@ -118,8 +118,9 @@ stateDiagram-v2
     draft --> proposed : submit
     proposed --> draft : revise
     proposed --> approved : Decision by authorized human
-    approved --> deprecated
+    approved --> deprecated : supersede / retire
     deprecated --> archived
+    archived --> [*]
 ```
 
 Only Articles of an **approved** Constitution version are in force.

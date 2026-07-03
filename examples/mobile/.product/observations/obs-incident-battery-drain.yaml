@@ -1,0 +1,25 @@
+pp: "0.1"
+kind: Observation
+metadata:
+  id: obs-incident-battery-drain
+  name: "Incident: battery drain spike during check-in windows"
+  version: 1.0.0
+  createdAt: 2026-06-24T18:30:00Z
+spec:
+  source: incident
+  statement: >
+    Support and telemetry converged on a battery-drain incident: hikes
+    with an open check-in window drained ~15% per hour on mid-range
+    Android devices, three times the constitutional budget. Root cause:
+    the check-in service held a continuous high-accuracy GPS
+    subscription for the whole window instead of duty-cycled fixes.
+  measurement:
+    metric: battery_drain_per_hour_tracking
+    value: 15
+    unit: percent
+  observedAt: 2026-06-24T18:30:00Z
+  environment: production
+  relatesTo:
+    - ref: { kind: Issue, id: issue-battery-drain }
+    - ref: { kind: Deployment, id: deploy-prod-train-2026-06 }
+  severity: high

@@ -1,0 +1,24 @@
+pp: "0.1"
+kind: Decision
+metadata:
+  id: dec-approve-spec-mvp
+  name: Approve TrailKit MVP Specification 1.0.0
+  version: 1.0.0
+  createdAt: 2026-05-14T16:00:00Z
+spec:
+  context: >
+    The MVP specification (offline maps + safety check-ins) was proposed
+    on 2026-05-08 and reviewed by product and engineering leads.
+  outcome: >
+    Specification spec-trailkit-mvp at version 1.0.0 is approved and is
+    now immutable; amendments require a new draft version.
+  authority: { type: human, id: maya@trailkit.example.com, name: Maya Lindqvist }
+  decidedAt: 2026-05-14T16:00:00Z
+  approves:
+    ref: { kind: Specification, id: spec-trailkit-mvp, version: "1.0.0" }
+  affects:
+    - ref: { kind: Specification, id: spec-trailkit-mvp, version: "1.0.0" }
+  consequences: >
+    Planning may decompose the specification into Features, Stories,
+    and Tasks. Representative approval record; sibling approvals of
+    other governed objects follow the same shape.

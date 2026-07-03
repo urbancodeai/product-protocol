@@ -1,0 +1,35 @@
+pp: "0.1"
+kind: Evaluation
+metadata:
+  id: eval-visual-map-train-2026-06
+  name: Visual goldens for release build 1.6.0
+  version: 1.0.0
+  createdAt: 2026-06-11T09:30:00Z
+spec:
+  subject: { ref: { kind: Artifact, id: artifact-release-build-160 } }
+  category: visual
+  criteria:
+    - source: { ref: { kind: GoldenTest, id: golden-offline-map-render, version: "1.0.0" } }
+      description: Offline map golden render at zoom 12 and 14 in airplane mode.
+    - source: { ref: { kind: GoldenTest, id: golden-checkin-happy-path, version: "1.0.0" } }
+      description: Check-in screen states along the happy path match goldens.
+  verdict: pass
+  score: 0.96
+  dimensions:
+    - name: map-zoom-12
+      score: 0.98
+    - name: map-zoom-14
+      score: 0.94
+    - name: checkin-screens
+      score: 0.97
+  evidence:
+    - type: screenshot
+      description: Capture set and perceptual diffs for build 1.6.0 on the test track.
+      uri: https://artifacts.example.com/trailkit/goldens/1.6.0-260/diffs
+      digest: sha256:aa11bb22cc33dd44ee55ff660718293a4b5c6d7e8f90a1b2c3d4e5f607182930
+    - type: measurement
+      description: SSIM scores per capture (min 0.94 at zoom 14).
+      path: evaluation/runs/eval-visual-map-train-2026-06.yaml
+  evaluator: { ref: { kind: Evaluator, id: evaluator-trailkit-quality } }
+  evaluatedAt: 2026-06-11T09:30:00Z
+  notes: Zoom-14 score dipped from new contour styling; within tolerance.

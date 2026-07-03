@@ -1,0 +1,20 @@
+pp: "0.1"
+kind: Feature
+metadata:
+  id: feat-offline-trail-maps
+  name: Offline trail maps
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-15T09:00:00Z
+  updatedAt: 2026-05-18T09:00:00Z
+spec:
+  description: >
+    Region browsing, pack download with resume, storage management, and
+    offline map rendering with live position and recorded track overlay.
+  capability: { ref: { kind: Capability, id: cap-offline-maps } }
+  personas:
+    - solo-hiker
+    - weekend-trailrunner
+  notes: >
+    Region packs are single SQLite files per dec-offline-maps-storage;
+    the download manager treats them as opaque resumable blobs.

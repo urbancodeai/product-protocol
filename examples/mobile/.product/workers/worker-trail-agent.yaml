@@ -1,0 +1,44 @@
+pp: "0.1"
+kind: Worker
+metadata:
+  id: worker-trail-agent
+  name: TrailKit mobile coding agent
+  version: 1.2.0
+  createdAt: 2026-05-22T09:00:00Z
+  updatedAt: 2026-06-15T09:00:00Z
+spec:
+  description: >
+    Autonomous coding agent for the TrailKit app: Kotlin/Swift feature
+    work, offline storage, and golden-screen test upkeep. Runs in a
+    sandboxed CI environment; cannot approve governed objects or board
+    a release train.
+  type: agent
+  capabilities:
+    - code.kotlin
+    - code.swift
+    - mobile.ui
+    - mobile.offline-storage
+    - test.golden
+  constraints:
+    allowedArtifactTypes:
+      - changeset
+      - report
+      - prototype
+    maxConcurrentTasks: 2
+    constitutionBound: true
+  contextContract:
+    requires:
+      - task
+      - specification
+      - constitution
+      - knowledge
+      - prior_attempts
+    maxContextItems: 40
+  evaluationHooks:
+    - name: lint-and-typecheck
+      description: Static analysis over the changeset per art-code-standards.
+      mode: blocking
+    - name: golden-screens
+      description: Render golden screens locally and compare before submitting.
+      mode: advisory
+      evaluation: { ref: { kind: GoldenTest, id: golden-offline-map-render } }

@@ -1,0 +1,27 @@
+pp: "0.1"
+kind: GoldenTest
+metadata:
+  id: golden-battery-budget
+  name: Four-hour tracking battery budget
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-20T09:20:00Z
+  updatedAt: 2026-05-22T09:00:00Z
+spec:
+  scenario: >
+    Record a simulated four-hour hike (GPX replay, screen off, one
+    check-in window) on reference hardware starting from 100% charge.
+  inputs:
+    gpxFixture: ridge-loop-4h.gpx
+    device: reference-android-2022
+    screen: "off"
+    checkinWindows: 1
+  expected: >
+    Total battery drain over the four-hour session is at most 20%
+    (5% per hour budget, art-perf-battery), and the recorded track has
+    no gaps longer than 30 seconds.
+  method: automated
+  appliesTo:
+    - ref: { kind: Feature, id: feat-offline-trail-maps }
+    - ref: { kind: Feature, id: feat-safety-checkin }
+  tolerance: Drain measured by the OS battery-stats harness; +/-1 percentage point.

@@ -1,0 +1,16 @@
+pp: "0.1"
+kind: Capability
+metadata:
+  id: cap-payments
+  name: Accept payments
+  version: 1.1.0
+  lifecycle: approved
+  createdAt: 2026-05-02T10:00:00Z
+  updatedAt: 2026-06-10T14:30:00Z
+spec:
+  description: >
+    Take payment for a cart: cards and major wallets, with tax and
+    receipt handling, for signed-in and guest purchasers.
+  serves:
+    - ref: { kind: Goal, id: goal-checkout-conversion }
+    - ref: { kind: Goal, id: goal-weekly-active-readers }

@@ -162,8 +162,9 @@ stateDiagram-v2
     draft --> proposed : submit
     proposed --> draft : revise
     proposed --> approved : Decision by authorized human
-    approved --> deprecated
+    approved --> deprecated : supersede / retire
     deprecated --> archived
+    archived --> [*]
 ```
 
 - The `proposed → approved` transition MUST be authorized by a human and
@@ -197,8 +198,10 @@ root (or a subdirectory) of a Git repository:
 ├── specification/            # Goal, Capability, Specification, Feature, Story
 ├── constitution/             # Constitution objects
 ├── tasks/                    # Task objects (graph: PP-0006 §4)
+│   └── artifacts/            # Artifact records (PP-0007 §6)
 ├── workers/                  # Worker declarations
 ├── evaluation/
+│   ├── evaluators/           # Evaluator declarations (PP-0008 §5)
 │   ├── golden/               # GoldenTest objects
 │   ├── gates/                # QualityGate definitions (PP-0008 §9)
 │   └── runs/                 # Evaluation records
@@ -251,6 +254,11 @@ Rules:
 
 A Product MUST contain exactly one `Product` object. Every other object
 in the tree belongs to it implicitly.
+
+`Product` is not a governed object. Its `metadata.lifecycle`, when
+present, is `active` or `archived`: a Product is `active` from creation
+until it is retired, at which point it — and its ProductBrain — move to
+`archived` and implementations MUST cease autonomous activity on it.
 
 ## Normative Requirements
 

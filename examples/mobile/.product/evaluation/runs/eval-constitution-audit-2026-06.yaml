@@ -1,0 +1,36 @@
+pp: "0.1"
+kind: Evaluation
+metadata:
+  id: eval-constitution-audit-2026-06
+  name: Scheduled constitution audit, June 2026
+  version: 1.0.0
+  createdAt: 2026-06-20T08:00:00Z
+spec:
+  subject: { ref: { kind: Product, id: trailkit } }
+  category: constitution_audit
+  criteria:
+    - source: { ref: { kind: Constitution, id: trailkit-constitution, version: "1.0.0" } }
+      description: All articles of trailkit-constitution 1.0.0, blocking and advisory.
+  verdict: pass
+  score: 0.93
+  dimensions:
+    - name: art-security-location
+      score: 1.0
+    - name: art-perf-battery
+      score: 1.0
+    - name: art-ux-offline-states
+      score: 0.7
+      weight: 0.5
+  evidence:
+    - type: log
+      description: Audit run over the 1.6.0 build and production telemetry.
+      uri: https://ci.example.com/trailkit/audits/2026-06-20/log
+    - type: test_report
+      description: Per-article findings; one advisory finding on offline-state copy in region settings.
+      uri: https://artifacts.example.com/trailkit/audits/2026-06-20/report.html
+  evaluator: { ref: { kind: Evaluator, id: evaluator-trailkit-quality } }
+  evaluatedAt: 2026-06-20T08:00:00Z
+  notes: >
+    Advisory finding: region-settings screen shows a spinner while
+    checking for pack updates offline (art-ux-offline-states). Tracked
+    for the next train; no blocking violations.

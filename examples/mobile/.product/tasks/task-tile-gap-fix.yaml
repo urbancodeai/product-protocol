@@ -1,0 +1,35 @@
+pp: "0.1"
+kind: Task
+metadata:
+  id: task-tile-gap-fix
+  name: Fix missing tiles at zoom 14+ in downloaded regions
+  version: 1.0.0
+  createdAt: 2026-06-18T09:00:00Z
+spec:
+  intent: >
+    Investigate and fix issue-tile-gaps: some downloaded regions are
+    missing tiles above zoom 13 along region boundaries, leaving blank
+    squares on the trail map.
+  tracesTo: { ref: { kind: Issue, id: issue-tile-gaps } }
+  dependsOn:
+    - ref: { kind: Task, id: task-map-tile-pipeline }
+  priority: medium
+  capabilities:
+    - code.kotlin
+    - mobile.offline-storage
+  context:
+    knowledge:
+      - ref: { kind: Knowledge, id: know-tech-region-pack-size }
+    constitutionArticles:
+      - art-arch-offline-first
+    notes: Suspected off-by-one in the boundary tile enumeration of the pack builder.
+  completion:
+    criteria:
+      - id: cc-1
+        statement: Boundary tiles present at all zoom levels for the ten launch regions; golden render passes.
+    evaluations:
+      - ref: { kind: GoldenTest, id: golden-offline-map-render }
+    artifacts:
+      - changeset
+status:
+  state: ready

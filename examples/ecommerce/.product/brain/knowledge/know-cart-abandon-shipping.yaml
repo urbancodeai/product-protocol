@@ -1,0 +1,36 @@
+# Knowledge at `validated` confidence (PP-0003 §3, §4), distilled from
+# a production Observation in this tree.
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-cart-abandon-shipping
+  name: Late shipping cost drives cart abandonment
+  version: 2.1.0
+  labels:
+    area: checkout
+  createdAt: 2026-06-02T10:00:00Z
+  updatedAt: 2026-06-28T09:30:00Z
+spec:
+  category: user
+  subcategory: behavior
+  statement: >
+    Shoppers abandon carts significantly more often when shipping cost
+    is first revealed at the payment step rather than on the cart page.
+  detail: >
+    June 2026 funnel telemetry shows a 23% drop-off at the payment step
+    for orders under $25, versus 9% when a shipping estimate is shown on
+    the cart page. Effect concentrates in first-time buyers.
+  confidence: validated
+  provenance:
+    - type: observation
+      ref: { ref: { kind: Observation, id: obs-funnel-2026-06 } }
+      description: Checkout funnel telemetry, June 2026.
+    - type: external
+      uri: https://research.example.com/aurora/session-replays-2026-06
+      description: Session-replay study of abandoned checkouts.
+  links:
+    - rel: supports
+      target: { ref: { kind: Knowledge, id: know-early-price-transparency } }
+    - rel: relates_to
+      target: { ref: { kind: Story, id: story-guest-checkout } }
+  reviewedAt: 2026-06-28T09:30:00Z

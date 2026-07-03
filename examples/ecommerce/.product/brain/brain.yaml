@@ -1,0 +1,24 @@
+# The ProductBrain root object (PP-0003 §1). Knowledge lives in
+# brain/knowledge/, Decisions in brain/decisions/ (PP-0003 §6).
+pp: "0.1"
+kind: ProductBrain
+metadata:
+  id: aurora-brain
+  name: Aurora Books Product Brain
+  version: 1.1.0
+  lifecycle: active
+  createdAt: 2026-05-01T09:05:00Z
+  updatedAt: 2026-07-03T12:00:00Z
+spec:
+  summary: >
+    Knowledge store for Aurora Books: online bookstore domain rules,
+    reader behavior, checkout and recommendation architecture, and
+    lessons from autonomous operation since May 2026.
+  retention:
+    reviewInterval: P90D
+    compactAfter: P365D
+  indexes:
+    - name: by-category
+      description: Category + subcategory lookup for Worker context.
+    - name: checkout-graph
+      description: Link-traversal index seeded from checkout objects.

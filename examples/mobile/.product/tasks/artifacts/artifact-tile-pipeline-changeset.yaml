@@ -1,0 +1,20 @@
+pp: "0.1"
+kind: Artifact
+metadata:
+  id: artifact-tile-pipeline-changeset
+  name: Region pack pipeline changeset
+  version: 1.0.0
+  createdAt: 2026-06-01T15:55:00Z
+spec:
+  type: changeset
+  digest: sha256:4be0339c2fa74b16e3b53253cafdd4df1d1a86e775c0c8ba5c6c41c04c6a5d1e
+  uri: https://git.example.com/trailkit/app/commit/8c2f41aa09d3be7e5f4a2f6f9b1e6d4c3b2a1908
+  path: core/offline-maps
+  summary: >
+    Adds the per-region SQLite pack format, resumable download manager
+    with range-request support, region store with delete/reclaim, and
+    unit plus instrumentation tests.
+  producedBy: { ref: { kind: Task, id: task-map-tile-pipeline } }
+  producedAt: 2026-06-01T15:55:00Z
+  size: 74212
+  mediaType: text/x-diff

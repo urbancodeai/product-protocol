@@ -1,0 +1,100 @@
+# A full Specification (PP-0004 §2): personas, functional and
+# non-functional requirements (with a budget), UX intent with an HTML
+# prototype, business rules, constraints, and dependencies.
+pp: "0.1"
+kind: Specification
+metadata:
+  id: spec-guest-checkout
+  name: Guest Checkout Specification
+  version: 2.0.0
+  lifecycle: approved
+  createdAt: 2026-05-25T08:00:00Z
+  updatedAt: 2026-06-10T14:30:00Z
+  owners:
+    - { type: human, id: dana@example.com, name: Dana Ito }
+spec:
+  scope:
+    - ref: { kind: Capability, id: cap-payments }
+    - ref: { kind: Feature, id: feat-guest-checkout }
+  summary: >
+    Defines guest checkout end to end: personas, functional behavior,
+    quality budgets, UX intent, and the business rules governing
+    payment capture and tax.
+  businessGoals:
+    - ref: { kind: Goal, id: goal-checkout-conversion }
+  personas:
+    - id: guest-shopper
+      name: Guest shopper
+      description: >
+        A first-time or infrequent buyer who will abandon the purchase
+        if asked to create an account.
+      needs:
+        - Buy in under three minutes
+        - No account creation
+        - See the full cost (items, shipping, tax) before paying
+  functionalRequirements:
+    - id: FR-1
+      statement: >
+        The system MUST allow a purchase to complete with only email,
+        shipping address, and payment details.
+      priority: critical
+      rationale: Core of the feature; everything else is refinement.
+    - id: FR-2
+      statement: >
+        The system SHOULD offer a one-click account upgrade on the
+        confirmation page, preserving order history.
+      priority: medium
+    - id: FR-3
+      statement: >
+        The system MUST show an estimated shipping cost on the cart
+        page before checkout begins.
+      priority: high
+      rationale: Late shipping-cost disclosure drives abandonment (know-cart-abandon-shipping).
+  nonFunctionalRequirements:
+    - id: NFR-1
+      category: performance
+      statement: Checkout page transitions MUST feel instant on 4G.
+      budget: { metric: p95_step_latency, value: 800, unit: ms }
+    - id: NFR-2
+      category: accessibility
+      statement: >
+        All checkout steps MUST be operable by keyboard alone and
+        satisfy WCAG 2.2 AA.
+    - id: NFR-3
+      category: security
+      statement: >
+        Card data MUST never touch product infrastructure; only the
+        payment provider's hosted fields may collect it.
+  ux:
+    principles:
+      - One decision per screen; never ask twice for the same fact.
+      - Errors appear inline, next to the field that caused them.
+      - The full order cost is visible before the payment step.
+    prototypes:
+      - name: guest-checkout-flow
+        description: Static three-step guest checkout mock, desktop-first.
+        path: prototypes/guest-checkout.html
+        format: html
+  businessRules:
+    - id: BR-PAY-1
+      statement: Payment MUST be captured exactly once per order.
+      appliesTo:
+        - ref: { kind: Feature, id: feat-guest-checkout }
+    - id: BR-TAX-1
+      statement: >
+        Tax MUST be computed from the shipping address at submission
+        time, not from the cart-creation address.
+  constraints:
+    - >
+      Card data never touches product infrastructure; use the payment
+      provider's hosted fields.
+    - >
+      Guest orders are stored under the same order schema as account
+      orders; no parallel "guest order" table.
+  dependencies:
+    - name: payments-provider
+      description: Hosted card fields, capture, and refunds.
+    - name: tax-service
+      description: Address-based tax computation.
+  acceptance:
+    - ref: { kind: GoldenTest, id: golden-checkout-happy-path }

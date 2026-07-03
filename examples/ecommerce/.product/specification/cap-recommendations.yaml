@@ -1,0 +1,16 @@
+pp: "0.1"
+kind: Capability
+metadata:
+  id: cap-recommendations
+  name: Personalized recommendations
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-02T10:15:00Z
+  updatedAt: 2026-06-10T14:30:00Z
+spec:
+  description: >
+    Recommend titles a reader is likely to buy or borrow next, based on
+    their ratings, purchases, and club activity, surfaced on the home
+    page and in the weekly digest.
+  serves:
+    - ref: { kind: Goal, id: goal-weekly-active-readers }

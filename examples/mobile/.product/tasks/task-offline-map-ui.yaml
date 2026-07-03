@@ -1,0 +1,48 @@
+pp: "0.1"
+kind: Task
+metadata:
+  id: task-offline-map-ui
+  name: Offline map screen with recording controls
+  version: 1.0.0
+  createdAt: 2026-05-25T09:05:00Z
+  updatedAt: 2026-06-22T09:00:00Z
+spec:
+  intent: >
+    Build the trailhead map screen over the downloaded region store:
+    offline render, live position, track overlay, recording controls,
+    and visible data attribution, matching the trail-map prototype.
+  tracesTo: { ref: { kind: Story, id: story-download-trail-region } }
+  dependsOn:
+    - ref: { kind: Task, id: task-map-tile-pipeline }
+  priority: high
+  capabilities:
+    - code.kotlin
+    - code.swift
+    - mobile.ui
+    - test.golden
+  context:
+    knowledge:
+      - ref: { kind: Knowledge, id: know-tech-region-pack-size }
+    specifications:
+      - ref: { kind: Specification, id: spec-trailkit-mvp, version: "1.0.0" }
+      - ref: { kind: Story, id: story-download-trail-region }
+    constitutionArticles:
+      - art-ux-offline-states
+      - art-a11y-trail-actions
+      - art-perf-cold-start
+  completion:
+    criteria:
+      - id: cc-1
+        statement: Map screen matches the golden render within tolerance in airplane mode.
+      - id: cc-2
+        statement: Cold start to interactive map within the 2500 ms p90 budget.
+    evaluations:
+      - ref: { kind: GoldenTest, id: golden-offline-map-render }
+    artifacts:
+      - changeset
+      - report
+status:
+  state: in_progress
+  worker: { ref: { kind: Worker, id: worker-trail-agent } }
+  attempts: 2
+  claimedAt: 2026-06-18T08:30:00Z

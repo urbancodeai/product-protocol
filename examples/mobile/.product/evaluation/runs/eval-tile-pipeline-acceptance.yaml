@@ -1,0 +1,27 @@
+pp: "0.1"
+kind: Evaluation
+metadata:
+  id: eval-tile-pipeline-acceptance
+  name: Acceptance of tile pipeline changeset
+  version: 1.0.0
+  createdAt: 2026-06-02T11:00:00Z
+spec:
+  subject: { ref: { kind: Artifact, id: artifact-tile-pipeline-changeset } }
+  category: acceptance
+  criteria:
+    - source: { ref: { kind: Story, id: story-download-trail-region, version: "1.0.0" } }
+      description: Story ac-1, ac-2, ac-4 satisfied (offline render, resumable download, clean delete).
+    - source: { ref: { kind: Task, id: task-map-tile-pipeline } }
+      description: Task completion criteria cc-1 and cc-2 met, including pack-size measurements.
+  verdict: pass
+  score: 1.0
+  evidence:
+    - type: test_report
+      description: Worker test report and pack-size measurements.
+      artifact: { ref: { kind: Artifact, id: artifact-tile-pipeline-report } }
+    - type: log
+      description: Instrumentation-test run on the emulator farm.
+      uri: https://ci.example.com/trailkit/runs/5521/log
+  evaluator: { ref: { kind: Evaluator, id: evaluator-trailkit-quality } }
+  evaluatedAt: 2026-06-02T11:00:00Z
+  notes: Resume tested at 3 interruption points; delete reclaims 100% of pack bytes.

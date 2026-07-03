@@ -1,0 +1,27 @@
+pp: "0.1"
+kind: Deployment
+metadata:
+  id: deploy-prod-train-2026-06
+  name: Release train 2026.06 (1.6.0) to production stores
+  version: 1.0.0
+  createdAt: 2026-06-17T10:00:00Z
+  updatedAt: 2026-06-19T08:00:00Z
+spec:
+  environment: production
+  artifacts:
+    - ref: { kind: Artifact, id: artifact-release-build-160 }
+  gates:
+    - ref: { kind: QualityGate, id: gate-release-train }
+  strategy: rolling
+  requestedBy: { type: human, id: maya@trailkit.example.com, name: Maya Lindqvist }
+  requestedAt: 2026-06-17T10:00:00Z
+status:
+  state: active
+  evaluations:
+    - ref: { kind: Evaluation, id: eval-visual-map-train-2026-06 }
+    - ref: { kind: Evaluation, id: eval-constitution-audit-2026-06 }
+  startedAt: 2026-06-17T10:30:00Z
+  completedAt: 2026-06-19T08:00:00Z
+  reason: >
+    Staged rollout via store phased release: 10% on day one, 50% on day
+    two, 100% after store review cleared on 2026-06-19.

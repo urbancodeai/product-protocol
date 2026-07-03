@@ -1,0 +1,31 @@
+pp: "0.1"
+kind: Decision
+metadata:
+  id: dec-offline-maps-storage
+  name: "ADR: store offline maps as vector-tile packs in SQLite"
+  version: 1.0.0
+  createdAt: 2026-05-12T14:00:00Z
+spec:
+  context: >
+    Offline trail maps need a storage format that supports partial
+    region downloads, resumable transfers, styling changes without
+    re-downloading, and predictable disk budgets on low-storage phones.
+  options:
+    - option: Raster tile packs (PNG pyramids)
+      rationale: Simplest renderer, but 5-8x larger and restyling requires re-download.
+    - option: Vector-tile packs in a single SQLite (MBTiles-style) file per region
+      rationale: Compact, restylable client-side, one file per region simplifies resume and delete.
+    - option: Bundle whole-country maps with the app binary
+      rationale: No download UX, but pushes the installed size past store over-the-air limits.
+  outcome: >
+    Vector-tile packs, one SQLite file per region, downloaded on demand
+    with HTTP range-request resume. Raster fallback rejected on size;
+    bundling rejected on install-size limits.
+  authority: { type: human, id: maya@trailkit.example.com, name: Maya Lindqvist }
+  decidedAt: 2026-05-12T14:00:00Z
+  affects:
+    - ref: { kind: Capability, id: cap-offline-maps }
+    - ref: { kind: Specification, id: spec-trailkit-mvp }
+  consequences: >
+    Tile pipeline must emit per-region SQLite packs; the app needs a
+    vector renderer; region packs become the unit of storage accounting.

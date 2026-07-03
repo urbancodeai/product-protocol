@@ -1,0 +1,29 @@
+pp: "0.1"
+kind: Decision
+metadata:
+  id: dec-release-train
+  name: Adopt a two-week app-store release train
+  version: 1.0.0
+  createdAt: 2026-05-20T11:00:00Z
+spec:
+  context: >
+    Mobile releases pass store review and cannot be rolled forward
+    quickly. Shipping ad hoc caused rushed submissions and one rejected
+    build in the prototype phase.
+  options:
+    - option: Ship on demand whenever a feature lands
+      rationale: Fastest per-feature, but every release is a fire drill.
+    - option: Two-week release train with a blocking promotion gate
+      rationale: Predictable cadence; the train leaves without unfinished work.
+  outcome: >
+    Two-week train, cut every second Tuesday. A build boards the train
+    only when the release-train quality gate passes on the test track.
+  authority: { type: human, id: maya@trailkit.example.com, name: Maya Lindqvist }
+  decidedAt: 2026-05-20T11:00:00Z
+  affects:
+    - ref: { kind: Product, id: trailkit }
+    - ref: { kind: QualityGate, id: gate-release-train }
+  consequences: >
+    Deployments to production use the train; the test environment is
+    the boarding platform; missing a train costs two weeks, so the gate
+    runs continuously, not on cut day.

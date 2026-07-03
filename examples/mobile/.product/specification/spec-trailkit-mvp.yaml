@@ -1,0 +1,143 @@
+pp: "0.1"
+kind: Specification
+metadata:
+  id: spec-trailkit-mvp
+  name: TrailKit MVP Specification
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-08T09:00:00Z
+  updatedAt: 2026-05-14T16:00:00Z
+  owners:
+    - { type: human, id: maya@trailkit.example.com, name: Maya Lindqvist }
+spec:
+  scope:
+    - ref: { kind: Capability, id: cap-offline-maps }
+    - ref: { kind: Capability, id: cap-safety-checkins }
+  summary: >
+    MVP scope for TrailKit: offline trail maps with per-region download
+    packs, GPS activity tracking, and scheduled safety check-ins with
+    contact escalation. Offline-first is the defining constraint: every
+    on-trail flow must work with the radio off.
+  businessGoals:
+    - ref: { kind: Goal, id: goal-weekly-active-hikers }
+    - ref: { kind: Goal, id: goal-checkin-adoption }
+  personas:
+    - id: solo-hiker
+      name: Solo day hiker
+      description: >
+        Hikes alone on day trips, often out of coverage. Wants the map
+        to just work and someone to notice if they do not come back.
+      needs:
+        - Download the route area before leaving home
+        - One-tap "I'm OK" check-in with gloves on
+        - Confidence the battery lasts the whole hike
+    - id: emergency-contact
+      name: Emergency contact
+      description: >
+        Partner or friend who receives check-in status. May not be a
+        TrailKit user; reachable by push or SMS.
+      needs:
+        - Clear notification when a check-in is missed
+        - The hiker's last known position and planned route
+    - id: weekend-trailrunner
+      name: Weekend trail runner
+      description: >
+        Tracks pace and elevation on known trails; cares about accurate
+        stats and minimal battery cost, uses check-ins on long runs.
+      needs:
+        - Accurate distance/elevation with the screen off
+        - Quick start/stop without menu diving
+  functionalRequirements:
+    - id: fr-1
+      statement: Users can browse trail regions and download a region pack for offline use.
+      priority: critical
+      rationale: Offline maps are the core promise.
+    - id: fr-2
+      statement: Region downloads are resumable after connectivity loss and deletable to reclaim storage.
+      priority: high
+    - id: fr-3
+      statement: Users can record a hike (GPS track, distance, elevation, duration) fully offline.
+      priority: critical
+    - id: fr-4
+      statement: Users can schedule check-in windows for a hike and designate emergency contacts.
+      priority: critical
+    - id: fr-5
+      statement: A missed check-in window escalates to emergency contacts with last known position.
+      priority: critical
+      rationale: The escalation path is the safety feature; it must fire from the server side even when the hiker's phone is dark.
+    - id: fr-6
+      statement: Attribution for map data sources is visible on every map surface.
+      priority: medium
+      rationale: ODbL obligation (see know-domain-trail-data-licensing).
+  nonFunctionalRequirements:
+    - id: nfr-offline
+      category: reliability
+      statement: >
+        Every on-trail flow (map render, tracking, check-in confirm)
+        must complete with no network connectivity; connectivity is an
+        enhancement, never a requirement.
+    - id: nfr-battery
+      category: performance
+      statement: >
+        Recording a hike with the screen off must not exceed the
+        battery budget on reference mid-range hardware.
+      budget:
+        metric: battery_drain_per_hour_tracking
+        value: 5
+        unit: percent
+    - id: nfr-cold-start
+      category: performance
+      statement: Cold start to interactive map must stay within budget on reference hardware.
+      budget:
+        metric: cold_start_to_interactive_p90
+        value: 2500
+        unit: ms
+    - id: nfr-a11y
+      category: accessibility
+      statement: >
+        All screens meet WCAG 2.2 AA; on-trail actions (check-in
+        confirm, start/stop) have touch targets >= 48dp and work with
+        screen readers.
+    - id: nfr-location-privacy
+      category: security
+      statement: >
+        Location history is encrypted at rest on device and shared only
+        with designated contacts during an active escalation.
+  ux:
+    principles:
+      - Glanceable on the trail -- large targets, high contrast in sunlight, one-handed use.
+      - Offline states are first-class, never error states.
+    prototypes:
+      - name: Trail map screen
+        description: Offline region map with track recording controls.
+        path: prototypes/trail-map.html
+        format: html
+      - name: Safety check-in screen
+        description: Check-in window schedule and one-tap confirmation.
+        path: prototypes/safety-checkin.html
+        format: html
+  businessRules:
+    - id: br-1
+      statement: A check-in window may only be marked missed after a 15-minute grace period.
+      appliesTo:
+        - ref: { kind: Capability, id: cap-safety-checkins }
+    - id: br-2
+      statement: Escalation notifies contacts in the order the hiker configured, stopping when one acknowledges.
+      appliesTo:
+        - ref: { kind: Capability, id: cap-safety-checkins }
+    - id: br-3
+      statement: Region packs are free up to three regions; more requires the Trail+ subscription.
+  constraints:
+    - Android 10+ and iOS 16+; reference hardware is a 2022 mid-range Android device.
+    - Installed app size (before region downloads) must stay under 150 MB store over-the-air limit.
+    - Map data limited to ODbL-compatible sources.
+  dependencies:
+    - name: Tile pipeline
+      description: Server-side pipeline producing per-region vector-tile packs.
+    - name: Push/SMS gateway
+      description: Third-party gateway used for contact escalation delivery.
+    - name: Offline storage decision
+      ref: { ref: { kind: Decision, id: dec-offline-maps-storage } }
+  acceptance:
+    - ref: { kind: GoldenTest, id: golden-offline-map-render }
+    - ref: { kind: GoldenTest, id: golden-checkin-happy-path }

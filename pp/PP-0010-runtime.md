@@ -187,8 +187,10 @@ release's runtime state.
 
 **Lifecycle.** A Deployment's `spec` is written once at request time
 and never changes; its `status` evolves through the state machine
-below. Apart from that status evolution, Deployments are append-only
-records (PP-0002 §6.3) — a new release is a new Deployment.
+below. Deployments are not among the pure record kinds of PP-0002
+§6.3 precisely because `status` is mutable, but their `spec` carries
+the same write-once discipline — a new release is a new Deployment,
+never an edit to an old one.
 
 ```mermaid
 stateDiagram-v2

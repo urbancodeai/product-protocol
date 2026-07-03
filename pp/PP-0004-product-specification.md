@@ -105,8 +105,9 @@ stateDiagram-v2
     draft --> proposed : submit
     proposed --> draft : revise
     proposed --> approved : Decision by authorized human
-    approved --> deprecated
+    approved --> deprecated : supersede / retire
     deprecated --> archived
+    archived --> [*]
 ```
 
 The `proposed → approved` transition MUST be authorized by a human and

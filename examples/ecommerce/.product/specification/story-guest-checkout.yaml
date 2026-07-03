@@ -1,0 +1,45 @@
+# story-guest-checkout v1.0.0 — approved 2026-06-10 (see Decision
+# dec-2026-06-10-guest-checkout) and therefore immutable (PP-0002 §6.2).
+# A proposed amendment lives alongside as story-guest-checkout@1.1.0.yaml.
+pp: "0.1"
+kind: Story
+metadata:
+  id: story-guest-checkout
+  name: Guest completes a purchase
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-06-01T09:15:00Z
+  updatedAt: 2026-06-10T15:04:00Z
+  owners:
+    - { type: human, id: dana@example.com, name: Dana Ito }
+spec:
+  narrative: >
+    As a guest shopper, I want to pay for my cart with only my email
+    and shipping details, so that I can buy without creating an account.
+  feature: { ref: { kind: Feature, id: feat-guest-checkout } }
+  acceptanceCriteria:
+    - id: ac-1
+      given: a cart with at least one in-stock item and no signed-in user
+      when: the shopper submits valid email, shipping, and card details
+      then: >
+        the order is created, payment is captured exactly once, and a
+        confirmation page and email include the order number
+      verification:
+        method: automated
+        evaluations:
+          - ref: { kind: GoldenTest, id: golden-checkout-happy-path }
+    - id: ac-2
+      criterion: >
+        A failed payment intent returns a retryable error to the
+        shopper and never creates an order.
+      verification:
+        method: automated
+    - id: ac-3
+      criterion: >
+        The checkout flow reads clearly and matches the approved
+        prototype's step order.
+      verification:
+        method: agentic
+  businessRules:
+    - BR-PAY-1
+    - BR-TAX-1

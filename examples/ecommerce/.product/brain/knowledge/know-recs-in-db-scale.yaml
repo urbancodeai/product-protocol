@@ -1,0 +1,31 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-recs-in-db-scale
+  name: In-database collaborative filtering meets latency at current scale
+  version: 1.0.0
+  labels:
+    area: recommendations
+  createdAt: 2026-06-24T13:00:00Z
+  updatedAt: 2026-06-24T13:00:00Z
+spec:
+  category: architectural
+  subcategory: recommendations
+  statement: >
+    Collaborative filtering computed inside the primary database serves
+    the "For you" shelf within the 300 ms budget at the current catalog
+    size (~40k titles); a dedicated recommendation service is not
+    justified below roughly 500k titles.
+  confidence: observed
+  provenance:
+    - type: decision
+      ref: { ref: { kind: Decision, id: dec-2026-06-24-recs-in-db } }
+      description: Architecture decision adopting in-database recommendations.
+    - type: external
+      uri: https://ci.example.com/aurora/benchmarks/recs-2026-06-23
+      description: Recommendation-query benchmark, 2026-06-23.
+  links:
+    - rel: derived_from
+      target: { ref: { kind: Decision, id: dec-2026-06-24-recs-in-db } }
+    - rel: relates_to
+      target: { ref: { kind: Capability, id: cap-recommendations } }

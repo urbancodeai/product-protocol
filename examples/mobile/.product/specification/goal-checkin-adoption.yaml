@@ -1,0 +1,23 @@
+pp: "0.1"
+kind: Goal
+metadata:
+  id: goal-checkin-adoption
+  name: Safety check-in adoption
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-06T09:10:00Z
+  updatedAt: 2026-05-12T09:00:00Z
+spec:
+  statement: >
+    Make scheduled safety check-ins a default part of solo hikes.
+  metric:
+    name: checkin_adoption_rate
+    description: Share of solo tracked hikes that have a scheduled check-in.
+    unit: percent
+    baseline: 9
+    target: 40
+    direction: increase
+  timeframe: End of Q4 2026
+  rationale: >
+    Check-ins are TrailKit's differentiator versus plain trackers and
+    the reason emergency contacts install the app.

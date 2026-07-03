@@ -1,0 +1,22 @@
+pp: "0.1"
+kind: Evaluator
+metadata:
+  id: evaluator-trailkit-quality
+  name: TrailKit quality evaluator
+  version: 1.1.0
+  createdAt: 2026-05-22T10:00:00Z
+  updatedAt: 2026-06-10T10:00:00Z
+spec:
+  description: >
+    Agentic evaluator for TrailKit: runs golden-screen visual
+    comparisons on emulator farms, drives performance and battery
+    harnesses on reference hardware, checks acceptance criteria, and
+    audits changes against the Constitution. Distinct principal from
+    all Workers.
+  type: agentic
+  categories:
+    - acceptance
+    - visual
+    - performance
+    - accessibility
+    - constitution_audit

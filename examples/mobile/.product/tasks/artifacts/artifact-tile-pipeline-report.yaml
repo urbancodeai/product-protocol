@@ -1,0 +1,19 @@
+pp: "0.1"
+kind: Artifact
+metadata:
+  id: artifact-tile-pipeline-report
+  name: Tile pipeline self-assessment and test report
+  version: 1.0.0
+  createdAt: 2026-06-01T16:00:00Z
+spec:
+  type: report
+  digest: sha256:9f1d0a6be2c34455a7d9e8b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f
+  uri: https://artifacts.example.com/trailkit/reports/tile-pipeline-2026-06-01.html
+  summary: >
+    Worker self-assessment against task completion criteria: download,
+    resume, render, and delete test results plus measured pack sizes
+    for the ten launch regions (mean 38 MB, p95 92 MB).
+  producedBy: { ref: { kind: Task, id: task-map-tile-pipeline } }
+  producedAt: 2026-06-01T16:00:00Z
+  size: 18240
+  mediaType: text/html

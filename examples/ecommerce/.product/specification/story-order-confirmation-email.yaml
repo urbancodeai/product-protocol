@@ -1,0 +1,32 @@
+pp: "0.1"
+kind: Story
+metadata:
+  id: story-order-confirmation-email
+  name: Shopper receives an order confirmation email
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-06-05T09:00:00Z
+  updatedAt: 2026-06-10T15:10:00Z
+spec:
+  narrative: >
+    As a shopper (guest or signed-in), I want a confirmation email with
+    my order number and receipt, so that I have a durable record of the
+    purchase without needing an account.
+  feature: { ref: { kind: Feature, id: feat-guest-checkout } }
+  acceptanceCriteria:
+    - id: ac-1
+      given: an order whose payment has just been captured
+      when: the confirmation pipeline runs
+      then: >
+        an email containing the order number, line items, shipping
+        address, and total is queued within 2 minutes of capture
+      verification:
+        method: automated
+    - id: ac-2
+      criterion: >
+        The email renders legibly in the top three consumer mail
+        clients and in plain-text fallback.
+      verification:
+        method: manual
+  businessRules:
+    - BR-PAY-1

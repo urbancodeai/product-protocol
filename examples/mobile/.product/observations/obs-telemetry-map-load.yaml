@@ -1,0 +1,22 @@
+pp: "0.1"
+kind: Observation
+metadata:
+  id: obs-telemetry-map-load
+  name: Offline map cold start p90 after 1.6.0
+  version: 1.0.0
+  createdAt: 2026-06-22T07:00:00Z
+spec:
+  source: telemetry
+  statement: >
+    After the 2026.06 train reached 100% rollout, cold start to
+    interactive map settled at 2140 ms p90 on the reference cohort,
+    inside the 2500 ms budget.
+  measurement:
+    metric: cold_start_to_interactive_p90
+    value: 2140
+    unit: ms
+  observedAt: 2026-06-22T07:00:00Z
+  environment: production
+  relatesTo:
+    - ref: { kind: Deployment, id: deploy-prod-train-2026-06 }
+  severity: info

@@ -1,0 +1,30 @@
+pp: "0.1"
+kind: GoldenTest
+metadata:
+  id: golden-checkin-happy-path
+  name: Check-in happy path (offline confirm, later sync)
+  version: 1.0.0
+  lifecycle: approved
+  labels:
+    dataset: mobile-core
+  createdAt: 2026-05-20T09:10:00Z
+  updatedAt: 2026-05-22T09:00:00Z
+spec:
+  scenario: >
+    A hike with a 14:00 check-in window and one designated contact; the
+    device is offline when the hiker confirms inside the window and
+    regains connectivity 40 minutes later.
+  inputs:
+    fixture: checkin-solo-hike-v1
+    windowLocal: "14:00"
+    confirmOffsetMinutes: 5
+    reconnectOffsetMinutes: 45
+  expected: >
+    The confirmation is queued locally at tap time, no escalation fires,
+    and the contact receives the "checked in" status within 60 seconds
+    of reconnect with the original confirmation timestamp preserved.
+  method: automated
+  appliesTo:
+    - ref: { kind: Story, id: story-checkin-scheduled }
+    - ref: { kind: Feature, id: feat-safety-checkin }
+  tolerance: Delivery within 60 s of reconnect; timestamps compared at second precision.

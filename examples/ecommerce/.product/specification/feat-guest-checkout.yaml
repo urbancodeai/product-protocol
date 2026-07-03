@@ -1,0 +1,20 @@
+pp: "0.1"
+kind: Feature
+metadata:
+  id: feat-guest-checkout
+  name: Guest checkout
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-20T11:00:00Z
+  updatedAt: 2026-06-10T14:30:00Z
+spec:
+  description: >
+    Complete a purchase without creating an account: email, shipping,
+    payment, order confirmation, and an optional post-purchase upgrade
+    to a full account.
+  capability: { ref: { kind: Capability, id: cap-payments } }
+  personas:
+    - guest-shopper
+  notes: >
+    Post-purchase account upgrade is in scope; social sign-in during
+    checkout is explicitly out of scope for v1.

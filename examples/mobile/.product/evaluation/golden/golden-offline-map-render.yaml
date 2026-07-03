@@ -1,0 +1,37 @@
+pp: "0.1"
+kind: GoldenTest
+metadata:
+  id: golden-offline-map-render
+  name: Offline map golden render
+  version: 1.0.0
+  lifecycle: approved
+  labels:
+    dataset: mobile-core
+  createdAt: 2026-05-20T09:00:00Z
+  updatedAt: 2026-05-22T09:00:00Z
+spec:
+  scenario: >
+    With the "gruenwald-ridge" fixture region pack installed and the
+    device in airplane mode, open the trailhead map, centre on the
+    fixture trailhead, and capture the rendered screen at zoom 12 and
+    zoom 14.
+  inputs:
+    regionPack: gruenwald-ridge-v2.sqlite
+    device: reference-android-2022
+    connectivity: airplane_mode
+    zoomLevels: [12, 14]
+  expected: >
+    Both captures match the stored golden screenshots: trails, contour
+    lines, waypoint icons, and the data attribution badge are present;
+    no blank tiles, no network-error affordances.
+  steps:
+    - step: Install the fixture region pack and enable airplane mode.
+    - step: Cold-start the app and open the gruenwald-ridge trailhead map.
+    - step: Capture at zoom 12 and zoom 14 and compare against goldens.
+  method: agentic
+  appliesTo:
+    - ref: { kind: Story, id: story-download-trail-region }
+    - ref: { kind: Feature, id: feat-offline-trail-maps }
+  tolerance: >
+    Perceptual diff SSIM >= 0.97 per capture; status bar and clock
+    regions are masked. Any missing tile is an outright fail.

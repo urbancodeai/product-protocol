@@ -1,0 +1,31 @@
+# Approval Decision for the current Constitution version. Human-only
+# per PP-0002 §6.2 and PP-0005 §6.
+pp: "0.1"
+kind: Decision
+metadata:
+  id: dec-2026-06-20-constitution-v2-1
+  name: Approve Constitution v2.1.0 (data-deletion amendment)
+  version: 1.0.0
+  createdAt: 2026-06-20T10:00:00Z
+spec:
+  context: >
+    Amendment v2.1.0 tightens COMP-1 to a 30-day deletion window
+    including restorable backups, and clarifies the tax-record
+    retention exception. Proposed 2026-06-15 after the compliance
+    review; no blocking Articles were weakened.
+  options:
+    - option: Keep the 90-day deletion window of v2.0.0
+      rationale: Less operational pressure, but out of step with the market and counsel's advice.
+    - option: Adopt the 30-day window with a pseudonymized tax-record exception
+      rationale: Meets counsel's recommendation; operationally feasible per the backup-restore audit.
+  outcome: >
+    Constitution aurora-constitution v2.1.0 approved and in force for
+    all Tasks and Deployments from 2026-06-20.
+  authority: { type: human, id: dana@example.com, name: Dana Ito }
+  decidedAt: 2026-06-20T10:00:00Z
+  affects:
+    - ref: { kind: Constitution, id: aurora-constitution, version: "2.1.0" }
+  approves: { ref: { kind: Constitution, id: aurora-constitution, version: "2.1.0" } }
+  consequences: >
+    The weekly COMP-1 sweep now flags deletion requests older than 20
+    days as at-risk; backup restore tooling must honor pseudonymization.

@@ -1,0 +1,22 @@
+# An approval Decision (PP-0002 §6.2, PP-0003 §7.1): records the human
+# authorization of the proposed -> approved transition of
+# story-guest-checkout at its exact version.
+pp: "0.1"
+kind: Decision
+metadata:
+  id: dec-2026-06-10-guest-checkout
+  name: Approve guest checkout story v1.0.0
+  version: 1.0.0
+  createdAt: 2026-06-10T15:04:00Z
+spec:
+  context: >
+    Story story-guest-checkout v1.0.0 was proposed to reduce first-time
+    buyer drop-off. Funnel telemetry and the shipping-cost knowledge
+    support prioritizing checkout friction.
+  outcome: >
+    Approved for implementation as specified.
+  authority: { type: human, id: dana@example.com, name: Dana Ito }
+  decidedAt: 2026-06-10T15:04:00Z
+  affects:
+    - ref: { kind: Story, id: story-guest-checkout, version: "1.0.0" }
+  approves: { ref: { kind: Story, id: story-guest-checkout, version: "1.0.0" } }
