@@ -1,0 +1,36 @@
+# Scheduled constitution audit; subject is the Product.
+pp: "0.1"
+kind: Evaluation
+metadata:
+  id: eval-run-2026-06-24-constitution-audit
+  name: Weekly constitution audit, 2026-06-24
+  version: 1.0.0
+  createdAt: 2026-06-24T07:20:00Z
+spec:
+  subject:
+    ref: { kind: Product, id: pulseboard }
+  category: constitution_audit
+  criteria:
+    - source:
+        ref: { kind: Constitution, id: pulse-constitution, version: "1.0.0" }
+      description: >
+        All eight Articles of pulse-constitution v1.0.0, evaluated on
+        their declared schedule: query-log audit for SEC-1/ARCH-1,
+        production telemetry for PERF-1 and REL-1, deleted-workspace
+        sweep for COMP-1, and sampled dialog audits for A11Y-1 and UX-1.
+  verdict: pass
+  score: 0.97
+  evidence:
+    - type: log
+      description: Audit run log with per-article findings.
+      uri: https://ci.pulseboard.example/audits/constitution-2026-06-24
+    - type: measurement
+      description: PERF-1 production p95 1210 ms; REL-1 error budget 64% remaining.
+      uri: https://metrics.pulseboard.example/slo/2026-06-24
+  evaluator:
+    ref: { kind: Evaluator, id: eval-pulse-quality-agent }
+  evaluatedAt: 2026-06-24T07:15:00Z
+  notes: >
+    One advisory UX-1 finding: the integrations page hides (rather
+    than gates) the warehouse connector on the free plan. Recorded for
+    planning, not blocking.

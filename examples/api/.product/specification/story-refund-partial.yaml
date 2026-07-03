@@ -1,0 +1,45 @@
+pp: "0.1"
+kind: Story
+metadata:
+  id: story-refund-partial
+  name: Issue full and partial refunds
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-09T10:10:00Z
+  updatedAt: 2026-05-18T09:00:00Z
+spec:
+  narrative: >
+    As merchant finance operations, I want to refund all or part of a
+    captured charge and see a state that matches settlement reality, so
+    reconciliation and customer messaging are accurate.
+  feature: { ref: { kind: Feature, id: feat-charge-lifecycle } }
+  acceptanceCriteria:
+    - id: ac-1
+      given: a captured charge of 5000 minor units with 2000 already refunded
+      when: a refund of 3500 is requested
+      then: the API responds 422 refund_exceeds_captured and records nothing
+      verification:
+        method: automated
+        evaluations:
+          - ref: { kind: GoldenTest, id: golden-refund-contract }
+    - id: ac-2
+      given: a captured charge that has not yet settled
+      when: a full refund is requested
+      then: the refund completes as a reversal with state "reversed" and the cardholder never sees a posted charge
+      verification:
+        method: automated
+        evaluations:
+          - ref: { kind: GoldenTest, id: golden-refund-contract }
+    - id: ac-3
+      criterion: >
+        Refund creation is idempotent under the same Idempotency-Key
+        semantics as charges.
+      verification:
+        method: automated
+    - id: ac-4
+      criterion: Every refund emits a refund.updated webhook on each state transition.
+      verification:
+        method: automated
+  businessRules:
+    - br-1
+    - br-3

@@ -1,0 +1,48 @@
+# The agent Worker (PP-0007 §2).
+pp: "0.1"
+kind: Worker
+metadata:
+  id: worker-py-agent
+  name: Pulseboard Coding Agent
+  version: 1.0.0
+  labels:
+    runtime: sandbox-b
+  owners:
+    - { type: team, id: platform, name: Platform Team }
+  createdAt: 2026-05-06T09:00:00Z
+  updatedAt: 2026-06-16T09:00:00Z
+spec:
+  description: >
+    Autonomous coding agent for the Python backend and TypeScript
+    frontend: implements services, APIs, UI flows, integrations, and
+    tests from approved Stories and triaged Issues.
+  type: agent
+  capabilities:
+    - code.python
+    - code.typescript
+    - api.rest
+    - web.frontend
+    - integrations.slack
+    - test.unit
+  constraints:
+    allowedArtifactTypes:
+      - changeset
+      - report
+    maxConcurrentTasks: 1
+    constitutionBound: true
+  contextContract:
+    requires:
+      - task
+      - specification
+      - constitution
+      - knowledge
+      - prior_attempts
+    maxContextItems: 40
+  evaluationHooks:
+    - name: lint-and-typecheck
+      description: ruff + mypy --strict and tsc --noEmit over the changeset.
+      mode: blocking
+    - name: tenant-isolation-smoke
+      description: Run the tenant-isolation golden locally before submit.
+      mode: advisory
+      evaluation: { ref: { kind: GoldenTest, id: golden-tenant-isolation } }

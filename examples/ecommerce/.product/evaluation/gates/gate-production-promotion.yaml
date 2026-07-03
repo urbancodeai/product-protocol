@@ -1,0 +1,35 @@
+# A blocking deployment-promotion gate (PP-0008 §9) over the
+# checkout-core golden dataset and the performance budget.
+pp: "0.1"
+kind: QualityGate
+metadata:
+  id: gate-production-promotion
+  name: Production promotion gate
+  version: 1.1.0
+  createdAt: 2026-05-15T08:00:00Z
+  updatedAt: 2026-06-15T08:00:00Z
+spec:
+  description: >
+    No release reaches production unless the checkout-core golden
+    dataset passes and the performance budget holds with headroom.
+  trigger: deployment_promotion
+  mode: blocking
+  requires:
+    - description: >
+        Every approved golden test in the checkout-core dataset has a
+        current passing evaluation.
+      selector:
+        category: regression
+        labels:
+          dataset: checkout-core
+      verdict: pass
+    - description: >
+        The guest checkout golden test specifically passes (named
+        explicitly so it cannot be dropped by relabeling).
+      evaluations:
+        - ref: { kind: GoldenTest, id: golden-checkout-happy-path }
+    - description: >
+        Performance budget evaluations pass with at least 10% headroom.
+      selector:
+        category: performance
+      minScore: 0.9

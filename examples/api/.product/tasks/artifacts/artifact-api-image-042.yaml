@@ -1,0 +1,18 @@
+pp: "0.1"
+kind: Artifact
+metadata:
+  id: artifact-api-image-042
+  name: brookpay-api container image 0.4.2
+  version: 1.0.0
+  createdAt: 2026-05-27T09:00:00Z
+spec:
+  type: binary
+  digest: sha256:f3a9c1e5b7d20486a2c4e6f8091b3d5c7e9a0b2d4f6c8e1a3b5d7f9c0e2a4b6d
+  uri: https://registry.example.com/brookpay/api@sha256:f3a9c1e5b7d20486a2c4e6f8091b3d5c7e9a0b2d4f6c8e1a3b5d7f9c0e2a4b6d
+  summary: >
+    Release image 0.4.2 containing the charges endpoint changeset;
+    payload lives in the container registry, addressed here by digest.
+  producedBy: { ref: { kind: Task, id: task-charges-endpoint } }
+  producedAt: 2026-05-27T09:00:00Z
+  size: 148897792
+  mediaType: application/vnd.oci.image.index.v1+json

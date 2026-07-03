@@ -1,0 +1,47 @@
+pp: "0.1"
+kind: Task
+metadata:
+  id: task-refunds-endpoint
+  name: Refunds endpoint with settlement-aware states
+  version: 1.0.0
+  createdAt: 2026-05-18T09:05:00Z
+  updatedAt: 2026-06-24T09:00:00Z
+spec:
+  intent: >
+    Implement POST /v1/refunds with full/partial amounts, the
+    refund-exceeds-captured guard (br-1), pre/post-settlement states
+    (br-3), idempotency, and refund.updated webhook emission.
+  tracesTo: { ref: { kind: Story, id: story-refund-partial } }
+  dependsOn:
+    - ref: { kind: Task, id: task-charges-endpoint }
+  priority: critical
+  capabilities:
+    - code.go
+    - api.rest
+    - db.postgres
+    - test.contract
+  context:
+    knowledge:
+      - ref: { kind: Knowledge, id: know-domain-settlement-cutoffs }
+    specifications:
+      - ref: { kind: Specification, id: spec-brookpay-payments, version: "1.0.0" }
+      - ref: { kind: Story, id: story-refund-partial }
+    constitutionArticles:
+      - art-rel-idempotency
+      - art-comp-audit-trail
+      - art-code-money-types
+  completion:
+    criteria:
+      - id: cc-1
+        statement: Story acceptance criteria pass in the refund contract suite, including the over-refund guard.
+    evaluations:
+      - ref: { kind: GoldenTest, id: golden-refund-contract }
+      - ref: { kind: QualityGate, id: gate-task-acceptance }
+    artifacts:
+      - changeset
+      - report
+status:
+  state: in_progress
+  worker: { ref: { kind: Worker, id: worker-pay-agent } }
+  attempts: 1
+  claimedAt: 2026-06-22T08:30:00Z

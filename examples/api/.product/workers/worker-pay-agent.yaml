@@ -1,0 +1,42 @@
+pp: "0.1"
+kind: Worker
+metadata:
+  id: worker-pay-agent
+  name: BrookPay backend coding agent
+  version: 1.1.0
+  createdAt: 2026-05-16T09:00:00Z
+  updatedAt: 2026-06-10T09:00:00Z
+spec:
+  description: >
+    Autonomous coding agent for the BrookPay API service: endpoint
+    implementation, contract tests, and migration authoring. Runs in a
+    sandbox without production credentials; cannot approve governed
+    objects or promote deployments.
+  type: agent
+  capabilities:
+    - code.go
+    - api.rest
+    - db.postgres
+    - test.contract
+  constraints:
+    allowedArtifactTypes:
+      - changeset
+      - report
+    maxConcurrentTasks: 2
+    constitutionBound: true
+  contextContract:
+    requires:
+      - task
+      - specification
+      - constitution
+      - knowledge
+      - prior_attempts
+    maxContextItems: 30
+  evaluationHooks:
+    - name: contract-suite
+      description: Run the contract-fixtures golden suite against a local instance before submitting.
+      mode: blocking
+      evaluation: { ref: { kind: GoldenTest, id: golden-charge-contract } }
+    - name: money-type-lint
+      description: Static analysis for floating-point arithmetic in the money path (art-code-money-types).
+      mode: blocking

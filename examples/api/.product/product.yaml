@@ -1,0 +1,37 @@
+pp: "0.1"
+kind: Product
+metadata:
+  id: brookpay
+  name: BrookPay Payments API
+  version: 1.0.0
+  labels:
+    domain: payments
+    surface: api
+  owners:
+    - { type: human, id: ravi@brookpay.example.com, name: Ravi Menon }
+  createdAt: 2026-05-05T09:00:00Z
+  updatedAt: 2026-07-01T09:00:00Z
+spec:
+  summary: >
+    BrookPay is a payments API service for online merchants: create and
+    capture charges, issue full or partial refunds, and receive signed
+    webhooks for asynchronous events. Every mutating endpoint is
+    idempotent via client-supplied idempotency keys. Releases reach
+    production through canary deployments gated on contract golden
+    tests and latency budgets.
+  brain: { ref: { kind: ProductBrain, id: brookpay-brain } }
+  constitutions:
+    - ref: { kind: Constitution, id: brookpay-constitution, version: "1.0.0" }
+  goals:
+    - ref: { kind: Goal, id: goal-auth-success-rate }
+    - ref: { kind: Goal, id: goal-time-to-first-charge }
+  environments:
+    - name: staging
+      classification: pre_production
+      description: Merchant-facing sandbox and pre-production verification.
+    - name: production
+      classification: production
+      description: Live traffic; canary strategy only.
+  repositories:
+    - { name: api, uri: "https://git.example.com/brookpay/api.git", role: source }
+    - { name: images, uri: "https://registry.example.com/brookpay", role: artifact }

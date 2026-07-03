@@ -1,0 +1,31 @@
+pp: "0.1"
+kind: QualityGate
+metadata:
+  id: gate-canary-promotion
+  name: Canary promotion gate
+  version: 1.0.0
+  createdAt: 2026-06-01T10:30:00Z
+spec:
+  description: >
+    A canary widens (5% -> 25% -> 100%) only while the contract golden
+    dataset passes against the canary and edge latency stays within the
+    p99 budget; any failure triggers automatic rollback
+    (dec-canary-deployments).
+  trigger: deployment_promotion
+  mode: blocking
+  requires:
+    - description: Contract golden dataset passes against the canary build.
+      selector:
+        category: regression
+        labels:
+          dataset: contract-fixtures-v3
+      verdict: pass
+    - description: Canary performance evaluation passes with p99 within budget.
+      selector:
+        category: performance
+      verdict: pass
+      minScore: 0.9
+    - description: No blocking constitution-audit failures for the release.
+      selector:
+        category: constitution_audit
+      verdict: pass

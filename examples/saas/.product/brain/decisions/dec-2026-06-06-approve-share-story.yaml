@@ -1,0 +1,21 @@
+# Approval Decision for a Story at its exact version (PP-0002 §6.2).
+pp: "0.1"
+kind: Decision
+metadata:
+  id: dec-2026-06-06-approve-share-story
+  name: Approve dashboard share-link story v1.0.0
+  version: 1.0.0
+  createdAt: 2026-06-06T11:20:00Z
+spec:
+  context: >
+    Story story-share-dashboard-link v1.0.0 was proposed as the first
+    slice of dashboard sharing, after the scope-leak lesson forced a
+    redesign around workspace-scoped share tokens.
+  outcome: >
+    Approved for implementation as specified; external (outside-
+    workspace) sharing remains gated to the team plan per BR-PLAN-1.
+  authority: { type: human, id: mila@pulseboard.example, name: Mila Torres }
+  decidedAt: 2026-06-06T11:20:00Z
+  affects:
+    - ref: { kind: Story, id: story-share-dashboard-link, version: "1.0.0" }
+  approves: { ref: { kind: Story, id: story-share-dashboard-link, version: "1.0.0" } }

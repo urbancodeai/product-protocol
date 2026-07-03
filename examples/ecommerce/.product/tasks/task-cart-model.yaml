@@ -1,0 +1,52 @@
+# A completed Task (PP-0006 §5). It traces to a resolved Issue rather
+# than a Story — a Task's single parent may be either (PP-0006 §2.3).
+# Its Artifacts live in tasks/artifacts/ and were accepted by
+# evaluation/runs/eval-run-2026-06-18-cart-acceptance.yaml.
+pp: "0.1"
+kind: Task
+metadata:
+  id: task-cart-model
+  name: Persistent cart data model
+  version: 1.0.0
+  createdAt: 2026-06-12T09:00:00Z
+  updatedAt: 2026-06-18T10:00:00Z
+spec:
+  intent: >
+    Replace the session-bound cart with a persistent cart model keyed
+    by an anonymous cart token, so carts survive refreshes and are
+    reusable by signed-in and guest checkout, with shared validation
+    middleware.
+  tracesTo: { ref: { kind: Issue, id: issue-cart-loss-on-refresh } }
+  priority: high
+  capabilities:
+    - code.typescript
+  context:
+    specifications:
+      - { ref: { kind: Specification, id: spec-guest-checkout, version: "2.0.0" } }
+    constitutionArticles:
+      - ARCH-1
+      - CODE-1
+    notes: >
+      The cart token is an opaque random id; never derive it from user
+      data. Expose validation as middleware for reuse by checkout.
+  completion:
+    criteria:
+      - id: cc-1
+        statement: Cart contents survive a session refresh and a browser restart within 30 days.
+      - id: cc-2
+        statement: Cart validation is exposed as middleware reusable by the checkout endpoints.
+    evaluations:
+      - { ref: { kind: GoldenTest, id: golden-cart-persistence } }
+    artifacts:
+      - changeset
+      - report
+  constraints:
+    effortBudget: PT6H
+    maxAttempts: 3
+status:
+  state: done
+  worker: { ref: { kind: Worker, id: worker-ts-agent } }
+  attempts: 1
+  claimedAt: 2026-06-15T08:30:00Z
+  submittedAt: 2026-06-17T16:45:00Z
+  completedAt: 2026-06-18T09:40:00Z

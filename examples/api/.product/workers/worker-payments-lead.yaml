@@ -1,0 +1,32 @@
+pp: "0.1"
+kind: Worker
+metadata:
+  id: worker-payments-lead
+  name: Payments lead (human)
+  version: 1.0.0
+  createdAt: 2026-05-16T09:10:00Z
+  updatedAt: 2026-06-01T12:00:00Z
+spec:
+  description: >
+    Human payments lead: reviews money-path changes, owns production
+    deploys and rollbacks, holds acquirer credentials, and handles work
+    requiring compliance judgment.
+  type: human
+  capabilities:
+    - review.code
+    - ops.deploy
+    - compliance.review
+    - db.postgres
+  constraints:
+    allowedArtifactTypes:
+      - changeset
+      - report
+      - document
+      - binary
+    maxConcurrentTasks: 4
+    constitutionBound: true
+  evaluationHooks:
+    - name: canary-gate-check
+      description: Confirms the canary promotion gate is green before widening traffic.
+      mode: blocking
+      evaluation: { ref: { kind: QualityGate, id: gate-canary-promotion } }

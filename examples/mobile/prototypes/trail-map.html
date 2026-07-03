@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrailKit prototype — Trail map screen</title>
+<style>
+  :root { --ink:#1c2a22; --pine:#2f6b4f; --amber:#e2a33d; --paper:#f4f1e8; }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: system-ui, sans-serif; background:#d9d4c5; display:flex; justify-content:center; padding:24px; }
+  .phone { width:360px; height:720px; background:var(--paper); border-radius:28px; border:6px solid var(--ink); overflow:hidden; display:flex; flex-direction:column; }
+  header { padding:12px 16px; background:var(--pine); color:#fff; display:flex; justify-content:space-between; align-items:center; }
+  header .offline { font-size:12px; background:rgba(255,255,255,.2); padding:2px 8px; border-radius:10px; }
+  .map { flex:1; position:relative; background:
+    repeating-linear-gradient(45deg,#cfe3d3 0 22px,#c2d9c8 22px 44px); }
+  .trail { position:absolute; inset:0; }
+  .marker { position:absolute; left:48%; top:42%; width:18px; height:18px; background:var(--amber); border:3px solid #fff; border-radius:50%; }
+  .attribution { position:absolute; right:8px; bottom:8px; font-size:10px; background:rgba(255,255,255,.85); padding:2px 6px; border-radius:4px; }
+  .stats { display:flex; gap:8px; padding:12px 16px; background:#fff; }
+  .stat { flex:1; text-align:center; }
+  .stat b { display:block; font-size:20px; color:var(--ink); }
+  .stat span { font-size:11px; color:#6b7a6f; text-transform:uppercase; letter-spacing:.05em; }
+  .actions { padding:12px 16px 20px; background:#fff; }
+  button { width:100%; min-height:56px; font-size:18px; font-weight:700; border:none; border-radius:14px; background:var(--pine); color:#fff; }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <header>
+      <strong>Grünwald Ridge</strong>
+      <span class="offline">Offline · pack v2</span>
+    </header>
+    <div class="map">
+      <svg class="trail" viewBox="0 0 360 460" aria-label="Trail path">
+        <path d="M40 420 C 120 340, 90 260, 170 210 S 300 120, 320 50"
+              fill="none" stroke="#2f6b4f" stroke-width="5" stroke-dasharray="10 7" stroke-linecap="round"/>
+      </svg>
+      <div class="marker" role="img" aria-label="Current position"></div>
+      <div class="attribution">© OpenStreetMap contributors (ODbL)</div>
+    </div>
+    <div class="stats" aria-label="Activity stats">
+      <div class="stat"><b>6.4</b><span>km</span></div>
+      <div class="stat"><b>412</b><span>m up</span></div>
+      <div class="stat"><b>1:47</b><span>elapsed</span></div>
+    </div>
+    <div class="actions">
+      <button type="button">Pause tracking</button>
+    </div>
+  </div>
+</body>
+</html>

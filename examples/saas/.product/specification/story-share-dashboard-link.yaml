@@ -1,0 +1,55 @@
+# Approved 2026-06-06 by Decision dec-2026-06-06-approve-share-story.
+pp: "0.1"
+kind: Story
+metadata:
+  id: story-share-dashboard-link
+  name: Analyst shares a dashboard by link
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-29T10:00:00Z
+  updatedAt: 2026-06-06T11:20:00Z
+  owners:
+    - { type: human, id: mila@pulseboard.example, name: Mila Torres }
+spec:
+  narrative: >
+    As an analyst on a team plan, I want to share a dashboard with an
+    external stakeholder via a revocable link, so that they can follow
+    the numbers without a Pulseboard account.
+  feature: { ref: { kind: Feature, id: feat-dashboard-sharing } }
+  acceptanceCriteria:
+    - id: ac-1
+      given: a team-plan workspace and a dashboard the analyst can edit
+      when: the analyst creates an external share link and opens it in a signed-out session
+      then: >
+        the dashboard renders read-only with current data, and the
+        viewer sees only that dashboard — no navigation into the
+        workspace
+      verification:
+        method: automated
+        evaluations:
+          - ref: { kind: GoldenTest, id: golden-share-link-roundtrip }
+    - id: ac-2
+      criterion: >
+        A revoked link stops resolving within 60 seconds, returning a
+        neutral "link no longer active" page with no workspace details.
+      verification:
+        method: automated
+        evaluations:
+          - ref: { kind: GoldenTest, id: golden-share-link-roundtrip }
+    - id: ac-3
+      criterion: >
+        A share token presented against any other workspace's data
+        resolves nothing (Article SEC-1, BR-TEN-1).
+      verification:
+        method: automated
+        evaluations:
+          - ref: { kind: GoldenTest, id: golden-tenant-isolation }
+    - id: ac-4
+      criterion: >
+        The share dialog matches the approved prototype's structure
+        and answers "who can see this right now?" at a glance.
+      verification:
+        method: agentic
+  businessRules:
+    - BR-PLAN-1
+    - BR-TEN-1

@@ -1,0 +1,32 @@
+pp: "0.1"
+kind: Story
+metadata:
+  id: story-webhook-signature
+  name: Rotate webhook signing secrets without dropped events
+  version: 1.0.0
+  lifecycle: proposed
+  createdAt: 2026-06-20T09:00:00Z
+  updatedAt: 2026-06-20T09:00:00Z
+spec:
+  narrative: >
+    As a merchant integration engineer, I want to rotate my webhook
+    signing secret with an overlap window, so I can roll credentials
+    without a window of unverifiable or dropped events.
+  feature: { ref: { kind: Feature, id: feat-webhook-delivery } }
+  acceptanceCriteria:
+    - id: ac-1
+      given: a merchant with an active signing secret S1
+      when: rotation is initiated creating secret S2
+      then: events are signed with both S1 and S2 for the overlap window, and with only S2 after it ends
+      verification:
+        method: automated
+    - id: ac-2
+      criterion: >
+        The overlap window is merchant-configurable between 1 hour and
+        7 days, defaulting to 24 hours.
+      verification:
+        method: automated
+    - id: ac-3
+      criterion: Rotation and its window are auditable in the merchant dashboard event log.
+      verification:
+        method: manual

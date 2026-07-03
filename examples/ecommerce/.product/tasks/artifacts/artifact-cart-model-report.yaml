@@ -1,0 +1,21 @@
+# The Worker's self-assessment for the same submission, delivered as a
+# report Artifact per PP-0007 §7.
+pp: "0.1"
+kind: Artifact
+metadata:
+  id: artifact-cart-model-report
+  name: Cart model self-assessment report
+  version: 1.0.0
+  createdAt: 2026-06-17T16:42:00Z
+spec:
+  type: report
+  digest: sha256:9c22f5b8a7d6e5f4c3b2a190807f6e5d4c3b2a1908f7e6d5c4b3a29180706f5e
+  uri: https://ci.example.com/aurora/runs/task-cart-model/attempt-1/self-assessment.md
+  summary: >
+    Worker self-assessment: both completion criteria met; notes the
+    30-day cart TTL as a product decision to revisit; declares no new
+    dependencies and no constitution exceptions used.
+  producedBy: { ref: { kind: Task, id: task-cart-model } }
+  producedAt: 2026-06-17T16:42:00Z
+  size: 4210
+  mediaType: text/markdown

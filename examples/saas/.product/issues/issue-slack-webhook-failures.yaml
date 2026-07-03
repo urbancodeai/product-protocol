@@ -1,0 +1,25 @@
+# An open Issue raised from an incident Observation.
+pp: "0.1"
+kind: Issue
+metadata:
+  id: issue-slack-webhook-failures
+  name: Digest retry loop ignores Slack Retry-After
+  version: 1.0.0
+  createdAt: 2026-06-30T15:10:00Z
+  updatedAt: 2026-07-01T09:30:00Z
+spec:
+  title: Digest retry loop ignores Slack Retry-After
+  description: >
+    The legacy digest sender retries 429 responses immediately instead
+    of honoring Retry-After, amplifying rate limiting into delivery
+    failure and one temporary app ban. know-slack-rate-limits already
+    documents the required behavior; the rewrite in
+    task-slack-digest-job must subsume this fix.
+  severity: high
+  source:
+    type: observation
+    ref: { ref: { kind: Observation, id: obs-slack-webhook-outage } }
+  affects:
+    - ref: { kind: Feature, id: feat-slack-digest }
+status:
+  state: open

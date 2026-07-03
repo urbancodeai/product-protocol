@@ -1,0 +1,118 @@
+pp: "0.1"
+kind: Constitution
+metadata:
+  id: brookpay-constitution
+  name: BrookPay Constitution
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-06T09:00:00Z
+  updatedAt: 2026-05-11T09:00:00Z
+  owners:
+    - { type: human, id: ravi@brookpay.example.com, name: Ravi Menon }
+spec:
+  preamble: >
+    BrookPay moves money. Correctness beats speed, auditability beats
+    convenience, and no rule below may be traded away for a feature.
+  articles:
+    - id: art-sec-credentials
+      category: security
+      rule: >
+        API keys MUST be scoped and revocable; secrets MUST never
+        appear in code, logs, Artifacts, or PP objects. Webhook
+        payloads MUST be HMAC-signed and timestamp-replay-protected.
+      enforcement:
+        mode: blocking
+        evaluatedOn:
+          - task_submission
+          - deployment
+    - id: art-comp-chd
+      category: compliance
+      rule: >
+        Cardholder-data handling: primary account numbers MUST be
+        accepted only by the tokenization endpoint, MUST never be
+        stored or logged in any form (including truncated beyond
+        first-6/last-4), and MUST never appear in webhook payloads,
+        error messages, or telemetry.
+      rationale: >
+        Generic cardholder-data hygiene rule; certification claims are
+        out of scope for this example.
+      enforcement:
+        mode: blocking
+        evaluatedOn:
+          - task_submission
+          - deployment
+          - schedule
+        monitor: Log scanner for PAN-shaped tokens runs hourly in production.
+    - id: art-comp-audit-trail
+      category: compliance
+      rule: >
+        Every money movement (charge, capture, refund) MUST produce an
+        immutable double-entry ledger record before the API response is
+        sent; amounts MUST be integer minor units end to end.
+      enforcement:
+        mode: blocking
+        evaluatedOn:
+          - task_submission
+    - id: art-perf-latency
+      category: performance
+      rule: >
+        Synchronous payment endpoints MUST keep charge_create_latency_p99
+        within 300 ms at the edge; a deployment that breaches the budget
+        on canary MUST roll back automatically.
+      enforcement:
+        mode: blocking
+        evaluatedOn:
+          - deployment
+          - observation
+        monitor: Edge latency percentiles, alert at 280 ms p99 over 5 minutes.
+    - id: art-rel-idempotency
+      category: reliability
+      rule: >
+        Every mutating endpoint MUST be idempotent via Idempotency-Key;
+        retried requests MUST replay the stored response and MUST NOT
+        create duplicate money movements under any failure or
+        concurrency scenario.
+      enforcement:
+        mode: blocking
+        evaluatedOn:
+          - task_submission
+          - deployment
+        evaluations:
+          - ref: { kind: GoldenTest, id: golden-charge-contract }
+    - id: art-arch-api-compat
+      category: architecture
+      rule: >
+        The public API contract under /v1 MUST remain backward
+        compatible: fields are only added, never removed or retyped;
+        error codes are append-only; breaking changes require a new
+        version prefix.
+      enforcement:
+        mode: blocking
+        evaluatedOn:
+          - task_submission
+          - deployment
+    - id: art-code-money-types
+      category: coding_standards
+      rule: >
+        Code in the money path MUST use the shared Money type (integer
+        minor units + currency); floating-point arithmetic on amounts
+        MUST fail static analysis. All handlers MUST have contract
+        tests for success and every documented error shape.
+      enforcement:
+        mode: blocking
+        evaluatedOn:
+          - task_submission
+    - id: art-rel-webhook-isolation
+      category: reliability
+      rule: >
+        Asynchronous work (webhook dispatch, retries) MUST be isolated
+        from the synchronous payment path: separate pools and queues,
+        with jittered exponential backoff and per-merchant concurrency
+        caps on retries.
+      rationale: Adopted after the 2026-06-25 webhook-storm incident (know-lesson-webhook-backoff).
+      enforcement:
+        mode: advisory
+        evaluatedOn:
+          - task_submission
+          - observation
+        monitor: Dispatcher pool saturation vs charge-path latency correlation dashboard.

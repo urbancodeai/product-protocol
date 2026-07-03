@@ -1,0 +1,29 @@
+# Blocking task-acceptance gate (PP-0008 §9).
+pp: "0.1"
+kind: QualityGate
+metadata:
+  id: gate-changeset-acceptance
+  name: Changeset acceptance gate
+  version: 1.0.0
+  createdAt: 2026-05-13T09:00:00Z
+  updatedAt: 2026-05-13T09:00:00Z
+spec:
+  description: >
+    No submitted Task is accepted without a passing acceptance
+    evaluation of its Artifacts and a passing security evaluation
+    covering tenant isolation (Article SEC-1).
+  trigger: task_acceptance
+  mode: blocking
+  requires:
+    - description: >
+        A current acceptance-category evaluation of the submitted
+        Artifacts passes.
+      selector:
+        category: acceptance
+      verdict: pass
+    - description: >
+        A current security-category evaluation passes, including the
+        tenant-isolation golden where the change touches data access.
+      selector:
+        category: security
+      verdict: pass

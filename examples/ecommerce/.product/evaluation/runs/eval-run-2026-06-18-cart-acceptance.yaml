@@ -1,0 +1,46 @@
+# The acceptance Evaluation (PP-0008 §4) that moved task-cart-model to
+# `done`: subject is the submitted Artifact, criteria come from the
+# Task's completion criteria and the golden test, and every Evidence
+# item is independently checkable.
+pp: "0.1"
+kind: Evaluation
+metadata:
+  id: eval-run-2026-06-18-cart-acceptance
+  name: Acceptance — persistent cart model (attempt 1)
+  version: 1.0.0
+  createdAt: 2026-06-18T09:35:00Z
+spec:
+  subject:
+    ref: { kind: Artifact, id: artifact-cart-model-changeset, version: "1.0.0" }
+  category: acceptance
+  criteria:
+    - source:
+        ref: { kind: Task, id: task-cart-model }
+      description: >
+        Task completion criteria cc-1 (cart survives refresh, restart,
+        and 30-day return) and cc-2 (validation exposed as reusable
+        middleware).
+    - source:
+        ref: { kind: GoldenTest, id: golden-cart-persistence, version: "1.2.0" }
+      description: Cart contents survive a session refresh (golden).
+  verdict: pass
+  score: 0.97
+  dimensions:
+    - { name: correctness, score: 1.0, weight: 0.7 }
+    - { name: maintainability, score: 0.9, weight: 0.3 }
+  evidence:
+    - type: test_report
+      description: Harness report for the cart-persistence golden scenario.
+      path: evaluation/runs/evidence/eval-run-2026-06-18/report.json
+      digest: sha256:7d1f2a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f7
+    - type: log
+      description: Worker self-assessment reviewed and cross-checked.
+      artifact:
+        ref: { kind: Artifact, id: artifact-cart-model-report }
+  evaluator:
+    ref: { kind: Evaluator, id: eval-checkout-agent }
+  evaluatedAt: 2026-06-18T09:30:00Z
+  notes: >
+    Middleware reuse verified by importing it from a scratch checkout
+    stub. The 30-day TTL is recorded in the self-assessment as a
+    product decision to revisit.

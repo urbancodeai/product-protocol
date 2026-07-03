@@ -1,0 +1,28 @@
+# An earlier production Deployment (PP-0010 §6): the canary release of
+# the cart model, later superseded by the full rollout (prod-032).
+pp: "0.1"
+kind: Deployment
+metadata:
+  id: deploy-2026-06-20-prod-031
+  name: Production release 31 — persistent cart model (canary)
+  version: 1.0.0
+  createdAt: 2026-06-20T09:00:00Z
+spec:
+  environment: production
+  artifacts:
+    - ref: { kind: Artifact, id: artifact-cart-model-changeset, version: "1.0.0" }
+  gates:
+    - ref: { kind: QualityGate, id: gate-production-promotion }
+  strategy: canary
+  requestedBy: { type: agent, id: release-manager-agent, name: Release Manager }
+  requestedAt: 2026-06-20T09:00:00Z
+status:
+  state: superseded
+  evaluations:
+    - ref: { kind: Evaluation, id: eval-run-2026-06-18-cart-acceptance }
+    - ref: { kind: Evaluation, id: eval-run-2026-06-19-perf-checkout }
+  startedAt: 2026-06-20T09:05:00Z
+  completedAt: 2026-06-20T09:40:00Z
+  reason: >
+    Canary at 10% of traffic for 48 hours; superseded by full rollout
+    deploy-2026-06-22-prod-032.

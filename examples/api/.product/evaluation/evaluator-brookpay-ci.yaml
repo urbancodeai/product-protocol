@@ -1,0 +1,20 @@
+pp: "0.1"
+kind: Evaluator
+metadata:
+  id: evaluator-brookpay-ci
+  name: BrookPay CI evaluator
+  version: 1.0.0
+  createdAt: 2026-05-16T10:00:00Z
+spec:
+  description: >
+    Automated evaluator for BrookPay: runs the contract golden suites
+    against candidate builds, replays recorded traffic for performance
+    verdicts, scans for cardholder-data leakage, and audits changes
+    against the Constitution. Distinct principal from all Workers.
+  type: automated
+  categories:
+    - regression
+    - acceptance
+    - performance
+    - security
+    - constitution_audit

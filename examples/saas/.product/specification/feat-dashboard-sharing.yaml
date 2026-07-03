@@ -1,0 +1,22 @@
+pp: "0.1"
+kind: Feature
+metadata:
+  id: feat-dashboard-sharing
+  name: Dashboard sharing
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-21T09:00:00Z
+  updatedAt: 2026-06-06T11:20:00Z
+spec:
+  description: >
+    Share a dashboard inside the workspace by default, or externally
+    via a revocable, workspace-scoped share link. External sharing is
+    a team-plan feature; free workspaces see the upgrade path.
+  capability: { ref: { kind: Capability, id: cap-dashboards } }
+  personas:
+    - team-admin
+    - analyst
+  notes: >
+    Public "anyone with the link" embeds were removed after
+    issue-share-scope-leak; every link is now workspace-scoped and
+    revocable.

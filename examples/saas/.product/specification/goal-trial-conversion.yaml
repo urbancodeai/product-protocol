@@ -1,0 +1,28 @@
+pp: "0.1"
+kind: Goal
+metadata:
+  id: goal-trial-conversion
+  name: Raise trial-to-paid conversion
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-05T09:10:00Z
+  updatedAt: 2026-05-28T15:00:00Z
+  owners:
+    - { type: human, id: mila@pulseboard.example, name: Mila Torres }
+spec:
+  statement: >
+    More trialing workspaces should reach a paid plan. Make the value
+    of the team plan visible during the trial, especially around
+    sharing and integrations.
+  metric:
+    name: trial_to_paid_rate
+    description: Share of 14-day trials converting to a paid plan within 30 days of trial start.
+    unit: percent
+    baseline: 6.5
+    target: 10
+    direction: increase
+  timeframe: 2026-Q4
+  rationale: >
+    Sharing behavior during trials appears to predict conversion
+    (know-trial-upgrade-trigger); plan gating should surface upgrade
+    value at those moments.

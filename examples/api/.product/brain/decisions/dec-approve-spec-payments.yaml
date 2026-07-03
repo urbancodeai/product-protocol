@@ -1,0 +1,25 @@
+pp: "0.1"
+kind: Decision
+metadata:
+  id: dec-approve-spec-payments
+  name: Approve BrookPay Payments Specification 1.0.0
+  version: 1.0.0
+  createdAt: 2026-05-15T16:00:00Z
+spec:
+  context: >
+    The payments specification (charges, refunds, webhooks,
+    idempotency) was proposed on 2026-05-12 and reviewed by engineering
+    and the compliance officer.
+  outcome: >
+    Specification spec-brookpay-payments at version 1.0.0 is approved
+    and immutable; amendments require a new draft version.
+  authority: { type: human, id: ravi@brookpay.example.com, name: Ravi Menon }
+  decidedAt: 2026-05-15T16:00:00Z
+  approves:
+    ref: { kind: Specification, id: spec-brookpay-payments, version: "1.0.0" }
+  affects:
+    - ref: { kind: Specification, id: spec-brookpay-payments, version: "1.0.0" }
+  consequences: >
+    Planning may decompose the specification. Representative approval
+    record; sibling approvals of other governed objects follow the same
+    shape.

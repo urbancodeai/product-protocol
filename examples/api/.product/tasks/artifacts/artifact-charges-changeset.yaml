@@ -1,0 +1,20 @@
+pp: "0.1"
+kind: Artifact
+metadata:
+  id: artifact-charges-changeset
+  name: Charges endpoint changeset
+  version: 1.0.0
+  createdAt: 2026-05-26T14:50:00Z
+spec:
+  type: changeset
+  digest: sha256:2d7f9c4e8b1a3f5d6c0e2a4b8d9f1c3e5a7b9d0f2c4e6a8b0d1f3e5c7a9b1d3f
+  uri: https://git.example.com/brookpay/api/commit/4f7d2c91b8a6e5f3d0c2b4a698e7d5c3b1a09f8e
+  path: services/charges
+  summary: >
+    Adds POST /v1/charges and /capture with the idempotency layer
+    (unique constraint + response cache in one transaction), ledger
+    write-before-response, and the full contract-test suite.
+  producedBy: { ref: { kind: Task, id: task-charges-endpoint } }
+  producedAt: 2026-05-26T14:50:00Z
+  size: 58120
+  mediaType: text/x-diff

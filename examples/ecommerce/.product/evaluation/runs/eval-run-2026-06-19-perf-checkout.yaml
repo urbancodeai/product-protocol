@@ -1,0 +1,41 @@
+# A performance Evaluation with measurement-backed Evidence and a
+# score, used by gate-production-promotion (minScore 0.9).
+pp: "0.1"
+kind: Evaluation
+metadata:
+  id: eval-run-2026-06-19-perf-checkout
+  name: Performance — cart endpoints against Article PERF-1
+  version: 1.0.0
+  createdAt: 2026-06-19T18:10:00Z
+spec:
+  subject:
+    ref: { kind: Artifact, id: artifact-cart-model-changeset, version: "1.0.0" }
+  category: performance
+  criteria:
+    - source:
+        ref: { kind: Constitution, id: aurora-constitution, version: "2.1.0" }
+      description: >
+        Article PERF-1: p95 server response time of user-facing
+        endpoints at or below 300 ms, exercised at 2x forecast load in
+        staging.
+  verdict: pass
+  score: 0.94
+  dimensions:
+    - { name: p95_latency, score: 0.94, weight: 0.8 }
+    - { name: error_rate, score: 1.0, weight: 0.2 }
+  evidence:
+    - type: measurement
+      description: >
+        Cart and checkout endpoints p95 189 ms against the 300 ms
+        Article PERF-1 budget at 2x forecast load (30-minute run).
+      uri: https://metrics.example.com/aurora/runs/perf-2026-06-19/latency
+    - type: test_report
+      description: Load-test harness report.
+      path: evaluation/runs/evidence/eval-run-2026-06-19/loadtest.json
+      digest: sha256:c1d2e3f405162738495a6b7c8d9e0f102132435465768798a9bacbdcedfe0f10
+  evaluator:
+    ref: { kind: Evaluator, id: eval-checkout-agent }
+  evaluatedAt: 2026-06-19T18:00:00Z
+  notes: >
+    Headroom 37%; comfortably above the promotion gate's 10% headroom
+    floor.

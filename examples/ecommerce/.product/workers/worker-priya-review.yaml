@@ -1,0 +1,38 @@
+# A human Worker under the same contract (PP-0007 §2): humans claim
+# Tasks, produce Artifacts, and submit evidence exactly like agents.
+pp: "0.1"
+kind: Worker
+metadata:
+  id: worker-priya-review
+  name: Priya Shah (UX and content review)
+  version: 1.0.0
+  owners:
+    - { type: human, id: priya@example.com, name: Priya Shah }
+  createdAt: 2026-05-05T09:10:00Z
+  updatedAt: 2026-05-05T09:10:00Z
+spec:
+  description: >
+    Human worker for UX review, copywriting, and escalations that
+    agents mark blocked: reviews checkout flows against the approved
+    prototypes and owns email content quality.
+  type: human
+  capabilities:
+    - review.ux
+    - review.code
+    - content.copywriting
+  constraints:
+    allowedArtifactTypes:
+      - document
+      - report
+      - prototype
+    maxConcurrentTasks: 2
+    constitutionBound: true
+  contextContract:
+    requires:
+      - task
+      - specification
+      - constitution
+  evaluationHooks:
+    - name: ux-review-checklist
+      description: Manual checklist covering UX-1 and the spec's UX principles.
+      mode: advisory

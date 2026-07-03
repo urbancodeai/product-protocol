@@ -1,0 +1,23 @@
+# A telemetry Observation with a measurement. It is provenance for
+# Knowledge know-cart-abandon-shipping (the learning loop, PP-0010 §7).
+pp: "0.1"
+kind: Observation
+metadata:
+  id: obs-funnel-2026-06
+  name: Payment-step drop-off, June 2026 funnel
+  version: 1.0.0
+  createdAt: 2026-06-28T08:00:00Z
+spec:
+  source: telemetry
+  statement: >
+    June funnel telemetry shows a 23% drop-off at the payment step for
+    orders under $25 when shipping cost first appears there, versus 9%
+    when a shipping estimate is shown on the cart page.
+  measurement:
+    metric: checkout_payment_step_dropoff
+    value: 23
+    unit: percent
+  observedAt: 2026-06-27T23:59:00Z
+  environment: production
+  relatesTo:
+    - ref: { kind: Goal, id: goal-checkout-conversion }

@@ -1,0 +1,36 @@
+# Blocking deployment-promotion gate over the pulse-core dataset,
+# the named tenancy golden, and the performance budget.
+pp: "0.1"
+kind: QualityGate
+metadata:
+  id: gate-prod-promotion
+  name: Production promotion gate
+  version: 1.0.0
+  createdAt: 2026-05-13T09:10:00Z
+  updatedAt: 2026-05-13T09:10:00Z
+spec:
+  description: >
+    No release reaches production unless the pulse-core golden dataset
+    passes, the tenant-isolation golden specifically passes, and the
+    performance budget holds with headroom.
+  trigger: deployment_promotion
+  mode: blocking
+  requires:
+    - description: >
+        Every approved golden test in the pulse-core dataset has a
+        current passing evaluation.
+      selector:
+        category: regression
+        labels:
+          dataset: pulse-core
+      verdict: pass
+    - description: >
+        The tenant-isolation golden specifically passes (named so it
+        cannot be dropped by relabeling).
+      evaluations:
+        - ref: { kind: GoldenTest, id: golden-tenant-isolation }
+    - description: >
+        Performance budget evaluations pass with at least 10% headroom.
+      selector:
+        category: performance
+      minScore: 0.9

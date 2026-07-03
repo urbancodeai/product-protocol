@@ -1,0 +1,37 @@
+# Part of the `pulse-core` golden dataset (the `dataset` label).
+pp: "0.1"
+kind: GoldenTest
+metadata:
+  id: golden-share-link-roundtrip
+  name: External share link roundtrip and revocation
+  version: 1.0.0
+  lifecycle: approved
+  labels:
+    dataset: pulse-core
+  createdAt: 2026-06-07T10:00:00Z
+  updatedAt: 2026-06-09T09:00:00Z
+spec:
+  scenario: >
+    A team-plan analyst creates an external share link for a dashboard;
+    a signed-out viewer opens it; the analyst revokes it; the viewer
+    refreshes.
+  inputs:
+    plan: team
+    dashboard: fixture-revenue-dashboard
+    revokeAfter: PT2M
+  expected: >
+    The signed-out viewer sees the dashboard read-only with current
+    data and no workspace navigation; within 60 seconds of revocation
+    a refresh shows the neutral "link no longer active" page with no
+    workspace details.
+  steps:
+    - step: Create an external share link as a team-plan analyst.
+    - step: Open the link in a signed-out session and verify read-only rendering.
+    - step: Revoke the link from the share dialog.
+    - step: Refresh the viewer session and verify the neutral inactive-link page.
+  method: automated
+  appliesTo:
+    - ref: { kind: Story, id: story-share-dashboard-link, version: "1.0.0" }
+  tolerance: >
+    Rendering latency may vary within the PERF-1 budget; the 60-second
+    revocation bound and the absence of workspace details may not.

@@ -4,7 +4,7 @@ metadata:
   id: gate-release-train
   name: Release train promotion gate
   version: 1.0.0
-  createdAt: 2026-05-22T10:40:00Z
+  createdAt: 2026-05-20T10:30:00Z
 spec:
   description: >
     A build boards the production release train only when the

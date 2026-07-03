@@ -1,0 +1,25 @@
+pp: "0.1"
+kind: Goal
+metadata:
+  id: goal-auth-success-rate
+  name: Raise authorization success rate
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-07T09:00:00Z
+  updatedAt: 2026-05-11T09:00:00Z
+spec:
+  statement: >
+    Raise the share of charge attempts that authorize successfully,
+    net of true declines, by eliminating avoidable failures (timeouts,
+    duplicate submissions, malformed retries).
+  metric:
+    name: authorization_success_rate
+    description: Authorized charges / total non-fraud charge attempts, 28-day rolling.
+    unit: percent
+    baseline: 91.4
+    target: 95
+    direction: increase
+  timeframe: End of Q4 2026
+  rationale: >
+    Every avoidable authorization failure is lost merchant revenue and
+    the top cited reason for churn to competing processors.

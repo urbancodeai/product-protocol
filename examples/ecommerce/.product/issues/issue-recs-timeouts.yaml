@@ -1,0 +1,25 @@
+# An open Issue raised from an incident Observation, awaiting triage
+# into the Task Graph.
+pp: "0.1"
+kind: Issue
+metadata:
+  id: issue-recs-timeouts
+  name: Recommendations shelf API times out under evening load
+  version: 1.0.0
+  createdAt: 2026-07-01T23:05:00Z
+  updatedAt: 2026-07-02T08:30:00Z
+spec:
+  title: Recommendations shelf API times out under evening load
+  description: >
+    The in-database recommendation query exceeds its 500 ms statement
+    timeout during the evening traffic peak, tripping the bestseller
+    fallback for up to 12% of home-page requests. Suspected missing
+    index on the ratings table after the 2026-06-30 data backfill.
+  severity: high
+  source:
+    type: observation
+    ref: { ref: { kind: Observation, id: obs-recs-outage-2026-07-01 } }
+  affects:
+    - ref: { kind: Feature, id: feat-recs-shelf }
+status:
+  state: open

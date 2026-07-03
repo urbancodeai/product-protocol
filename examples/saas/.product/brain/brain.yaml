@@ -1,0 +1,22 @@
+pp: "0.1"
+kind: ProductBrain
+metadata:
+  id: pulse-brain
+  name: Pulseboard Product Brain
+  version: 1.0.0
+  lifecycle: active
+  createdAt: 2026-05-04T08:05:00Z
+  updatedAt: 2026-07-02T16:00:00Z
+spec:
+  summary: >
+    Knowledge store for Pulseboard: multi-tenant analytics domain,
+    workspace and plan semantics, integration constraints, and lessons
+    from operating shared dashboards since May 2026.
+  retention:
+    reviewInterval: P90D
+    compactAfter: P365D
+  indexes:
+    - name: by-category
+      description: Category + subcategory lookup for Worker context.
+    - name: tenancy-graph
+      description: Link-traversal index seeded from tenancy and sharing objects.

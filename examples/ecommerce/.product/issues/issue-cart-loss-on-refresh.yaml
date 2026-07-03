@@ -1,0 +1,31 @@
+# A resolved Issue (PP-0010 §6.4): raised from a user_feedback
+# Observation, planned into task-cart-model, resolved when that Task
+# was accepted.
+pp: "0.1"
+kind: Issue
+metadata:
+  id: issue-cart-loss-on-refresh
+  name: Carts are lost on refresh
+  version: 1.0.0
+  createdAt: 2026-06-02T09:00:00Z
+  updatedAt: 2026-06-18T10:00:00Z
+spec:
+  title: Carts are lost on refresh
+  description: >
+    Anonymous carts are bound to the server session; a page refresh or
+    browser restart empties them. Confirmed against support tickets and
+    session replays. Blocks a credible guest checkout.
+  severity: high
+  source:
+    type: observation
+    ref: { ref: { kind: Observation, id: obs-feedback-cart-loss } }
+  affects:
+    - ref: { kind: Capability, id: cap-payments }
+  resolution: >
+    Resolved by the persistent, token-keyed cart model delivered by
+    task-cart-model (accepted 2026-06-18); covered permanently by
+    golden-cart-persistence.
+status:
+  state: resolved
+  tasks:
+    - ref: { kind: Task, id: task-cart-model }

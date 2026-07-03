@@ -1,0 +1,17 @@
+pp: "0.1"
+kind: Capability
+metadata:
+  id: cap-charges
+  name: Charges and refunds
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-07T09:20:00Z
+  updatedAt: 2026-05-11T09:00:00Z
+spec:
+  description: >
+    Create, capture, and retrieve charges and issue full or partial
+    refunds, with idempotency guarantees on every mutating call and
+    settlement-aware refund semantics.
+  serves:
+    - ref: { kind: Goal, id: goal-auth-success-rate }
+    - ref: { kind: Goal, id: goal-time-to-first-charge }

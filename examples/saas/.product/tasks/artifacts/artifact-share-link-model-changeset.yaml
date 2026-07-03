@@ -1,0 +1,22 @@
+# Artifact record (PP-0007 §6); the payload is a commit addressed by
+# digest. Directory follows PP-0007's example layout (tasks/artifacts/).
+pp: "0.1"
+kind: Artifact
+metadata:
+  id: artifact-share-link-model-changeset
+  name: Share-token model changeset
+  version: 1.0.0
+  createdAt: 2026-06-13T17:05:00Z
+spec:
+  type: changeset
+  digest: sha256:1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f809
+  uri: https://git.pulseboard.example/pulse/app/commit/8c4e2f1a9b7d3056c2e4f6a8b0d1c3e5f7a9b1d3
+  path: services/sharing
+  summary: >
+    Adds the workspace-scoped share-token model, RLS-verified resolver,
+    revocation with cache invalidation, and property tests that fuzz
+    tokens across workspaces; removes the legacy public embed route.
+  producedBy: { ref: { kind: Task, id: task-share-link-model } }
+  producedAt: 2026-06-13T17:05:00Z
+  size: 30720
+  mediaType: text/x-diff

@@ -1,0 +1,27 @@
+# Incident Observation with severity; the durable record was filed the
+# morning after the pager alert, so it can also relate back to the
+# Issue opened during the incident (records are append-only).
+pp: "0.1"
+kind: Observation
+metadata:
+  id: obs-slack-webhook-outage
+  name: Slack digest deliveries failing for large workspaces
+  version: 1.0.0
+  createdAt: 2026-07-01T09:00:00Z
+spec:
+  source: incident
+  statement: >
+    During the 2026-06-30 digest window, deliveries to 9 of the 41
+    largest workspaces failed with repeated 429 responses; the retry
+    loop did not honor Retry-After and one workspace's Slack app was
+    temporarily rate-banned.
+  measurement:
+    metric: digest_delivery_failure_rate
+    value: 22
+    unit: percent
+  observedAt: 2026-06-30T14:20:00Z
+  environment: production
+  severity: high
+  relatesTo:
+    - ref: { kind: Issue, id: issue-slack-webhook-failures }
+    - ref: { kind: Feature, id: feat-slack-digest }

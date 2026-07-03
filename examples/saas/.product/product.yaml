@@ -1,0 +1,33 @@
+# The root Product object (PP-0002 §9) for Pulseboard, a multi-tenant
+# team analytics SaaS with plan-based feature gating.
+pp: "0.1"
+kind: Product
+metadata:
+  id: pulseboard
+  name: Pulseboard
+  version: 1.0.0
+  labels:
+    domain: saas
+  owners:
+    - { type: human, id: mila@pulseboard.example, name: Mila Torres }
+  createdAt: 2026-05-04T08:00:00Z
+  updatedAt: 2026-07-02T16:00:00Z
+spec:
+  summary: >
+    Team analytics SaaS: shared dashboards over product and business
+    metrics, integrations that pull data in and push digests out, and
+    usage insights per workspace. Multi-tenant, with plan-based
+    feature gating (free, team, business).
+  brain: { ref: { kind: ProductBrain, id: pulse-brain } }
+  constitutions:
+    - ref: { kind: Constitution, id: pulse-constitution, version: ">=1.0.0" }
+  goals:
+    - ref: { kind: Goal, id: goal-weekly-active-teams }
+    - ref: { kind: Goal, id: goal-trial-conversion }
+  environments:
+    - name: staging
+      classification: pre_production
+    - name: production
+      classification: production
+  repositories:
+    - { name: main, uri: "https://git.pulseboard.example/pulse/app.git", role: source }

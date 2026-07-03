@@ -1,0 +1,27 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-tech-idempotency-keys
+  name: Idempotency is key-plus-stored-response replay
+  version: 1.0.0
+  createdAt: 2026-05-14T10:00:00Z
+spec:
+  category: technical
+  subcategory: idempotency
+  statement: >
+    A retried request with the same Idempotency-Key must return the
+    stored response of the first attempt, byte-identical, including
+    error responses. A key reused with a different request body must be
+    rejected with 409, never silently create a second charge.
+  detail: >
+    Keys are scoped per merchant and retained for 24 hours (br-2 in the
+    payments specification). Storage is a Postgres unique constraint
+    with a response-cache table per dec-idempotency-store.
+  confidence: canonical
+  provenance:
+    - type: decision
+      ref: { ref: { kind: Decision, id: dec-idempotency-store } }
+      description: Idempotency storage decision.
+    - type: external
+      uri: https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/
+      description: IETF idempotency-key header draft.

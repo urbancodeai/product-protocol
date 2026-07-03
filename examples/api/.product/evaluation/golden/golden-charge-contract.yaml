@@ -1,0 +1,35 @@
+pp: "0.1"
+kind: GoldenTest
+metadata:
+  id: golden-charge-contract
+  name: Charge API contract suite
+  version: 1.1.0
+  lifecycle: approved
+  labels:
+    dataset: contract-fixtures-v3
+  createdAt: 2026-05-10T09:00:00Z
+  updatedAt: 2026-06-14T09:00:00Z
+spec:
+  scenario: >
+    Run the recorded charge-lifecycle contract fixtures against a
+    candidate build: create (auth and auto-capture), capture, retrieve,
+    idempotent replay, key/body conflict, and concurrent same-key
+    submission.
+  inputs:
+    fixtureSet: contract-fixtures-v3/charges
+    cases: 142
+    concurrencyIterations: 1000
+  expected: >
+    Every response matches the recorded contract byte-for-byte
+    (modulo documented volatile fields: ids, timestamps); replayed keys
+    return identical bodies; exactly one charge exists after the
+    concurrency case; no undocumented fields or error codes appear.
+  steps:
+    - step: Boot the candidate against the sandbox acquirer stub.
+    - step: Execute the fixture set and diff responses against recordings.
+    - step: Run the same-key concurrency case 1000 times and count acquirer calls.
+  method: automated
+  appliesTo:
+    - ref: { kind: Story, id: story-create-charge-idempotent }
+    - ref: { kind: Feature, id: feat-charge-lifecycle }
+  tolerance: Volatile fields (id, created, request_id) masked; everything else exact.

@@ -1,0 +1,20 @@
+pp: "0.1"
+kind: Feature
+metadata:
+  id: feat-webhook-delivery
+  name: Signed webhook delivery
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-08T09:10:00Z
+  updatedAt: 2026-05-18T09:00:00Z
+spec:
+  description: >
+    Event emission, HMAC signing with per-merchant secrets, delivery
+    with jittered exponential backoff and per-merchant concurrency
+    caps, and a redelivery API for missed events.
+  capability: { ref: { kind: Capability, id: cap-webhooks } }
+  personas:
+    - integration-engineer
+  notes: >
+    Dispatcher pool must be isolated from the synchronous charge path
+    (know-lesson-webhook-backoff).

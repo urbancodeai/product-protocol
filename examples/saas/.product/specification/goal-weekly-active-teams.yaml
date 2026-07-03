@@ -1,0 +1,27 @@
+pp: "0.1"
+kind: Goal
+metadata:
+  id: goal-weekly-active-teams
+  name: Grow weekly active teams
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-05T09:00:00Z
+  updatedAt: 2026-05-28T15:00:00Z
+  owners:
+    - { type: human, id: mila@pulseboard.example, name: Mila Torres }
+spec:
+  statement: >
+    A workspace that checks its dashboards every week is a workspace
+    that renews. Grow the number of workspaces with at least three
+    members active in a given week.
+  metric:
+    name: weekly_active_teams
+    description: Workspaces with three or more distinct members viewing a dashboard in a 7-day window.
+    unit: workspaces
+    baseline: 320
+    target: 500
+    direction: increase
+  timeframe: 2026-Q4
+  rationale: >
+    Weekly team-level activity is the strongest observed predictor of
+    renewal and of seat expansion.

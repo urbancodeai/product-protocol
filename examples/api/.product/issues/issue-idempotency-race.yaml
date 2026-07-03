@@ -1,0 +1,28 @@
+pp: "0.1"
+kind: Issue
+metadata:
+  id: issue-idempotency-race
+  name: Capture retry race can double-call the acquirer
+  version: 1.0.0
+  createdAt: 2026-06-10T09:00:00Z
+  updatedAt: 2026-06-12T09:30:00Z
+spec:
+  title: Concurrent capture retries with the same key can both reach the acquirer
+  description: >
+    A merchant support escalation showed two acquirer capture calls for
+    one charge: two retries with the same Idempotency-Key raced while
+    the first attempt's transaction was uncommitted. The unique
+    constraint deduplicated the charge rows, but the acquirer call sits
+    outside the serialized section. No cardholder was double-charged
+    (acquirer-side dedup), but the invariant of art-rel-idempotency is
+    not fully held.
+  severity: high
+  source:
+    type: human
+  affects:
+    - ref: { kind: Story, id: story-create-charge-idempotent }
+    - ref: { kind: Capability, id: cap-charges }
+status:
+  state: planned
+  tasks:
+    - ref: { kind: Task, id: task-idempotency-hardening }

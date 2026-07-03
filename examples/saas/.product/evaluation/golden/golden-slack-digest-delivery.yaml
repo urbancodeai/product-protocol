@@ -1,0 +1,27 @@
+pp: "0.1"
+kind: GoldenTest
+metadata:
+  id: golden-slack-digest-delivery
+  name: Weekly digest lands well in a real channel
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-06-10T10:00:00Z
+  updatedAt: 2026-06-12T09:00:00Z
+spec:
+  scenario: >
+    The weekly digest job runs against the staging sandbox Slack
+    workspace for three fixture workspaces of different sizes; a human
+    reviews the posted digests.
+  inputs:
+    fixtureWorkspaces: 3
+    channel: "#pulse-digest-staging"
+  expected: >
+    Exactly one message per workspace; each contains the top three
+    metric movements and a working share link; copy reads like a
+    teammate's summary; no rate-limit warnings in the job log.
+  method: manual
+  appliesTo:
+    - ref: { kind: Story, id: story-slack-weekly-digest, version: "1.0.0" }
+  tolerance: >
+    Wording may vary week to week; message count, link validity, and
+    rate-limit cleanliness may not.

@@ -1,0 +1,39 @@
+pp: "0.1"
+kind: Task
+metadata:
+  id: task-idempotency-hardening
+  name: Close idempotency race on capture retries
+  version: 1.0.0
+  createdAt: 2026-06-12T09:00:00Z
+spec:
+  intent: >
+    Fix issue-idempotency-race: a narrow race lets two concurrent
+    capture retries with the same key both hit the acquirer when the
+    first attempt's transaction is still uncommitted. Serialize on the
+    key row before the acquirer call.
+  tracesTo: { ref: { kind: Issue, id: issue-idempotency-race } }
+  dependsOn:
+    - ref: { kind: Task, id: task-refunds-endpoint }
+  priority: high
+  capabilities:
+    - code.go
+    - db.postgres
+    - test.contract
+  context:
+    knowledge:
+      - ref: { kind: Knowledge, id: know-tech-idempotency-keys }
+    constitutionArticles:
+      - art-rel-idempotency
+    notes: >
+      Ordered after the refunds endpoint because both touch the shared
+      idempotency layer and the fix changes its locking contract.
+  completion:
+    criteria:
+      - id: cc-1
+        statement: Concurrency contract test (story ac-3) passes 1000 iterations without a duplicate acquirer call.
+    evaluations:
+      - ref: { kind: GoldenTest, id: golden-charge-contract }
+    artifacts:
+      - changeset
+status:
+  state: pending

@@ -1,0 +1,22 @@
+# Approval Decision for the Constitution (PP-0002 §6.2): human-only.
+pp: "0.1"
+kind: Decision
+metadata:
+  id: dec-2026-05-28-approve-constitution-v1
+  name: Approve Pulseboard Constitution v1.0.0
+  version: 1.0.0
+  createdAt: 2026-05-28T15:00:00Z
+spec:
+  context: >
+    First full Constitution for Pulseboard, drafted from the tenancy
+    architecture decision, the WCAG commitment in enterprise
+    questionnaires, and the availability target in the standard terms
+    of service.
+  outcome: >
+    Constitution pulse-constitution v1.0.0 approved; in force for all
+    Tasks and Deployments from 2026-05-28.
+  authority: { type: human, id: mila@pulseboard.example, name: Mila Torres }
+  decidedAt: 2026-05-28T15:00:00Z
+  affects:
+    - ref: { kind: Constitution, id: pulse-constitution, version: "1.0.0" }
+  approves: { ref: { kind: Constitution, id: pulse-constitution, version: "1.0.0" } }

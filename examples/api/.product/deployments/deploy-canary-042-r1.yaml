@@ -1,0 +1,28 @@
+pp: "0.1"
+kind: Deployment
+metadata:
+  id: deploy-canary-042-r1
+  name: 0.4.2 canary to production (first attempt)
+  version: 1.0.0
+  createdAt: 2026-06-24T09:00:00Z
+  updatedAt: 2026-06-25T08:40:00Z
+spec:
+  environment: production
+  artifacts:
+    - ref: { kind: Artifact, id: artifact-api-image-042 }
+  gates:
+    - ref: { kind: QualityGate, id: gate-canary-promotion }
+  strategy: canary
+  requestedBy: { type: human, id: ravi@brookpay.example.com, name: Ravi Menon }
+  requestedAt: 2026-06-24T09:00:00Z
+status:
+  state: rolled_back
+  startedAt: 2026-06-24T09:10:00Z
+  completedAt: 2026-06-25T08:40:00Z
+  reason: >
+    Automatic rollback at the 25% step: a large merchant's webhook
+    endpoint went hard-down and synchronized fixed-interval retries
+    saturated the shared dispatcher pool, pushing
+    charge_create_latency_p99 to 540 ms (budget 300 ms). See
+    obs-incident-webhook-storm; the promotion gate's performance check
+    failed and traffic was returned to 0.4.1.

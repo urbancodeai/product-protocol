@@ -1,0 +1,40 @@
+pp: "0.1"
+kind: Task
+metadata:
+  id: task-signature-rotation
+  name: Webhook signing-secret rotation with overlap window
+  version: 1.0.0
+  createdAt: 2026-06-21T09:00:00Z
+  updatedAt: 2026-06-29T11:00:00Z
+spec:
+  intent: >
+    Implement signing-secret rotation with a dual-signing overlap
+    window per story-webhook-signature (currently proposed; build
+    behind a flag, do not expose until the story is approved).
+  tracesTo: { ref: { kind: Story, id: story-webhook-signature } }
+  dependsOn:
+    - ref: { kind: Task, id: task-charges-endpoint }
+  priority: medium
+  capabilities:
+    - code.go
+    - api.rest
+  context:
+    specifications:
+      - ref: { kind: Story, id: story-webhook-signature }
+    constitutionArticles:
+      - art-sec-credentials
+  completion:
+    criteria:
+      - id: cc-1
+        statement: Dual-signing overlap works end to end; rotation is audited.
+    artifacts:
+      - changeset
+status:
+  state: blocked
+  worker: { ref: { kind: Worker, id: worker-pay-agent } }
+  attempts: 1
+  claimedAt: 2026-06-28T08:00:00Z
+  blockedReason: >
+    story-webhook-signature is still proposed and the maximum overlap
+    window (ac-2: 1 hour to 7 days) is under debate with compliance;
+    needs a human Decision before the API surface can be finalized.

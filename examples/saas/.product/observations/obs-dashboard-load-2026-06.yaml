@@ -1,0 +1,25 @@
+# Telemetry Observation with a measurement; provenance for
+# know-dashboard-load-threshold (the learning loop).
+pp: "0.1"
+kind: Observation
+metadata:
+  id: obs-dashboard-load-2026-06
+  name: Dashboard load time vs. weekly return rate, June cohort
+  version: 1.0.0
+  createdAt: 2026-06-26T09:00:00Z
+spec:
+  source: telemetry
+  statement: >
+    June cohort telemetry: workspaces whose main dashboard renders
+    first tiles under 1.5 s return near-daily; above ~3 s, weekly
+    return rates fall by roughly half. Current production p95 is
+    1240 ms.
+  measurement:
+    metric: p95_dashboard_load
+    value: 1240
+    unit: ms
+  observedAt: 2026-06-25T23:59:00Z
+  environment: production
+  relatesTo:
+    - ref: { kind: Goal, id: goal-weekly-active-teams }
+    - ref: { kind: Capability, id: cap-dashboards }

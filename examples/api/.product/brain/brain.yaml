@@ -1,0 +1,21 @@
+pp: "0.1"
+kind: ProductBrain
+metadata:
+  id: brookpay-brain
+  name: BrookPay Product Brain
+  version: 1.0.0
+  createdAt: 2026-05-05T09:05:00Z
+  updatedAt: 2026-06-26T09:00:00Z
+spec:
+  summary: >
+    Knowledge store for BrookPay: idempotency semantics, merchant
+    integration behaviour, card-network settlement rules, webhook
+    delivery operations, and lessons from production incidents.
+  retention:
+    reviewInterval: P30D
+    compactAfter: P365D
+  indexes:
+    - name: by-category
+      description: Retrieval by Knowledge category.
+    - name: idempotency
+      description: Everything about idempotency keys and replay semantics.

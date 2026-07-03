@@ -1,0 +1,25 @@
+# The Evaluator actor (PP-0008 §5). It judges Artifacts, Deployments,
+# and the Product; the Evaluation records it produces live in
+# evaluation/runs/. Independence: it runs on a different model
+# configuration from all registered Workers (PP-0008 §5).
+pp: "0.1"
+kind: Evaluator
+metadata:
+  id: eval-checkout-agent
+  name: Aurora Quality Evaluation Agent
+  version: 1.1.0
+  createdAt: 2026-05-10T09:00:00Z
+  updatedAt: 2026-06-20T09:00:00Z
+spec:
+  description: >
+    Agentic evaluator that exercises storefront flows in a browser,
+    compares outcomes against golden tests, audits acceptance criteria
+    and Constitution Articles, and scores performance against budgets.
+    Runs on a different model configuration from all registered Workers.
+  type: agentic
+  categories:
+    - acceptance
+    - regression
+    - performance
+    - constitution_audit
+    - business_validation

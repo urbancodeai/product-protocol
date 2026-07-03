@@ -1,0 +1,54 @@
+pp: "0.1"
+kind: Task
+metadata:
+  id: task-charges-endpoint
+  name: Charges endpoint with idempotency layer
+  version: 1.0.0
+  createdAt: 2026-05-18T09:00:00Z
+  updatedAt: 2026-05-28T10:00:00Z
+spec:
+  intent: >
+    Implement POST /v1/charges and POST /v1/charges/{id}/capture with
+    the idempotency layer of dec-idempotency-store: unique-key
+    constraint, byte-identical response replay, 409 on key/body
+    mismatch, first-writer-wins under concurrency.
+  tracesTo: { ref: { kind: Story, id: story-create-charge-idempotent } }
+  priority: critical
+  capabilities:
+    - code.go
+    - api.rest
+    - db.postgres
+    - test.contract
+  context:
+    knowledge:
+      - ref: { kind: Knowledge, id: know-tech-idempotency-keys }
+      - ref: { kind: Knowledge, id: know-user-merchant-retries }
+    specifications:
+      - ref: { kind: Specification, id: spec-brookpay-payments, version: "1.0.0" }
+      - ref: { kind: Story, id: story-create-charge-idempotent }
+    constitutionArticles:
+      - art-rel-idempotency
+      - art-comp-audit-trail
+      - art-code-money-types
+  completion:
+    criteria:
+      - id: cc-1
+        statement: Story acceptance criteria ac-1 through ac-4 pass in the contract suite.
+      - id: cc-2
+        statement: Ledger record written transactionally before the response for every charge and capture.
+    evaluations:
+      - ref: { kind: GoldenTest, id: golden-charge-contract }
+      - ref: { kind: QualityGate, id: gate-task-acceptance }
+    artifacts:
+      - changeset
+      - report
+  constraints:
+    effortBudget: PT16H
+    maxAttempts: 3
+status:
+  state: done
+  worker: { ref: { kind: Worker, id: worker-pay-agent } }
+  attempts: 1
+  claimedAt: 2026-05-19T08:00:00Z
+  submittedAt: 2026-05-26T15:00:00Z
+  completedAt: 2026-05-28T10:00:00Z

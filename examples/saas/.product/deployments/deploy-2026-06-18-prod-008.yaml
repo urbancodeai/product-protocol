@@ -1,0 +1,24 @@
+# The active production Deployment, gated by gate-prod-promotion.
+pp: "0.1"
+kind: Deployment
+metadata:
+  id: deploy-2026-06-18-prod-008
+  name: Production release 8 — share-token model (full rollout)
+  version: 1.0.0
+  createdAt: 2026-06-18T10:00:00Z
+spec:
+  environment: production
+  artifacts:
+    - ref: { kind: Artifact, id: artifact-share-link-model-changeset, version: "1.0.0" }
+  gates:
+    - ref: { kind: QualityGate, id: gate-prod-promotion }
+  strategy: rolling
+  requestedBy: { type: agent, id: release-manager-agent, name: Release Manager }
+  requestedAt: 2026-06-18T10:00:00Z
+status:
+  state: active
+  evaluations:
+    - ref: { kind: Evaluation, id: eval-run-2026-06-14-share-model-acceptance }
+    - ref: { kind: Evaluation, id: eval-run-2026-06-16-perf-dashboard }
+  startedAt: 2026-06-18T10:04:00Z
+  completedAt: 2026-06-18T10:26:00Z

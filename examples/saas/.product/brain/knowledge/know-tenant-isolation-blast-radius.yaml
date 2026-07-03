@@ -1,0 +1,36 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-tenant-isolation-blast-radius
+  name: Cross-tenant data exposure is an existential risk
+  version: 1.1.0
+  labels:
+    area: tenancy
+  createdAt: 2026-05-19T09:00:00Z
+  updatedAt: 2026-06-15T10:00:00Z
+spec:
+  category: architectural
+  subcategory: tenancy
+  statement: >
+    A single cross-workspace data exposure would end enterprise sales
+    conversations; tenant isolation must be enforced in one place (the
+    database, via row-level security) rather than re-implemented per
+    endpoint.
+  detail: >
+    Row-level security keyed on the workspace id set in the session
+    context makes "forgot the WHERE clause" bugs return zero rows
+    instead of another tenant's rows. Adopted by Decision
+    dec-2026-05-18-postgres-rls; verified continuously by
+    golden-tenant-isolation.
+  confidence: validated
+  provenance:
+    - type: decision
+      ref: { ref: { kind: Decision, id: dec-2026-05-18-postgres-rls } }
+      description: Architecture decision adopting shared tables with RLS.
+    - type: external
+      uri: https://security.pulseboard.example/reviews/tenancy-2026-05
+      description: External security review of the tenancy design.
+  links:
+    - rel: relates_to
+      target: { ref: { kind: Capability, id: cap-dashboards } }
+  reviewedAt: 2026-06-15T10:00:00Z

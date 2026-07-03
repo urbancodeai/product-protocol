@@ -1,0 +1,36 @@
+pp: "0.1"
+kind: Evaluation
+metadata:
+  id: eval-constitution-audit-2026-06
+  name: Scheduled constitution audit, June 2026
+  version: 1.0.0
+  createdAt: 2026-06-30T08:00:00Z
+spec:
+  subject: { ref: { kind: Product, id: brookpay } }
+  category: constitution_audit
+  criteria:
+    - source: { ref: { kind: Constitution, id: brookpay-constitution, version: "1.0.0" } }
+      description: All articles of brookpay-constitution 1.0.0, blocking and advisory.
+  verdict: pass
+  score: 0.9
+  dimensions:
+    - name: art-comp-chd
+      score: 1.0
+    - name: art-rel-idempotency
+      score: 1.0
+    - name: art-rel-webhook-isolation
+      score: 0.6
+      weight: 0.5
+  evidence:
+    - type: log
+      description: Hourly PAN log-scan results for June (zero findings) and audit run output.
+      uri: https://ci.example.com/brookpay/audits/2026-06-30/log
+    - type: test_report
+      description: Per-article findings; advisory finding on webhook isolation pending task-webhook-dispatcher.
+      uri: https://artifacts.example.com/brookpay/audits/2026-06-30/report.html
+  evaluator: { ref: { kind: Evaluator, id: evaluator-brookpay-ci } }
+  evaluatedAt: 2026-06-30T08:00:00Z
+  notes: >
+    Advisory art-rel-webhook-isolation partially satisfied by the
+    config mitigation of 2026-06-27; full isolation lands with
+    task-webhook-dispatcher. No blocking violations.

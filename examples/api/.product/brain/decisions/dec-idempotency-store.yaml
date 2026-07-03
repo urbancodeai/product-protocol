@@ -1,0 +1,31 @@
+pp: "0.1"
+kind: Decision
+metadata:
+  id: dec-idempotency-store
+  name: "ADR: idempotency keys via Postgres unique constraint + response cache"
+  version: 1.0.0
+  createdAt: 2026-05-13T14:00:00Z
+spec:
+  context: >
+    Idempotent charge creation needs atomic first-writer-wins semantics
+    and byte-identical response replay for 24 hours, surviving process
+    restarts and horizontal scale-out.
+  options:
+    - option: Redis SETNX with TTL
+      rationale: Fast, but a cache eviction or failover window can lose a key and double-charge.
+    - option: Postgres unique constraint on (merchant_id, idempotency_key) plus a response-cache table
+      rationale: Atomicity and durability ride the same transaction as the charge insert; replay reads the cached response row.
+    - option: Application-level distributed lock
+      rationale: Adds a coordination service and still needs durable response storage.
+  outcome: >
+    Postgres unique constraint with a response-cache table, in the same
+    transaction as charge creation. Redis rejected because key loss is
+    a money-duplication bug, not a cache miss.
+  authority: { type: human, id: ravi@brookpay.example.com, name: Ravi Menon }
+  decidedAt: 2026-05-13T14:00:00Z
+  affects:
+    - ref: { kind: Capability, id: cap-charges }
+    - ref: { kind: Specification, id: spec-brookpay-payments }
+  consequences: >
+    The charges table gains a companion idempotency table with 24-hour
+    retention; replay semantics become testable in the contract goldens.

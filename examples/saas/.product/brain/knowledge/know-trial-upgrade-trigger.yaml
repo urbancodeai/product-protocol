@@ -1,0 +1,28 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-trial-upgrade-trigger
+  name: Sharing behavior predicts trial conversion
+  version: 1.0.0
+  labels:
+    area: growth
+  createdAt: 2026-06-24T14:00:00Z
+  updatedAt: 2026-06-24T14:00:00Z
+spec:
+  category: market
+  subcategory: conversion
+  statement: >
+    Trials that invite three or more teammates and share at least one
+    dashboard appear to convert to paid at several times the base
+    rate; sharing, not chart-building, may be the activation moment.
+  confidence: hypothesis
+  provenance:
+    - type: conversation
+      description: >
+        Growth review with the founding team, 2026-06-23; consistent
+        with anecdotal sales notes but not yet cohort-tested.
+  links:
+    - rel: relates_to
+      target: { ref: { kind: Goal, id: goal-trial-conversion } }
+    - rel: relates_to
+      target: { ref: { kind: Feature, id: feat-dashboard-sharing } }

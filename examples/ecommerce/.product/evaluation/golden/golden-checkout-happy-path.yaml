@@ -1,0 +1,39 @@
+# The canonical checkout scenario (PP-0008 §6), part of the
+# `checkout-core` golden dataset (the `dataset` label). Referenced by
+# the README's task example, story-guest-checkout ac-1, and the
+# production promotion gate.
+pp: "0.1"
+kind: GoldenTest
+metadata:
+  id: golden-checkout-happy-path
+  name: Guest checkout completes without an account
+  version: 1.0.0
+  lifecycle: approved
+  labels:
+    dataset: checkout-core
+  createdAt: 2026-06-11T10:00:00Z
+  updatedAt: 2026-06-12T09:00:00Z
+spec:
+  scenario: >
+    A first-time visitor with three books in the cart checks out as a
+    guest, paying by card, without creating an account.
+  inputs:
+    cart:
+      items: 3
+      totalUsd: 47.5
+    paymentMethod: test-card-visa
+  expected: >
+    The order is placed, a confirmation page with an order number is
+    shown, a confirmation email is queued, and no account record is
+    created.
+  steps:
+    - step: Add three in-stock books to the cart as an anonymous visitor.
+    - step: Proceed to checkout and choose "continue as guest".
+    - step: Enter shipping details and the test card, then submit.
+    - step: Verify confirmation page, queued email, and absence of an account.
+  method: agentic
+  appliesTo:
+    - ref: { kind: Story, id: story-guest-checkout, version: "1.0.0" }
+  tolerance: >
+    Copy and layout may vary; the order number format and the absence
+    of an account record may not.

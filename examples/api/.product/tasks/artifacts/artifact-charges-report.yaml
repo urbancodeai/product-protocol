@@ -1,0 +1,19 @@
+pp: "0.1"
+kind: Artifact
+metadata:
+  id: artifact-charges-report
+  name: Charges endpoint self-assessment and contract-test report
+  version: 1.0.0
+  createdAt: 2026-05-26T15:00:00Z
+spec:
+  type: report
+  digest: sha256:8e1c5b9a3d7f2e6c0a4b8d1f5c9e3a7b0d4f8c2e6a1b5d9f3c7e0a4b8d2f6c1a
+  uri: https://artifacts.example.com/brookpay/reports/charges-2026-05-26.html
+  summary: >
+    Worker self-assessment against task completion criteria: contract
+    suite results (142 cases, 0 failures), concurrency-race results
+    (1000 iterations, single acquirer call), ledger write verification.
+  producedBy: { ref: { kind: Task, id: task-charges-endpoint } }
+  producedAt: 2026-05-26T15:00:00Z
+  size: 22110
+  mediaType: text/html

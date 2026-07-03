@@ -5,6 +5,7 @@ metadata:
   name: Check-in windows exceed battery budget
   version: 1.0.0
   createdAt: 2026-06-24T19:00:00Z
+  updatedAt: 2026-06-24T21:30:00Z
 spec:
   title: Continuous GPS during check-in windows drains 15%/hour
   description: >

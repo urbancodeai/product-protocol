@@ -1,0 +1,24 @@
+# An Artifact record (PP-0007 §6). The payload (a commit) lives in the
+# source repository, addressed immutably by digest; only the record is
+# in-tree. PP-0002 §7 does not fix a directory for Artifact records —
+# this example follows PP-0007's example layout, tasks/artifacts/.
+pp: "0.1"
+kind: Artifact
+metadata:
+  id: artifact-cart-model-changeset
+  name: Persistent cart model changeset
+  version: 1.0.0
+  createdAt: 2026-06-17T16:40:00Z
+spec:
+  type: changeset
+  digest: sha256:4bf1c153d2a2f1f9a6c2f0f6f5d9c8b7a6e5d4c3b2a190807f6e5d4c3b2a1908
+  uri: https://git.example.com/aurora/books/commit/3f1a9c2e7b4d6058a1c2e3f4d5b6a7980c1d2e3f
+  path: services/cart
+  summary: >
+    Replaces the session-bound cart with a token-keyed persistent cart
+    model, adds shared validation middleware and unit tests; one
+    additive schema migration.
+  producedBy: { ref: { kind: Task, id: task-cart-model } }
+  producedAt: 2026-06-17T16:40:00Z
+  size: 24576
+  mediaType: text/x-diff

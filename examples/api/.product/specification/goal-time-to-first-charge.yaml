@@ -1,0 +1,22 @@
+pp: "0.1"
+kind: Goal
+metadata:
+  id: goal-time-to-first-charge
+  name: Cut merchant time-to-first-charge
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-07T09:10:00Z
+  updatedAt: 2026-05-11T09:00:00Z
+spec:
+  statement: >
+    A new merchant should get from signup to their first successful
+    production charge within one day, driven by predictable API
+    contracts, a faithful sandbox, and reliable webhooks.
+  metric:
+    name: median_time_to_first_charge
+    description: Median hours from merchant signup to first captured production charge.
+    unit: hours
+    baseline: 72
+    target: 24
+    direction: decrease
+  timeframe: End of Q3 2026

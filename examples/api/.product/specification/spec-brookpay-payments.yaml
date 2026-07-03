@@ -1,0 +1,126 @@
+pp: "0.1"
+kind: Specification
+metadata:
+  id: spec-brookpay-payments
+  name: BrookPay Payments API Specification
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-12T09:00:00Z
+  updatedAt: 2026-05-15T16:00:00Z
+  owners:
+    - { type: human, id: ravi@brookpay.example.com, name: Ravi Menon }
+spec:
+  scope:
+    - ref: { kind: Capability, id: cap-charges }
+    - ref: { kind: Capability, id: cap-webhooks }
+  summary: >
+    The payments core: REST endpoints for charges and refunds with
+    strict idempotency, and signed webhooks for asynchronous events.
+    This is an API product: there is no ux section; the interface *is*
+    the contract, expressed here as business rules and non-functional
+    budgets, and operationalized by contract golden tests.
+  businessGoals:
+    - ref: { kind: Goal, id: goal-auth-success-rate }
+    - ref: { kind: Goal, id: goal-time-to-first-charge }
+  personas:
+    - id: integration-engineer
+      name: Merchant integration engineer
+      description: >
+        Builds and maintains the merchant's integration; judges the API
+        by contract stability, error clarity, and sandbox fidelity.
+      needs:
+        - Deterministic, documented error shapes
+        - Safe retries via idempotency keys
+        - A sandbox that behaves exactly like production
+    - id: finance-ops
+      name: Merchant finance operations
+      description: >
+        Reconciles charges, refunds, and settlement; consumes webhooks
+        and reports rather than the REST API directly.
+      needs:
+        - Refund states that map to settlement reality
+        - Webhook events that arrive exactly-once-effectively
+  functionalRequirements:
+    - id: fr-1
+      statement: POST /v1/charges creates a charge; with capture=false it authorizes only, captured later via POST /v1/charges/{id}/capture.
+      priority: critical
+    - id: fr-2
+      statement: Every mutating endpoint accepts an Idempotency-Key header; a retried key replays the stored response byte-identically.
+      priority: critical
+      rationale: See know-tech-idempotency-keys; duplicate charges are the worst failure mode.
+    - id: fr-3
+      statement: POST /v1/refunds supports full and partial refunds against a captured charge, with pre/post-settlement semantics surfaced in the response state.
+      priority: critical
+    - id: fr-4
+      statement: State changes emit webhook events (charge.captured, refund.settled, ...) signed with a per-merchant secret; delivery is at-least-once with jittered exponential backoff.
+      priority: high
+    - id: fr-5
+      statement: GET endpoints support cursor pagination and are safe to poll as a webhook fallback.
+      priority: medium
+  nonFunctionalRequirements:
+    - id: nfr-latency
+      category: performance
+      statement: >
+        Synchronous charge creation must stay within the p99 latency
+        budget measured at the edge, excluding card-network time beyond
+        the 2 s network timeout.
+      budget:
+        metric: charge_create_latency_p99
+        value: 300
+        unit: ms
+    - id: nfr-availability
+      category: reliability
+      statement: The charges API meets a 99.95% monthly availability SLO; webhook delivery completes within 15 minutes for 99.9% of events.
+      budget:
+        metric: monthly_availability
+        value: 99.95
+        unit: percent
+    - id: nfr-chd
+      category: compliance
+      statement: >
+        Cardholder-data handling: primary account numbers are accepted
+        only on the tokenization endpoint, never stored, logged, or
+        echoed; all other endpoints operate on tokens. (Stated as a
+        product rule; this example makes no claim about any
+        certification.)
+    - id: nfr-security
+      category: security
+      statement: All endpoints require TLS 1.2+ and scoped API keys; webhook payloads are HMAC-signed and replay-protected by timestamp.
+    - id: nfr-scale
+      category: scalability
+      statement: The API sustains 500 charge creations per second with the latency budget intact.
+      budget:
+        metric: sustained_charge_throughput
+        value: 500
+        unit: rps
+  businessRules:
+    - id: br-1
+      statement: The sum of all refunds against a charge must never exceed the captured amount.
+      appliesTo:
+        - ref: { kind: Capability, id: cap-charges }
+    - id: br-2
+      statement: Idempotency keys are scoped per merchant and retained for 24 hours; a key reused with a different request body is rejected with 409.
+      appliesTo:
+        - ref: { kind: Capability, id: cap-charges }
+    - id: br-3
+      statement: A refund before settlement is processed as a void ("reversed"); after settlement as a credit ("pending" until settled).
+      appliesTo:
+        - ref: { kind: Capability, id: cap-charges }
+    - id: br-4
+      statement: Webhook retries stop after 72 hours or when the endpoint acknowledges with 2xx, whichever comes first; giving up emits a webhook.delivery_failed event to the dashboard feed.
+      appliesTo:
+        - ref: { kind: Capability, id: cap-webhooks }
+  constraints:
+    - Public API is versioned under /v1; breaking changes require a new version prefix, never an in-place change.
+    - Amounts are integer minor units with an explicit ISO 4217 currency; no floating point anywhere in the money path.
+    - All timestamps in API payloads are RFC 3339 UTC.
+  dependencies:
+    - name: Card network gateway
+      description: Upstream acquirer connection for authorization, capture, and credits.
+    - name: Ledger service
+      description: Internal double-entry ledger recording every money movement.
+    - name: Idempotency storage decision
+      ref: { ref: { kind: Decision, id: dec-idempotency-store } }
+  acceptance:
+    - ref: { kind: GoldenTest, id: golden-charge-contract }
+    - ref: { kind: GoldenTest, id: golden-refund-contract }

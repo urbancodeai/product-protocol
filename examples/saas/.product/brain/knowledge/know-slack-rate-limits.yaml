@@ -1,0 +1,29 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-slack-rate-limits
+  name: Slack posting limits require batched digests
+  version: 1.0.0
+  labels:
+    area: integrations
+  createdAt: 2026-05-26T11:00:00Z
+  updatedAt: 2026-06-20T09:00:00Z
+spec:
+  category: technical
+  subcategory: integrations
+  statement: >
+    Slack's Web API allows roughly one message per second per channel
+    with burst tolerance; weekly digests for large workspaces must be
+    queued and batched, and retries must respect Retry-After or the
+    app risks a temporary posting ban.
+  confidence: validated
+  provenance:
+    - type: document
+      uri: https://api.slack.com/docs/rate-limits
+      description: Slack rate-limit documentation.
+    - type: external
+      uri: https://ci.pulseboard.example/soak/slack-2026-06-19
+      description: Staging soak test against a sandbox workspace.
+  links:
+    - rel: relates_to
+      target: { ref: { kind: Feature, id: feat-slack-digest } }

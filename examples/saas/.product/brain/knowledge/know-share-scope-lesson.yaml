@@ -1,0 +1,31 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-share-scope-lesson
+  name: Share tokens must embed workspace scope
+  version: 1.0.0
+  labels:
+    area: tenancy
+  createdAt: 2026-06-15T09:00:00Z
+  updatedAt: 2026-06-15T09:00:00Z
+spec:
+  category: lesson
+  subcategory: security
+  statement: >
+    Any token that grants read access must embed and verify the issuing
+    workspace id; the legacy embed links omitted it and were viewable
+    across workspaces (issue-share-scope-leak). Never rely on URL
+    obscurity for tenant scoping.
+  confidence: validated
+  provenance:
+    - type: evaluation
+      ref: { ref: { kind: Evaluation, id: eval-run-2026-06-14-share-model-acceptance } }
+      description: Acceptance evaluation of the scoped share-token model.
+    - type: document
+      uri: https://docs.pulseboard.example/postmortems/share-scope-leak
+      description: Post-incident review of the embed-link scope leak.
+  links:
+    - rel: supports
+      target: { ref: { kind: Knowledge, id: know-tenant-isolation-blast-radius } }
+    - rel: relates_to
+      target: { ref: { kind: Issue, id: issue-share-scope-leak } }

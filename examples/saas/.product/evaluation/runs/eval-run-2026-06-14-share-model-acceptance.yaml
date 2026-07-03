@@ -1,0 +1,41 @@
+# Acceptance Evaluation that moved task-share-link-model to done.
+pp: "0.1"
+kind: Evaluation
+metadata:
+  id: eval-run-2026-06-14-share-model-acceptance
+  name: Acceptance — share-token model (attempt 1)
+  version: 1.0.0
+  createdAt: 2026-06-14T10:25:00Z
+spec:
+  subject:
+    ref: { kind: Artifact, id: artifact-share-link-model-changeset, version: "1.0.0" }
+  category: acceptance
+  criteria:
+    - source:
+        ref: { kind: Task, id: task-share-link-model }
+      description: >
+        Task completion criteria cc-1 (foreign-workspace tokens resolve
+        zero rows) and cc-2 (revocation propagates within 60 seconds).
+    - source:
+        ref: { kind: GoldenTest, id: golden-tenant-isolation, version: "1.1.0" }
+      description: No token or session resolves another workspace's data (golden).
+  verdict: pass
+  score: 0.96
+  dimensions:
+    - { name: correctness, score: 1.0, weight: 0.7 }
+    - { name: revocation_latency, score: 0.87, weight: 0.3 }
+  evidence:
+    - type: test_report
+      description: Property-test and golden-run report across both fixture workspaces.
+      path: evaluation/runs/evidence/eval-run-2026-06-14/report.json
+      digest: sha256:0f1e2d3c4b5a69788796a5b4c3d2e1f00112233445566778899aabbccddeeff0
+    - type: log
+      description: Worker self-assessment reviewed and cross-checked.
+      artifact:
+        ref: { kind: Artifact, id: artifact-share-link-model-report }
+  evaluator:
+    ref: { kind: Evaluator, id: eval-pulse-quality-agent }
+  evaluatedAt: 2026-06-14T10:20:00Z
+  notes: >
+    Revocation propagation measured 41 s worst case against the 60 s
+    bound; dimension scored accordingly.

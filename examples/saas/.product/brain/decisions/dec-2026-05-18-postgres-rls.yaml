@@ -1,0 +1,34 @@
+# An architecture Decision (PP-0003 §7.3): tenant isolation strategy.
+pp: "0.1"
+kind: Decision
+metadata:
+  id: dec-2026-05-18-postgres-rls
+  name: Enforce tenant isolation with PostgreSQL row-level security
+  version: 1.0.0
+  createdAt: 2026-05-18T10:30:00Z
+spec:
+  context: >
+    Every table in the analytics store holds rows for many workspaces.
+    Tenant isolation enforced per-endpoint is one forgotten predicate
+    away from a cross-tenant leak, which would be existential for an
+    analytics product.
+  options:
+    - option: Database per tenant
+      rationale: Strongest isolation; operationally unworkable at thousands of free workspaces.
+    - option: Schema per tenant
+      rationale: Migration fan-out grows with tenant count; connection pooling suffers.
+    - option: Shared tables with row-level security on workspace_id
+      rationale: One enforcement point in the database; failure mode is zero rows, not foreign rows.
+  outcome: >
+    Shared tables with PostgreSQL row-level security keyed on the
+    workspace id set in the session context. Every data-plane
+    connection must set the workspace context before any query.
+  authority: { type: human, id: mila@pulseboard.example, name: Mila Torres }
+  decidedAt: 2026-05-18T10:30:00Z
+  affects:
+    - ref: { kind: Capability, id: cap-dashboards }
+    - ref: { kind: Capability, id: cap-integrations }
+  consequences: >
+    All data access must flow through the query service that sets RLS
+    session context (Article ARCH-1); ad-hoc connections are forbidden.
+    Verified continuously by golden-tenant-isolation.

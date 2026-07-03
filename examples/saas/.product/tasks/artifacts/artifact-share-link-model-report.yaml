@@ -1,0 +1,20 @@
+pp: "0.1"
+kind: Artifact
+metadata:
+  id: artifact-share-link-model-report
+  name: Share-token model self-assessment
+  version: 1.0.0
+  createdAt: 2026-06-13T17:08:00Z
+spec:
+  type: report
+  digest: sha256:e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8
+  uri: https://ci.pulseboard.example/runs/task-share-link-model/attempt-1/self-assessment.md
+  summary: >
+    Worker self-assessment: both completion criteria met; notes that
+    revocation propagation measured 41 s worst case against the 60 s
+    bound, and that the legacy embed route removal is a breaking change
+    documented for the changelog.
+  producedBy: { ref: { kind: Task, id: task-share-link-model } }
+  producedAt: 2026-06-13T17:08:00Z
+  size: 5120
+  mediaType: text/markdown

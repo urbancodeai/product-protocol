@@ -1,0 +1,47 @@
+# An agent Worker (PP-0007 §2): declared capabilities, constraints, a
+# context contract, and pre-submission evaluation hooks.
+pp: "0.1"
+kind: Worker
+metadata:
+  id: worker-ts-agent
+  name: TypeScript Coding Agent
+  version: 1.0.0
+  labels:
+    runtime: sandbox-a
+  owners:
+    - { type: team, id: platform, name: Platform Team }
+  createdAt: 2026-05-05T09:00:00Z
+  updatedAt: 2026-06-24T09:00:00Z
+spec:
+  description: >
+    Autonomous coding agent for TypeScript services and the storefront
+    frontend: implements API endpoints, data models, UI flows, and unit
+    tests from approved Stories and triaged Issues.
+  type: agent
+  capabilities:
+    - code.typescript
+    - api.rest
+    - web.frontend
+    - test.unit
+  constraints:
+    allowedArtifactTypes:
+      - changeset
+      - report
+    maxConcurrentTasks: 1
+    constitutionBound: true
+  contextContract:
+    requires:
+      - task
+      - specification
+      - constitution
+      - knowledge
+      - prior_attempts
+    maxContextItems: 40
+  evaluationHooks:
+    - name: lint-and-typecheck
+      description: ESLint and tsc --noEmit over the changeset.
+      mode: blocking
+    - name: golden-smoke
+      description: Run the checkout golden test locally before submit.
+      mode: advisory
+      evaluation: { ref: { kind: GoldenTest, id: golden-checkout-happy-path } }

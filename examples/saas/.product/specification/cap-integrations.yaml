@@ -1,0 +1,16 @@
+pp: "0.1"
+kind: Capability
+metadata:
+  id: cap-integrations
+  name: Integrations in and out
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-05T10:15:00Z
+  updatedAt: 2026-05-28T15:00:00Z
+spec:
+  description: >
+    Connect data sources into the workspace and push insights out:
+    warehouse and product-analytics ingestion, plus outbound digests
+    to chat tools, starting with Slack.
+  serves:
+    - ref: { kind: Goal, id: goal-weekly-active-teams }

@@ -1,0 +1,28 @@
+# Earlier production Deployment: canary of the share-token model,
+# superseded by the full rollout (prod-008).
+pp: "0.1"
+kind: Deployment
+metadata:
+  id: deploy-2026-06-17-prod-007
+  name: Production release 7 — share-token model (canary)
+  version: 1.0.0
+  createdAt: 2026-06-17T09:00:00Z
+spec:
+  environment: production
+  artifacts:
+    - ref: { kind: Artifact, id: artifact-share-link-model-changeset, version: "1.0.0" }
+  gates:
+    - ref: { kind: QualityGate, id: gate-prod-promotion }
+  strategy: canary
+  requestedBy: { type: agent, id: release-manager-agent, name: Release Manager }
+  requestedAt: 2026-06-17T09:00:00Z
+status:
+  state: superseded
+  evaluations:
+    - ref: { kind: Evaluation, id: eval-run-2026-06-14-share-model-acceptance }
+    - ref: { kind: Evaluation, id: eval-run-2026-06-16-perf-dashboard }
+  startedAt: 2026-06-17T09:05:00Z
+  completedAt: 2026-06-17T09:35:00Z
+  reason: >
+    Canary at 10% of traffic for 24 hours; superseded by full rollout
+    deploy-2026-06-18-prod-008.

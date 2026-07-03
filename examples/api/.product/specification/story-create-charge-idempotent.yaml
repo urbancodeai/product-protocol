@@ -1,0 +1,44 @@
+pp: "0.1"
+kind: Story
+metadata:
+  id: story-create-charge-idempotent
+  name: Create a charge idempotently
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-09T10:00:00Z
+  updatedAt: 2026-05-18T09:00:00Z
+spec:
+  narrative: >
+    As a merchant integration engineer, I want charge creation to be
+    idempotent under retries, so that timeouts and network errors can
+    be retried blindly without ever double-charging a customer.
+  feature: { ref: { kind: Feature, id: feat-charge-lifecycle } }
+  acceptanceCriteria:
+    - id: ac-1
+      given: a charge request with Idempotency-Key K succeeded with charge id C
+      when: the identical request is retried with key K within 24 hours
+      then: the response is byte-identical (same charge id C, same status code) and no second charge exists
+      verification:
+        method: automated
+        evaluations:
+          - ref: { kind: GoldenTest, id: golden-charge-contract }
+    - id: ac-2
+      given: a request with Idempotency-Key K and body B1 was accepted
+      when: key K is reused with a different body B2
+      then: the API responds 409 idempotency_key_conflict and creates nothing
+      verification:
+        method: automated
+        evaluations:
+          - ref: { kind: GoldenTest, id: golden-charge-contract }
+    - id: ac-3
+      criterion: >
+        Two concurrent requests with the same key result in exactly one
+        charge; the loser receives the winner's stored response.
+      verification:
+        method: automated
+    - id: ac-4
+      criterion: Error responses (declines, validation failures) are also replayed for retried keys.
+      verification:
+        method: automated
+  businessRules:
+    - br-2

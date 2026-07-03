@@ -1,0 +1,40 @@
+pp: "0.1"
+kind: Story
+metadata:
+  id: story-share-plan-gating
+  name: Free workspace sees the upgrade path when sharing externally
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-29T10:30:00Z
+  updatedAt: 2026-06-06T11:25:00Z
+spec:
+  narrative: >
+    As a member of a free workspace, I want to understand that external
+    share links are a team-plan feature and what upgrading gets me, so
+    that the limit is a decision point rather than a dead end.
+  feature: { ref: { kind: Feature, id: feat-dashboard-sharing } }
+  acceptanceCriteria:
+    - id: ac-1
+      given: a free-plan workspace and a member viewing the share dialog
+      when: the member selects the external-link option
+      then: >
+        the control renders in a disabled-but-visible state with a
+        one-line explanation and an upgrade action that deep-links to
+        the plan page
+      verification:
+        method: automated
+    - id: ac-2
+      criterion: >
+        No API path allows a free workspace to mint an external share
+        token, regardless of UI state (server-side enforcement of
+        BR-PLAN-1).
+      verification:
+        method: automated
+    - id: ac-3
+      criterion: >
+        The upgrade prompt's tone matches the UX principle "plan limits
+        explain themselves"; it never shames or nags.
+      verification:
+        method: manual
+  businessRules:
+    - BR-PLAN-1

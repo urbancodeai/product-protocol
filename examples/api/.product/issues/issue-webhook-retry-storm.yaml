@@ -1,0 +1,26 @@
+pp: "0.1"
+kind: Issue
+metadata:
+  id: issue-webhook-retry-storm
+  name: Webhook retries can saturate the charge path
+  version: 1.0.0
+  createdAt: 2026-06-25T10:00:00Z
+  updatedAt: 2026-06-25T12:30:00Z
+spec:
+  title: Synchronized webhook retries degrade synchronous API latency
+  description: >
+    Raised from the 2026-06-25 incident: fixed-interval webhook retries
+    against a down endpoint synchronize into storms that share
+    resources with the synchronous charge path, breaching the p99
+    budget and forcing a canary rollback. Runtime configuration now
+    isolates the pools as a mitigation; the durable fix (jittered
+    backoff, per-merchant caps, dedicated queue) is scoped in
+    task-webhook-dispatcher.
+  severity: high
+  source:
+    type: observation
+    ref: { ref: { kind: Observation, id: obs-incident-webhook-storm } }
+  affects:
+    - ref: { kind: Feature, id: feat-webhook-delivery }
+status:
+  state: open

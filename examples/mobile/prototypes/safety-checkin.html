@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrailKit prototype — Safety check-in screen</title>
+<style>
+  :root { --ink:#1c2a22; --pine:#2f6b4f; --amber:#e2a33d; --paper:#f4f1e8; }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: system-ui, sans-serif; background:#d9d4c5; display:flex; justify-content:center; padding:24px; }
+  .phone { width:360px; height:720px; background:var(--paper); border-radius:28px; border:6px solid var(--ink); overflow:hidden; display:flex; flex-direction:column; }
+  header { padding:12px 16px; background:var(--pine); color:#fff; display:flex; justify-content:space-between; align-items:center; }
+  header .offline { font-size:12px; background:rgba(255,255,255,.2); padding:2px 8px; border-radius:10px; }
+  main { flex:1; padding:16px; display:flex; flex-direction:column; gap:12px; }
+  .window { background:#fff; border-radius:14px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; }
+  .window .time { font-size:22px; font-weight:700; color:var(--ink); }
+  .window .state { font-size:12px; padding:3px 10px; border-radius:10px; }
+  .done { background:#dff0e2; color:var(--pine); }
+  .next { background:#fdf0d7; color:#8a6414; }
+  .contact { background:#fff; border-radius:14px; padding:14px 16px; font-size:14px; color:#41504a; }
+  .contact b { color:var(--ink); }
+  footer { padding:12px 16px 20px; background:#fff; }
+  .confirm { width:100%; min-height:72px; font-size:22px; font-weight:800; border:none; border-radius:16px; background:var(--amber); color:var(--ink); }
+  .hint { text-align:center; font-size:12px; color:#6b7a6f; margin-top:8px; }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <header>
+      <strong>Safety check-ins</strong>
+      <span class="offline">Offline · queued sync</span>
+    </header>
+    <main>
+      <section class="window" aria-label="Check-in 11:00, confirmed">
+        <span class="time">11:00</span><span class="state done">Confirmed ✓</span>
+      </section>
+      <section class="window" aria-label="Check-in 14:00, open">
+        <span class="time">14:00</span><span class="state next">Open · 22 min left</span>
+      </section>
+      <section class="window" aria-label="Check-in 17:00, scheduled">
+        <span class="time">17:00</span><span class="state">Scheduled</span>
+      </section>
+      <p class="contact">If 14:00 is missed, <b>Jonas (partner)</b> gets your last
+      position and route after a 15-minute grace period.</p>
+    </main>
+    <footer>
+      <button class="confirm" type="button">I’m OK — check in</button>
+      <p class="hint">Works offline. Delivered when you regain signal.</p>
+    </footer>
+  </div>
+</body>
+</html>

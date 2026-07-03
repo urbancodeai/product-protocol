@@ -1,0 +1,39 @@
+# A pending Task: blocked on task-guest-checkout-api completing, so its
+# dependencies are not yet satisfied (pending -> ready per PP-0006 §5).
+pp: "0.1"
+kind: Task
+metadata:
+  id: task-confirmation-email
+  name: Order confirmation email pipeline
+  version: 1.0.0
+  createdAt: 2026-06-24T09:10:00Z
+  updatedAt: 2026-06-24T09:10:00Z
+spec:
+  intent: >
+    Send the order confirmation email within two minutes of payment
+    capture, with order number, line items, shipping address, and
+    total, plus a plain-text fallback.
+  tracesTo: { ref: { kind: Story, id: story-order-confirmation-email, version: "1.0.0" } }
+  dependsOn:
+    - { ref: { kind: Task, id: task-guest-checkout-api } }
+  priority: medium
+  capabilities:
+    - code.typescript
+  context:
+    specifications:
+      - { ref: { kind: Specification, id: spec-guest-checkout, version: "2.0.0" } }
+    constitutionArticles:
+      - SEC-1
+      - CODE-1
+  completion:
+    criteria:
+      - id: cc-1
+        statement: Email is queued within 2 minutes of capture in the staging soak test.
+    artifacts:
+      - changeset
+  constraints:
+    effortBudget: PT3H
+    maxAttempts: 3
+status:
+  state: pending
+  attempts: 0

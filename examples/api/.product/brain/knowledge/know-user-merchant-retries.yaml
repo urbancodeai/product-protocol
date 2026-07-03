@@ -1,0 +1,26 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-user-merchant-retries
+  name: Merchant clients retry aggressively on slow responses
+  version: 1.1.0
+  createdAt: 2026-05-15T10:00:00Z
+  updatedAt: 2026-06-26T10:00:00Z
+spec:
+  category: user
+  subcategory: integration-behaviour
+  statement: >
+    Merchant integrations commonly set 2-3 second client timeouts and
+    retry immediately, without jitter, on timeout. Latency regressions
+    therefore multiply load: a p99 breach becomes a retry storm within
+    a minute.
+  confidence: observed
+  provenance:
+    - type: conversation
+      description: Integration-support review of the top 20 merchants, May 2026.
+    - type: observation
+      ref: { ref: { kind: Observation, id: obs-incident-webhook-storm } }
+      description: Retry amplification measured during the June webhook incident.
+  links:
+    - rel: supports
+      target: { ref: { kind: Knowledge, id: know-lesson-webhook-backoff } }

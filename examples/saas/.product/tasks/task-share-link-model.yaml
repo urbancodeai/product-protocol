@@ -1,0 +1,53 @@
+# The done Task: traces to the resolved scope-leak Issue and produced
+# the Artifacts in tasks/artifacts/.
+pp: "0.1"
+kind: Task
+metadata:
+  id: task-share-link-model
+  name: Workspace-scoped share-token model
+  version: 1.0.0
+  createdAt: 2026-06-08T09:00:00Z
+  updatedAt: 2026-06-14T11:00:00Z
+spec:
+  intent: >
+    Replace legacy public embed links with a share-token model: opaque
+    random tokens that embed the issuing workspace id, are verified
+    under RLS session context, and are revocable with a 60-second
+    propagation bound.
+  tracesTo: { ref: { kind: Issue, id: issue-share-scope-leak } }
+  priority: critical
+  capabilities:
+    - code.python
+  context:
+    knowledge:
+      - { ref: { kind: Knowledge, id: know-tenant-isolation-blast-radius } }
+    specifications:
+      - { ref: { kind: Specification, id: spec-dashboard-sharing, version: "1.0.0" } }
+    constitutionArticles:
+      - SEC-1
+      - ARCH-1
+      - CODE-1
+    notes: >
+      Tokens are opaque and random (spec constraint); revocation is a
+      hard delete plus cache invalidation, not a soft flag.
+  completion:
+    criteria:
+      - id: cc-1
+        statement: A token presented against any other workspace resolves zero rows.
+      - id: cc-2
+        statement: A revoked token stops resolving within 60 seconds across all edge caches.
+    evaluations:
+      - { ref: { kind: GoldenTest, id: golden-tenant-isolation } }
+    artifacts:
+      - changeset
+      - report
+  constraints:
+    effortBudget: PT6H
+    maxAttempts: 3
+status:
+  state: done
+  worker: { ref: { kind: Worker, id: worker-py-agent } }
+  attempts: 1
+  claimedAt: 2026-06-10T08:30:00Z
+  submittedAt: 2026-06-13T17:10:00Z
+  completedAt: 2026-06-14T10:20:00Z

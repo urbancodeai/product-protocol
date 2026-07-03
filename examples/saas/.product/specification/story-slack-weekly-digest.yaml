@@ -1,0 +1,39 @@
+pp: "0.1"
+kind: Story
+metadata:
+  id: story-slack-weekly-digest
+  name: Team admin gets a weekly digest in Slack
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-06-02T09:00:00Z
+  updatedAt: 2026-06-09T10:00:00Z
+spec:
+  narrative: >
+    As a team admin, I want a weekly digest of headline metric moves
+    posted to our Slack channel, so that the team sees the numbers
+    where they already work.
+  feature: { ref: { kind: Feature, id: feat-slack-digest } }
+  acceptanceCriteria:
+    - id: ac-1
+      given: a workspace with the Slack integration installed and a digest channel chosen
+      when: the weekly digest job runs
+      then: >
+        one message is posted to the channel containing the top three
+        metric movements and a share link to the most-viewed dashboard
+      verification:
+        method: agentic
+        evaluations:
+          - ref: { kind: GoldenTest, id: golden-slack-digest-delivery }
+    - id: ac-2
+      criterion: >
+        Digest posting respects Slack rate limits and Retry-After on
+        429 responses; a failed week is skipped, never replayed in bulk
+        (know-slack-rate-limits).
+      verification:
+        method: automated
+    - id: ac-3
+      criterion: >
+        Digest copy reads like a teammate's summary, not a report
+        export; reviewed against ten sampled workspaces.
+      verification:
+        method: manual

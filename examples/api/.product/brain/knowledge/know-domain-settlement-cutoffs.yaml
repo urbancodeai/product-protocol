@@ -1,0 +1,27 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-domain-settlement-cutoffs
+  name: Card-network settlement cutoffs constrain refund timing
+  version: 1.0.0
+  createdAt: 2026-05-12T10:00:00Z
+spec:
+  category: domain
+  subcategory: settlement
+  statement: >
+    Card networks batch settlement at fixed daily cutoffs. A refund
+    issued before the capture has settled can be processed as a void;
+    after settlement it must be a new credit transaction, which takes
+    1-3 business days to reach the cardholder.
+  detail: >
+    Consequence for the API: refund responses must distinguish
+    "reversed" (pre-settlement void) from "pending" (post-settlement
+    credit) so merchants can set cardholder expectations.
+  confidence: validated
+  provenance:
+    - type: external
+      uri: https://docs.acquirer.example.com/settlement-windows
+      description: Acquirer settlement documentation.
+    - type: document
+      uri: https://wiki.example.com/brookpay/settlement-notes
+      description: Internal settlement behaviour notes, verified against acquirer test runs.

@@ -1,0 +1,34 @@
+pp: "0.1"
+kind: GoldenTest
+metadata:
+  id: golden-cart-persistence
+  name: Cart contents survive a session refresh
+  version: 1.2.0
+  lifecycle: approved
+  labels:
+    dataset: checkout-core
+  createdAt: 2026-05-20T10:00:00Z
+  updatedAt: 2026-06-08T14:00:00Z
+spec:
+  scenario: >
+    An anonymous visitor builds a cart, refreshes the page, closes the
+    browser, and returns the next day; the cart is intact throughout.
+  inputs:
+    cart:
+      items: 2
+    returnAfter: P1D
+  expected: >
+    The cart contains the same two items with the same quantities after
+    a refresh, after a browser restart, and on return within 30 days.
+  steps:
+    - step: Add two in-stock books to the cart as an anonymous visitor.
+    - step: Refresh the page and assert cart contents are unchanged.
+    - step: Restart the browser session and assert cart contents are unchanged.
+    - step: Simulate return after one day and assert cart contents are unchanged.
+  method: automated
+  appliesTo:
+    - ref: { kind: Feature, id: feat-guest-checkout }
+    - ref: { kind: Issue, id: issue-cart-loss-on-refresh }
+  tolerance: >
+    Price changes between visits may reprice line items; item identity
+    and quantity may not change.

@@ -1,0 +1,109 @@
+# The Pulseboard Constitution (PP-0005): eight Articles, one per
+# category. v1.0.0 approved 2026-05-28 by Decision
+# dec-2026-05-28-approve-constitution-v1.
+pp: "0.1"
+kind: Constitution
+metadata:
+  id: pulse-constitution
+  name: Pulseboard Constitution
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-12T09:00:00Z
+  updatedAt: 2026-05-28T15:00:00Z
+  owners:
+    - { type: human, id: mila@pulseboard.example, name: Mila Torres }
+spec:
+  preamble: >
+    Pulseboard holds other companies' operating metrics. One tenant's
+    data reaching another tenant is the failure we may never have.
+    These Articles bind every change, every deployment, and the
+    running product, at all times.
+  articles:
+    - id: SEC-1
+      category: security
+      rule: >
+        Every data-plane query MUST execute under the requesting
+        workspace's row-level-security session context; no code path
+        may read tenant data with the context unset or widened.
+      rationale: >
+        One enforcement point in the database (Decision
+        dec-2026-05-18-postgres-rls) instead of per-endpoint predicates.
+      enforcement:
+        mode: blocking
+        evaluatedOn: [task_submission, deployment]
+        evaluations:
+          - ref: { kind: GoldenTest, id: golden-tenant-isolation }
+    - id: PERF-1
+      category: performance
+      rule: >
+        The 95th-percentile first-tile render time of a dashboard MUST
+        remain at or below 1500 ms in production.
+      rationale: Dashboards slower than ~3 s stop being checked (know-dashboard-load-threshold).
+      enforcement:
+        mode: blocking
+        evaluatedOn: [deployment, observation]
+        evaluations:
+          - ref: { kind: QualityGate, id: gate-prod-promotion }
+        monitor: >
+          p95 first-tile render per workspace cohort from production
+          telemetry, 1-hour window; violation when above 1500 ms for
+          two consecutive windows.
+    - id: A11Y-1
+      category: accessibility
+      rule: >
+        Every user-facing surface MUST satisfy WCAG 2.2 level AA;
+        dashboards and dialogs MUST be operable by keyboard alone.
+      enforcement:
+        mode: blocking
+        evaluatedOn: [task_submission]
+    - id: COMP-1
+      category: compliance
+      rule: >
+        When a workspace is deleted, all of its tenant data — including
+        exports, digests queues, and backups reachable by restore —
+        MUST be purged within 30 days.
+      enforcement:
+        mode: blocking
+        evaluatedOn: [schedule]
+        monitor: >
+          Weekly sweep of deleted workspaces against remaining rows,
+          queued jobs, and backup manifests.
+    - id: ARCH-1
+      category: architecture
+      rule: >
+        All tenant data access MUST go through the query service that
+        sets the RLS session context; direct database connections from
+        feature code are forbidden.
+      enforcement:
+        mode: blocking
+        evaluatedOn: [task_submission]
+    - id: CODE-1
+      category: coding_standards
+      rule: >
+        Backend Python MUST pass mypy --strict; frontend TypeScript
+        MUST compile under strict mode. Type-checker suppressions
+        require a linked justification comment.
+      enforcement:
+        mode: blocking
+        evaluatedOn: [task_submission]
+    - id: UX-1
+      category: ux
+      rule: >
+        Plan-gated features MUST remain visible with a clear
+        explanation and upgrade path; a gate MUST NOT be a dead end or
+        a silently missing control.
+      enforcement:
+        mode: advisory
+        evaluatedOn: [task_submission]
+    - id: REL-1
+      category: reliability
+      rule: >
+        Monthly availability of the dashboard-viewing path MUST be at
+        least 99.9%; deployments MUST NOT proceed while the monthly
+        error budget is exhausted.
+      enforcement:
+        mode: blocking
+        evaluatedOn: [deployment, observation]
+        monitor: >
+          Error-budget burn from the availability SLO; violation when
+          the 30-day budget is spent.

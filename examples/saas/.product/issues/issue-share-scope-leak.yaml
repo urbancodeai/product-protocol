@@ -1,0 +1,32 @@
+# A resolved Issue: found by a human security review, planned into
+# task-share-link-model, resolved when that Task was accepted.
+pp: "0.1"
+kind: Issue
+metadata:
+  id: issue-share-scope-leak
+  name: Legacy embed links are not workspace-scoped
+  version: 1.0.0
+  createdAt: 2026-06-05T14:00:00Z
+  updatedAt: 2026-06-14T11:00:00Z
+spec:
+  title: Legacy embed links are not workspace-scoped
+  description: >
+    The pre-launch public embed links carry no workspace scope: a
+    guessed or leaked embed id renders the dashboard regardless of
+    tenant. Found during the May security review; no evidence of
+    exploitation, but the surface violates Article SEC-1 by design.
+  severity: critical
+  source:
+    type: human
+  affects:
+    - ref: { kind: Feature, id: feat-dashboard-sharing }
+    - ref: { kind: Capability, id: cap-dashboards }
+  resolution: >
+    Legacy embed route removed and replaced by workspace-scoped,
+    revocable share tokens (task-share-link-model, accepted
+    2026-06-14). Covered permanently by golden-tenant-isolation;
+    lesson distilled into know-share-scope-lesson.
+status:
+  state: resolved
+  tasks:
+    - ref: { kind: Task, id: task-share-link-model }

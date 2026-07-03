@@ -1,0 +1,20 @@
+# A user_feedback Observation (PP-0010 §6.3). It is the source of
+# Issue issue-cart-loss-on-refresh, which task-cart-model resolved.
+pp: "0.1"
+kind: Observation
+metadata:
+  id: obs-feedback-cart-loss
+  name: Support tickets report carts emptying on refresh
+  version: 1.0.0
+  createdAt: 2026-06-01T09:00:00Z
+spec:
+  source: user_feedback
+  statement: >
+    Fourteen support tickets in the last week of May describe carts
+    emptying after a page refresh or browser restart; several shoppers
+    say they gave up rather than rebuild the cart.
+  observedAt: 2026-05-30T17:00:00Z
+  environment: production
+  severity: medium
+  relatesTo:
+    - ref: { kind: Capability, id: cap-payments }

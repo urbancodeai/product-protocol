@@ -1,0 +1,23 @@
+# The Evaluator actor (PP-0008 §5), independent of all Workers.
+pp: "0.1"
+kind: Evaluator
+metadata:
+  id: eval-pulse-quality-agent
+  name: Pulseboard Quality Evaluation Agent
+  version: 1.0.0
+  createdAt: 2026-05-12T09:30:00Z
+  updatedAt: 2026-05-12T09:30:00Z
+spec:
+  description: >
+    Agentic evaluator that exercises dashboards and sharing flows in a
+    browser, attempts cross-tenant access with forged and foreign
+    tokens, audits Constitution Articles, and scores performance
+    against budgets. Runs on a different model configuration from all
+    registered Workers.
+  type: agentic
+  categories:
+    - acceptance
+    - regression
+    - security
+    - performance
+    - constitution_audit

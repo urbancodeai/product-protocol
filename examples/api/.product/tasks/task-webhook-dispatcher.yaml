@@ -1,0 +1,41 @@
+pp: "0.1"
+kind: Task
+metadata:
+  id: task-webhook-dispatcher
+  name: Isolated webhook dispatcher with jittered backoff
+  version: 1.0.0
+  createdAt: 2026-06-27T10:00:00Z
+spec:
+  intent: >
+    Rebuild the webhook dispatcher per art-rel-webhook-isolation and
+    know-lesson-webhook-backoff: dedicated pool and queue, jittered
+    exponential backoff, per-merchant concurrency caps, 72-hour retry
+    horizon (br-4).
+  tracesTo: { ref: { kind: Feature, id: feat-webhook-delivery } }
+  dependsOn:
+    - ref: { kind: Task, id: task-charges-endpoint }
+  priority: high
+  capabilities:
+    - code.go
+    - api.rest
+    - test.contract
+  context:
+    knowledge:
+      - ref: { kind: Knowledge, id: know-lesson-webhook-backoff }
+      - ref: { kind: Knowledge, id: know-ops-webhook-delivery }
+    specifications:
+      - ref: { kind: Specification, id: spec-brookpay-payments, version: "1.0.0" }
+    constitutionArticles:
+      - art-rel-webhook-isolation
+      - art-sec-credentials
+  completion:
+    criteria:
+      - id: cc-1
+        statement: Replayed June storm traffic no longer affects charge-path latency; webhook replay golden passes.
+    evaluations:
+      - ref: { kind: GoldenTest, id: golden-webhook-replay }
+    artifacts:
+      - changeset
+      - report
+status:
+  state: ready

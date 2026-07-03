@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aurora Books — Guest Checkout (prototype)</title>
+<style>
+  :root { --ink: #22303c; --muted: #5c6b78; --line: #d8dee4; --accent: #1d6fa5; --bg: #f6f4ef; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--ink); }
+  header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--line); background: #fff; }
+  header strong { letter-spacing: 0.04em; }
+  main { max-width: 60rem; margin: 2rem auto; padding: 0 1.5rem; display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+  ol.steps { list-style: none; display: flex; gap: 1rem; padding: 0; margin: 0 0 1.5rem; font-family: system-ui, sans-serif; font-size: 0.85rem; grid-column: 1 / -1; }
+  ol.steps li { padding: 0.35rem 0.75rem; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: #fff; }
+  ol.steps li[aria-current="step"] { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  form { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 1.5rem; }
+  fieldset { border: 0; padding: 0; margin: 0 0 1.25rem; }
+  legend { font-weight: 700; margin-bottom: 0.5rem; }
+  label { display: block; font-family: system-ui, sans-serif; font-size: 0.85rem; margin: 0.75rem 0 0.25rem; }
+  input { width: 100%; padding: 0.55rem 0.65rem; border: 1px solid var(--line); border-radius: 4px; font-size: 1rem; }
+  input:focus { outline: 3px solid #bcd9ec; border-color: var(--accent); }
+  p.error { font-family: system-ui, sans-serif; color: #a33a2a; font-size: 0.8rem; margin: 0.25rem 0 0; }
+  button { margin-top: 1rem; width: 100%; padding: 0.75rem; font-size: 1rem; border: 0; border-radius: 6px; background: var(--accent); color: #fff; cursor: pointer; }
+  aside { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 1.25rem; align-self: start; font-family: system-ui, sans-serif; font-size: 0.9rem; }
+  aside h2 { margin: 0 0 0.75rem; font-size: 1rem; font-family: Georgia, serif; }
+  aside dl { margin: 0; }
+  aside div { display: flex; justify-content: space-between; padding: 0.3rem 0; }
+  aside .total { border-top: 1px solid var(--line); margin-top: 0.5rem; font-weight: 700; }
+  aside dd { margin: 0; }
+</style>
+</head>
+<body>
+  <header><strong>AURORA BOOKS</strong> — Checkout</header>
+  <main>
+    <ol class="steps" aria-label="Checkout steps">
+      <li>1 · Contact</li>
+      <li aria-current="step">2 · Shipping</li>
+      <li>3 · Payment</li>
+    </ol>
+    <form aria-labelledby="ship-legend">
+      <fieldset>
+        <legend id="ship-legend">Where should we send your books?</legend>
+        <label for="name">Full name</label>
+        <input id="name" name="name" autocomplete="name" value="Rae Calder">
+        <label for="addr">Street address</label>
+        <input id="addr" name="addr" autocomplete="street-address" aria-describedby="addr-err" aria-invalid="true">
+        <p class="error" id="addr-err">Enter a street address so the carrier can find you.</p>
+        <label for="city">City</label>
+        <input id="city" name="city" autocomplete="address-level2" value="Portland">
+        <label for="zip">Postal code</label>
+        <input id="zip" name="zip" autocomplete="postal-code" value="97205">
+      </fieldset>
+      <button type="button">Continue to payment</button>
+    </form>
+    <aside aria-label="Order summary">
+      <h2>Your order</h2>
+      <dl>
+        <div><dt>Books (3)</dt><dd>$41.50</dd></div>
+        <div><dt>Shipping (est.)</dt><dd>$4.99</dd></div>
+        <div><dt>Tax (est.)</dt><dd>$1.01</dd></div>
+        <div class="total"><dt>Total</dt><dd>$47.50</dd></div>
+      </dl>
+    </aside>
+  </main>
+</body>
+</html>

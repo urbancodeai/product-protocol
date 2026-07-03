@@ -1,0 +1,25 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-dashboard-load-threshold
+  name: Dashboards slower than ~3 seconds stop being checked
+  version: 1.0.0
+  labels:
+    area: dashboards
+  createdAt: 2026-06-27T09:00:00Z
+  updatedAt: 2026-06-27T09:00:00Z
+spec:
+  category: user
+  subcategory: behavior
+  statement: >
+    Teams whose main dashboard loads in under 1.5 s check it near-daily;
+    above roughly 3 s, weekly return rates fall by half. Perceived
+    freshness matters more than chart count.
+  confidence: observed
+  provenance:
+    - type: observation
+      ref: { ref: { kind: Observation, id: obs-dashboard-load-2026-06 } }
+      description: June 2026 load-time vs. return-rate telemetry cohort.
+  links:
+    - rel: relates_to
+      target: { ref: { kind: Goal, id: goal-weekly-active-teams } }

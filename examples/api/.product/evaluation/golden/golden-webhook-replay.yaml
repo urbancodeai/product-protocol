@@ -1,0 +1,27 @@
+pp: "0.1"
+kind: GoldenTest
+metadata:
+  id: golden-webhook-replay
+  name: Webhook storm replay under latency budget
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-06-27T09:00:00Z
+  updatedAt: 2026-06-29T09:00:00Z
+spec:
+  scenario: >
+    Replay the recorded 2026-06-25 webhook storm (one large merchant's
+    endpoint hard-down, 40k pending deliveries) against a candidate
+    build while synthetic charge traffic runs at 200 rps.
+  inputs:
+    trafficRecording: storm-2026-06-25
+    chargeLoadRps: 200
+    downEndpoints: 1
+  expected: >
+    Charge-path p99 stays within the 300 ms budget for the entire
+    replay; retries observe jittered backoff and per-merchant caps; no
+    delivery is lost (all 40k eventually delivered or parked at the
+    72-hour horizon rule).
+  method: automated
+  appliesTo:
+    - ref: { kind: Feature, id: feat-webhook-delivery }
+  tolerance: p99 sampled per 60 s window; single-window excursion to 320 ms allowed once.

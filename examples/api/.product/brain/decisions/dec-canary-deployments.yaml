@@ -1,0 +1,29 @@
+pp: "0.1"
+kind: Decision
+metadata:
+  id: dec-canary-deployments
+  name: Adopt canary deployments for production releases
+  version: 1.0.0
+  createdAt: 2026-06-01T11:00:00Z
+spec:
+  context: >
+    Payment traffic cannot tolerate a bad full rollout; a latency or
+    correctness regression at 100% is a merchant-facing outage. Staging
+    verification alone missed load-dependent behaviour.
+  options:
+    - option: Blue/green with instant cutover
+      rationale: Fast rollback, but exposes 100% of traffic to a regression at once.
+    - option: Canary with automatic rollback on gate failure
+      rationale: Bounds the blast radius to the canary slice; latency budgets are checked against real traffic before promotion.
+  outcome: >
+    Canary strategy for all production deployments: 5% -> 25% -> 100%,
+    with automatic rollback if the promotion gate's performance or
+    regression checks fail at any step.
+  authority: { type: human, id: ravi@brookpay.example.com, name: Ravi Menon }
+  decidedAt: 2026-06-01T11:00:00Z
+  affects:
+    - ref: { kind: QualityGate, id: gate-canary-promotion }
+    - ref: { kind: Product, id: brookpay }
+  consequences: >
+    Deployments carry the canary gate; rollback is a first-class,
+    recorded outcome (see deploy-canary-042-r1).

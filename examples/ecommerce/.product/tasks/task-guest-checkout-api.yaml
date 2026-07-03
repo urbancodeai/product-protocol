@@ -1,0 +1,54 @@
+# The Task shown in the repository README ("A Taste") and PP-0006's
+# example, ready to be claimed: its dependency task-cart-model is done.
+pp: "0.1"
+kind: Task
+metadata:
+  id: task-guest-checkout-api
+  name: Implement guest checkout API
+  version: 1.0.0
+  createdAt: 2026-06-24T09:00:00Z
+  updatedAt: 2026-06-24T09:00:00Z
+spec:
+  intent: Implement the guest checkout API endpoint per story acceptance criteria.
+  tracesTo: { ref: { kind: Story, id: story-guest-checkout } }
+  dependsOn:
+    - { ref: { kind: Task, id: task-cart-model } }
+  priority: high
+  capabilities:
+    - code.typescript
+    - api.rest
+  context:
+    knowledge:
+      - { ref: { kind: Knowledge, id: know-payment-provider-limits } }
+    specifications:
+      - { ref: { kind: Specification, id: spec-guest-checkout, version: "2.0.0" } }
+    constitutionArticles:
+      - SEC-1
+      - ARCH-1
+      - CODE-1
+    notes: >
+      Reuse the cart validation middleware from task-cart-model; do
+      not introduce a new payment client. Capture retries MUST reuse
+      the original idempotency key (know-payment-provider-limits).
+  completion:
+    criteria:
+      - id: ac-1
+        statement: >
+          A guest with a non-empty cart can complete checkout without
+          creating an account.
+      - id: ac-2
+        statement: >
+          Failed payment intents return a retryable error and never
+          create an order.
+    evaluations:
+      - { ref: { kind: GoldenTest, id: golden-checkout-happy-path } }
+    artifacts:
+      - changeset
+      - report
+  constraints:
+    effortBudget: PT4H
+    deadline: 2026-07-10T00:00:00Z
+    maxAttempts: 3
+status:
+  state: ready
+  attempts: 0

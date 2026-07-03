@@ -1,0 +1,27 @@
+pp: "0.1"
+kind: GoldenTest
+metadata:
+  id: golden-recs-shelf-quality
+  name: Recommendations shelf is plausible for sampled readers
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-06-16T10:00:00Z
+  updatedAt: 2026-06-22T09:00:00Z
+spec:
+  scenario: >
+    A human curator reviews the "For you" shelf for ten sampled readers
+    spanning genres and account ages, checking personalization quality
+    and cold-start fallback behavior.
+  inputs:
+    sampleSize: 10
+    mustIncludeColdStart: true
+  expected: >
+    For established readers, at least six of eight titles are
+    personalized and none is already owned; for cold-start readers the
+    shelf shows labeled curated bestsellers, never an empty state.
+  method: manual
+  appliesTo:
+    - ref: { kind: Story, id: story-recs-shelf, version: "1.0.0" }
+  tolerance: >
+    Taste disagreements on individual titles are acceptable; owned
+    titles or empty shelves are not.

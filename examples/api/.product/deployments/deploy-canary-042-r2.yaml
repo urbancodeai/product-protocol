@@ -1,0 +1,30 @@
+pp: "0.1"
+kind: Deployment
+metadata:
+  id: deploy-canary-042-r2
+  name: 0.4.2 canary to production (after storm mitigation)
+  version: 1.0.0
+  createdAt: 2026-06-28T09:00:00Z
+  updatedAt: 2026-06-30T09:00:00Z
+spec:
+  environment: production
+  artifacts:
+    - ref: { kind: Artifact, id: artifact-api-image-042 }
+  gates:
+    - ref: { kind: QualityGate, id: gate-canary-promotion }
+  strategy: canary
+  requestedBy: { type: human, id: ravi@brookpay.example.com, name: Ravi Menon }
+  requestedAt: 2026-06-28T09:00:00Z
+status:
+  state: active
+  evaluations:
+    - ref: { kind: Evaluation, id: eval-canary-performance-042 }
+    - ref: { kind: Evaluation, id: eval-constitution-audit-2026-06 }
+  startedAt: 2026-06-28T09:10:00Z
+  completedAt: 2026-06-30T09:00:00Z
+  reason: >
+    Same image as the rolled-back attempt; the webhook dispatcher pool
+    was isolated from the charge path by runtime configuration
+    (recorded in know-lesson-webhook-backoff) before retrying. Canary
+    widened 5% -> 25% -> 100% with the promotion gate green at each
+    step.

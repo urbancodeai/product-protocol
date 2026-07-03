@@ -1,0 +1,27 @@
+# An incident Observation with severity. The durable record was filed
+# during morning triage, after the Issue it relates to was opened from
+# the pager alert (records are append-only, PP-0002 §6.3).
+pp: "0.1"
+kind: Observation
+metadata:
+  id: obs-recs-outage-2026-07-01
+  name: Recommendations shelf timeouts, evening 2026-07-01
+  version: 1.0.0
+  createdAt: 2026-07-02T08:05:00Z
+spec:
+  source: incident
+  statement: >
+    Between 21:47 and 22:30 UTC the "For you" shelf API returned
+    timeouts for 12% of requests; the home page fell back to curated
+    bestsellers, so no user-facing errors, but shelf personalization
+    was effectively down for 43 minutes.
+  measurement:
+    metric: recs_shelf_timeout_rate
+    value: 12
+    unit: percent
+  observedAt: 2026-07-01T21:47:00Z
+  environment: production
+  severity: high
+  relatesTo:
+    - ref: { kind: Issue, id: issue-recs-timeouts }
+    - ref: { kind: Feature, id: feat-recs-shelf }

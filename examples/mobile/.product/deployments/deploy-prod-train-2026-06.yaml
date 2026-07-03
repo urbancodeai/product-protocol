@@ -5,7 +5,7 @@ metadata:
   name: Release train 2026.06 (1.6.0) to production stores
   version: 1.0.0
   createdAt: 2026-06-17T10:00:00Z
-  updatedAt: 2026-06-19T08:00:00Z
+  updatedAt: 2026-06-20T09:00:00Z
 spec:
   environment: production
   artifacts:

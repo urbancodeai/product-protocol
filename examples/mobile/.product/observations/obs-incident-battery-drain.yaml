@@ -4,7 +4,7 @@ metadata:
   id: obs-incident-battery-drain
   name: "Incident: battery drain spike during check-in windows"
   version: 1.0.0
-  createdAt: 2026-06-24T18:30:00Z
+  createdAt: 2026-06-24T21:00:00Z
 spec:
   source: incident
   statement: >

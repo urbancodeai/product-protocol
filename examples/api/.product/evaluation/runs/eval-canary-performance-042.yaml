@@ -1,0 +1,32 @@
+pp: "0.1"
+kind: Evaluation
+metadata:
+  id: eval-canary-performance-042
+  name: Canary performance verdict for 0.4.2 (second attempt)
+  version: 1.0.0
+  createdAt: 2026-06-29T10:00:00Z
+spec:
+  subject: { ref: { kind: Deployment, id: deploy-canary-042-r2 } }
+  category: performance
+  criteria:
+    - source: { ref: { kind: Specification, id: spec-brookpay-payments, version: "1.0.0" } }
+      description: nfr-latency budget charge_create_latency_p99 <= 300 ms at the edge during canary.
+    - source: { ref: { kind: GoldenTest, id: golden-webhook-replay, version: "1.0.0" } }
+      description: Storm replay against the canary with charge load, per the webhook-replay golden.
+  verdict: pass
+  score: 0.97
+  dimensions:
+    - name: p99-at-5-percent
+      score: 0.98
+    - name: p99-at-25-percent
+      score: 0.96
+  evidence:
+    - type: measurement
+      description: Edge latency percentiles during both canary steps; worst 60 s window p99 = 236 ms.
+      uri: https://metrics.example.com/brookpay/canary/0.4.2-r2/latency
+    - type: trace
+      description: Sampled traces showing dispatcher pool isolated from the charge path after the config mitigation.
+      uri: https://traces.example.com/brookpay/canary/0.4.2-r2
+  evaluator: { ref: { kind: Evaluator, id: evaluator-brookpay-ci } }
+  evaluatedAt: 2026-06-29T10:00:00Z
+  notes: First canary attempt (deploy-canary-042-r1) was rolled back on 2026-06-25 before this evaluation could pass.

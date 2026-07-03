@@ -1,0 +1,42 @@
+# Performance Evaluation with measurement-backed Evidence and a score;
+# consumed by gate-prod-promotion (minScore 0.9).
+pp: "0.1"
+kind: Evaluation
+metadata:
+  id: eval-run-2026-06-16-perf-dashboard
+  name: Performance — shared-dashboard render against Article PERF-1
+  version: 1.0.0
+  createdAt: 2026-06-16T18:10:00Z
+spec:
+  subject:
+    ref: { kind: Artifact, id: artifact-share-link-model-changeset, version: "1.0.0" }
+  category: performance
+  criteria:
+    - source:
+        ref: { kind: Constitution, id: pulse-constitution, version: "1.0.0" }
+      description: >
+        Article PERF-1: p95 first-tile render at or below 1500 ms,
+        exercised at 2x forecast load in staging, including the
+        signed-out shared-viewer route.
+  verdict: pass
+  score: 0.92
+  dimensions:
+    - { name: p95_first_tile, score: 0.92, weight: 0.8 }
+    - { name: error_rate, score: 1.0, weight: 0.2 }
+  evidence:
+    - type: measurement
+      description: >
+        p95 first-tile render 1180 ms against the 1500 ms Article
+        PERF-1 budget at 2x forecast load (30-minute run); viewer
+        route p95 1240 ms.
+      uri: https://metrics.pulseboard.example/runs/perf-2026-06-16/render
+    - type: test_report
+      description: Load-test harness report.
+      path: evaluation/runs/evidence/eval-run-2026-06-16/loadtest.json
+      digest: sha256:aa11bb22cc33dd44ee55ff660718293a4b5c6d7e8f90a1b2c3d4e5f6a7b8c9d0
+  evaluator:
+    ref: { kind: Evaluator, id: eval-pulse-quality-agent }
+  evaluatedAt: 2026-06-16T18:00:00Z
+  notes: >
+    Headroom 21%; above the promotion gate's 10% floor but trending
+    down as tile count grows — watch the dimension trend.

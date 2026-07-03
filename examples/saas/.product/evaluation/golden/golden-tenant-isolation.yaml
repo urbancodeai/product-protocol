@@ -1,0 +1,38 @@
+# The canonical tenancy scenario: referenced by Constitution Article
+# SEC-1 and named explicitly in the promotion gate.
+pp: "0.1"
+kind: GoldenTest
+metadata:
+  id: golden-tenant-isolation
+  name: No token or session resolves another workspace's data
+  version: 1.1.0
+  lifecycle: approved
+  labels:
+    dataset: pulse-core
+  createdAt: 2026-05-30T10:00:00Z
+  updatedAt: 2026-06-09T09:10:00Z
+spec:
+  scenario: >
+    An agentic adversary with a valid session in workspace A and a
+    valid share token from workspace A attempts to read dashboards,
+    tiles, and exports belonging to workspace B through every public
+    API surface and the shared-viewer route.
+  inputs:
+    workspaces: [fixture-workspace-a, fixture-workspace-b]
+    surfaces: [rest-api, viewer-route, export-endpoint]
+  expected: >
+    Every attempt returns zero rows or a 404; no response contains
+    workspace B identifiers, metric names, or data points; RLS session
+    context is set on every observed query.
+  steps:
+    - step: Enumerate workspace B resource ids from fixtures.
+    - step: Replay workspace A credentials and tokens against each surface with B's ids.
+    - step: Assert empty or not-found responses and scan payloads for B identifiers.
+    - step: Verify from query logs that no statement ran without RLS context.
+  method: agentic
+  appliesTo:
+    - ref: { kind: Story, id: story-share-dashboard-link, version: "1.0.0" }
+    - ref: { kind: Capability, id: cap-dashboards }
+  tolerance: >
+    Error shape (404 vs. empty set) may vary by surface; any byte of
+    workspace B data in a response is a failure.

@@ -1,0 +1,32 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-lesson-webhook-backoff
+  name: "Lesson: webhook retries need jittered backoff and per-merchant caps"
+  version: 1.0.0
+  createdAt: 2026-06-26T09:00:00Z
+spec:
+  category: lesson
+  subcategory: webhooks
+  statement: >
+    Fixed-interval webhook retries synchronize into storms: when a
+    large merchant's endpoint went down, retries aligned and saturated
+    the dispatcher pool, dragging charge-API p99 past its budget.
+    Retries must use jittered exponential backoff with a per-merchant
+    concurrency cap, and the dispatcher pool must be isolated from the
+    charge path.
+  detail: >
+    Distilled from the 2026-06-25 webhook-storm incident that rolled
+    back the first 0.4.2 canary. Isolation of the dispatcher pool was
+    applied as a runtime configuration mitigation before the second,
+    successful canary.
+  confidence: observed
+  provenance:
+    - type: observation
+      ref: { ref: { kind: Observation, id: obs-incident-webhook-storm } }
+      description: Production incident observation this lesson distils.
+  links:
+    - rel: derived_from
+      target: { ref: { kind: Observation, id: obs-incident-webhook-storm } }
+    - rel: relates_to
+      target: { ref: { kind: Issue, id: issue-webhook-retry-storm } }

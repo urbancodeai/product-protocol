@@ -1,0 +1,20 @@
+pp: "0.1"
+kind: Feature
+metadata:
+  id: feat-slack-digest
+  name: Weekly Slack digest
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-21T09:30:00Z
+  updatedAt: 2026-06-06T11:20:00Z
+spec:
+  description: >
+    A weekly digest posted to a chosen Slack channel: headline metric
+    movements, the most-viewed dashboard, and share links back into
+    Pulseboard, batched to respect Slack posting limits.
+  capability: { ref: { kind: Capability, id: cap-integrations } }
+  personas:
+    - team-admin
+  notes: >
+    Digest delivery must degrade gracefully when the Slack workspace
+    is unreachable; missed digests are skipped, not replayed in bulk.

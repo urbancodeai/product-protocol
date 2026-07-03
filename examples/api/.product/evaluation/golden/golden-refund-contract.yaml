@@ -1,0 +1,29 @@
+pp: "0.1"
+kind: GoldenTest
+metadata:
+  id: golden-refund-contract
+  name: Refund API contract suite
+  version: 1.0.0
+  lifecycle: approved
+  labels:
+    dataset: contract-fixtures-v3
+  createdAt: 2026-05-10T09:10:00Z
+  updatedAt: 2026-05-21T09:00:00Z
+spec:
+  scenario: >
+    Run the refund contract fixtures: full refund pre-settlement
+    (reversal), partial refunds, the over-refund guard, post-settlement
+    credits, and idempotent refund replay.
+  inputs:
+    fixtureSet: contract-fixtures-v3/refunds
+    cases: 87
+  expected: >
+    Responses match recordings; the over-refund case returns 422
+    refund_exceeds_captured with nothing recorded; pre-settlement
+    refunds surface state "reversed", post-settlement "pending"; each
+    state transition emits exactly one refund.updated event.
+  method: automated
+  appliesTo:
+    - ref: { kind: Story, id: story-refund-partial }
+    - ref: { kind: Feature, id: feat-charge-lifecycle }
+  tolerance: Volatile fields masked; event ordering asserted per refund, not globally.

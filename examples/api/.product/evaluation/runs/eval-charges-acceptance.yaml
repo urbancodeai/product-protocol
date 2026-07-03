@@ -1,0 +1,27 @@
+pp: "0.1"
+kind: Evaluation
+metadata:
+  id: eval-charges-acceptance
+  name: Acceptance of charges endpoint changeset
+  version: 1.0.0
+  createdAt: 2026-05-27T11:00:00Z
+spec:
+  subject: { ref: { kind: Artifact, id: artifact-charges-changeset } }
+  category: acceptance
+  criteria:
+    - source: { ref: { kind: Story, id: story-create-charge-idempotent, version: "1.0.0" } }
+      description: Story acceptance criteria ac-1 through ac-4 (idempotent replay, 409 conflict, concurrency, error replay).
+    - source: { ref: { kind: Task, id: task-charges-endpoint } }
+      description: Task completion criteria cc-1 and cc-2, including ledger write-before-response.
+  verdict: pass
+  score: 1.0
+  evidence:
+    - type: test_report
+      description: Contract suite and concurrency results submitted with the changeset.
+      artifact: { ref: { kind: Artifact, id: artifact-charges-report } }
+    - type: log
+      description: CI acceptance run against the sandbox acquirer stub.
+      uri: https://ci.example.com/brookpay/runs/3310/log
+  evaluator: { ref: { kind: Evaluator, id: evaluator-brookpay-ci } }
+  evaluatedAt: 2026-05-27T11:00:00Z
+  notes: 142/142 contract cases green; concurrency case produced exactly one acquirer call in all 1000 iterations.

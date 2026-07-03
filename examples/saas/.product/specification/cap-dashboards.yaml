@@ -1,0 +1,17 @@
+pp: "0.1"
+kind: Capability
+metadata:
+  id: cap-dashboards
+  name: Shared team dashboards
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-05T10:00:00Z
+  updatedAt: 2026-05-28T15:00:00Z
+spec:
+  description: >
+    Build, view, and share dashboards over connected metrics: tiles,
+    filters, workspace-scoped permissions, and share links, isolated
+    per tenant.
+  serves:
+    - ref: { kind: Goal, id: goal-weekly-active-teams }
+    - ref: { kind: Goal, id: goal-trial-conversion }

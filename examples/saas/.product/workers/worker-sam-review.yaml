@@ -1,0 +1,36 @@
+# A human Worker under the same contract.
+pp: "0.1"
+kind: Worker
+metadata:
+  id: worker-sam-review
+  name: Sam Okafor (review and copy)
+  version: 1.0.0
+  owners:
+    - { type: human, id: sam@pulseboard.example, name: Sam Okafor }
+  createdAt: 2026-05-06T09:10:00Z
+  updatedAt: 2026-05-06T09:10:00Z
+spec:
+  description: >
+    Human worker for UX review, digest copy, and blocked-task
+    escalations: reviews plan-gating surfaces against Article UX-1 and
+    owns the digest's editorial voice (story ac-3 manual criteria).
+  type: human
+  capabilities:
+    - review.ux
+    - review.code
+    - content.copywriting
+  constraints:
+    allowedArtifactTypes:
+      - document
+      - report
+    maxConcurrentTasks: 2
+    constitutionBound: true
+  contextContract:
+    requires:
+      - task
+      - specification
+      - constitution
+  evaluationHooks:
+    - name: plan-gating-checklist
+      description: Manual checklist covering UX-1 and the spec's gating principles.
+      mode: advisory

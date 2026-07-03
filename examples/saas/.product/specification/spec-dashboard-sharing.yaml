@@ -1,0 +1,114 @@
+# The Specification for dashboard sharing (PP-0004 §2): personas,
+# functional requirements, NFRs with a budget, UX intent with an HTML
+# prototype, business rules (incl. plan gating), constraints, and
+# dependencies.
+pp: "0.1"
+kind: Specification
+metadata:
+  id: spec-dashboard-sharing
+  name: Dashboard Sharing Specification
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-22T08:00:00Z
+  updatedAt: 2026-06-06T11:20:00Z
+  owners:
+    - { type: human, id: mila@pulseboard.example, name: Mila Torres }
+spec:
+  scope:
+    - ref: { kind: Capability, id: cap-dashboards }
+    - ref: { kind: Feature, id: feat-dashboard-sharing }
+  summary: >
+    Defines dashboard sharing end to end: workspace-internal shares,
+    external share links, plan gating, revocation, and the tenancy
+    rules every share path must obey.
+  businessGoals:
+    - ref: { kind: Goal, id: goal-trial-conversion }
+    - ref: { kind: Goal, id: goal-weekly-active-teams }
+  personas:
+    - id: team-admin
+      name: Team admin
+      description: >
+        Owns the workspace: manages members, plans, and what may leave
+        the workspace boundary. Needs control and an audit trail.
+      needs:
+        - See and revoke every active share link
+        - Gate external sharing to trusted members
+    - id: analyst
+      name: Analyst
+      description: >
+        Builds dashboards and wants stakeholders — sometimes outside
+        the workspace — to see them without a walkthrough meeting.
+      needs:
+        - Share a dashboard in two clicks
+        - Know exactly who can see what
+  functionalRequirements:
+    - id: FR-1
+      statement: >
+        A member MUST be able to share a dashboard with the whole
+        workspace or with named members.
+      priority: critical
+    - id: FR-2
+      statement: >
+        A member on an eligible plan MUST be able to create a
+        revocable external share link scoped to one dashboard; the
+        link MUST stop working within 60 seconds of revocation.
+      priority: critical
+      rationale: Revocation latency was the admins' top concern in discovery interviews.
+    - id: FR-3
+      statement: >
+        On the free plan, the external-share control MUST render as a
+        visible upgrade path, not disappear.
+      priority: high
+      rationale: Sharing moments are the hypothesized upgrade trigger (know-trial-upgrade-trigger).
+  nonFunctionalRequirements:
+    - id: NFR-1
+      category: performance
+      statement: A shared dashboard MUST render its first tiles within the load budget on a median connection.
+      budget: { metric: p95_dashboard_load, value: 1500, unit: ms }
+    - id: NFR-2
+      category: security
+      statement: >
+        Every share token MUST embed and verify the issuing workspace
+        id; a token MUST NOT resolve data outside that workspace.
+    - id: NFR-3
+      category: accessibility
+      statement: The share dialog MUST be fully keyboard-operable and satisfy WCAG 2.2 AA.
+  ux:
+    principles:
+      - Sharing defaults to the safest audience; widening is always explicit.
+      - Every share surface answers "who can see this right now?"
+      - Plan limits explain themselves and offer the upgrade, never a dead end.
+    prototypes:
+      - name: dashboard-share-dialog
+        description: Static mock of the share dialog with plan gating visible.
+        path: prototypes/dashboard-share.html
+        format: html
+  businessRules:
+    - id: BR-PLAN-1
+      statement: >
+        External share links MAY be created only on the team plan or
+        higher; free workspaces are offered the upgrade path instead.
+      appliesTo:
+        - ref: { kind: Feature, id: feat-dashboard-sharing }
+    - id: BR-TEN-1
+      statement: >
+        Every data-plane read triggered by a share MUST execute with
+        the issuing workspace's RLS session context; there is no
+        cross-workspace share.
+      appliesTo:
+        - ref: { kind: Feature, id: feat-dashboard-sharing }
+  constraints:
+    - >
+      Share tokens are opaque and random; no workspace or dashboard
+      identifiers may be derivable from the token text.
+    - >
+      No new public-embed surface: external viewing goes through the
+      same rendering path as members, with a viewer role.
+  dependencies:
+    - name: query-service
+      description: The RLS-enforcing data access layer (Article ARCH-1).
+    - name: email-service
+      description: Share notifications to named members.
+  acceptance:
+    - ref: { kind: GoldenTest, id: golden-share-link-roundtrip }
+    - ref: { kind: GoldenTest, id: golden-tenant-isolation }

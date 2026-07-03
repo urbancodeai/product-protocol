@@ -1,0 +1,110 @@
+# The active Constitution (PP-0005): eight Articles across all
+# categories. v2.1.0 was approved 2026-06-20 by Decision
+# dec-2026-06-20-constitution-v2-1 and is immutable.
+pp: "0.1"
+kind: Constitution
+metadata:
+  id: aurora-constitution
+  name: Aurora Books Constitution
+  version: 2.1.0
+  lifecycle: approved
+  createdAt: 2026-05-01T09:00:00Z
+  updatedAt: 2026-06-20T10:00:00Z
+  owners:
+    - { type: human, id: dana@example.com, name: Dana Ito }
+spec:
+  preamble: >
+    Aurora Books is trusted with readers' money, addresses, and reading
+    habits. These Articles hold for every change, every deployment, and
+    the running product, at all times. Read them strictly; when in
+    doubt, they win.
+  articles:
+    - id: SEC-1
+      category: security
+      rule: >
+        Secrets, credentials, and API keys MUST NOT appear in source
+        code, configuration files under version control, or logs.
+      rationale: >
+        Incident 2026-03: a payment-provider key committed to a branch
+        reached a public fork.
+      enforcement:
+        mode: blocking
+        evaluatedOn: [task_submission, deployment]
+        evaluations:
+          - ref: { kind: QualityGate, id: gate-secret-scan }
+    - id: PERF-1
+      category: performance
+      rule: >
+        The 95th-percentile server response time of any user-facing
+        endpoint MUST remain at or below 300 ms in production.
+      enforcement:
+        mode: blocking
+        evaluatedOn: [deployment, observation]
+        evaluations:
+          - ref: { kind: QualityGate, id: gate-production-promotion }
+        monitor: >
+          p95 latency per endpoint from production telemetry, 1-hour
+          window; violation when above 300 ms for two consecutive
+          windows.
+    - id: A11Y-1
+      category: accessibility
+      rule: >
+        Every user-facing page MUST satisfy WCAG 2.2 level AA, and all
+        interactive flows MUST be operable by keyboard alone.
+      enforcement:
+        mode: blocking
+        evaluatedOn: [task_submission]
+    - id: ARCH-1
+      category: architecture
+      rule: >
+        Frontend code MUST NOT access data stores directly; all data
+        access MUST go through the published API layer.
+      rationale: Keeps the storage schema replaceable and auditable.
+      enforcement:
+        mode: blocking
+        evaluatedOn: [task_submission]
+    - id: CODE-1
+      category: coding_standards
+      rule: >
+        All TypeScript MUST compile under strict mode, and the `any`
+        type MUST NOT be introduced.
+      enforcement:
+        mode: blocking
+        evaluatedOn: [task_submission]
+    - id: UX-1
+      category: ux
+      rule: >
+        Destructive actions MUST require explicit confirmation and
+        SHOULD be undoable for at least 10 seconds after execution.
+      enforcement:
+        mode: advisory
+        evaluatedOn: [task_submission]
+    - id: REL-1
+      category: reliability
+      rule: >
+        Monthly availability of the storefront MUST be at least 99.9%;
+        deployments MUST NOT proceed while the remaining monthly error
+        budget is exhausted.
+      enforcement:
+        mode: blocking
+        evaluatedOn: [deployment, observation]
+        monitor: >
+          Error-budget burn from availability SLO; violation when the
+          30-day budget is spent.
+    - id: COMP-1
+      category: compliance
+      rule: >
+        A verified user request to delete personal data MUST be honored
+        completely within 30 days, including backups reachable by
+        restore.
+      enforcement:
+        mode: blocking
+        evaluatedOn: [schedule]
+        monitor: >
+          Weekly sweep of open deletion requests against their age.
+      exceptions:
+        - description: >
+            Order records required for tax law are retained 10 years
+            with personal fields pseudonymized (see Decision
+            dec-2026-06-20-constitution-v2-1).
+          expiresAt: 2027-01-01T00:00:00Z

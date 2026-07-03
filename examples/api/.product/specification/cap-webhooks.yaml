@@ -1,0 +1,16 @@
+pp: "0.1"
+kind: Capability
+metadata:
+  id: cap-webhooks
+  name: Signed event webhooks
+  version: 1.0.0
+  lifecycle: approved
+  createdAt: 2026-05-07T09:25:00Z
+  updatedAt: 2026-05-11T09:00:00Z
+spec:
+  description: >
+    Deliver signed, replay-safe webhook events for asynchronous charge
+    and refund state changes, with at-least-once delivery, jittered
+    retries, and merchant-verifiable signatures.
+  serves:
+    - ref: { kind: Goal, id: goal-time-to-first-charge }

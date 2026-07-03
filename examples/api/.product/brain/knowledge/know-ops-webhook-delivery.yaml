@@ -1,0 +1,23 @@
+pp: "0.1"
+kind: Knowledge
+metadata:
+  id: know-ops-webhook-delivery
+  name: Webhook endpoints are slow and flaky; delivery must assume failure
+  version: 1.0.0
+  createdAt: 2026-06-05T10:00:00Z
+spec:
+  category: operational
+  subcategory: webhooks
+  statement: >
+    Merchant webhook endpoints answer within 1 s only ~92% of the time;
+    ~3% of deliveries fail outright on first attempt. First-attempt
+    delivery success cannot be an SLO; end-to-end delivery within 15
+    minutes can.
+  confidence: validated
+  provenance:
+    - type: document
+      uri: https://metrics.example.com/brookpay/webhook-delivery-2026-05
+      description: Delivery statistics for May 2026 across all merchants.
+  links:
+    - rel: relates_to
+      target: { ref: { kind: Capability, id: cap-webhooks } }
